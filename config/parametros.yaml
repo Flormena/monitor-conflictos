@@ -1,0 +1,9 @@
+# Parámetros editables del monitor de conflictos
+# Modificar aquí antes que en el código fuente
+
+scraping:
+  TIMEOUT: 15         # segundos máximos de espera por medio
+  DELAY: 2            # segundos de pausa entre medios (cortesía de scraping)
+  MAX_TITULARES: 50   # máximo de titulares a extraer por medio por corrida
+
+# Parámetros adicionales se agregarán cuando se implementen los tools correspondientes
