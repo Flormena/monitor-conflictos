@@ -1,0 +1,30 @@
+2026-04-30 21:40:50,783 INFO     Analizando semana: 2026-W18
+2026-04-30 21:40:50,785 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-04-30 21:40:50,791 INFO     Titulares cargados: 3589
+2026-04-30 21:40:50,883 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W18.csv (75 filas)
+2026-04-30 21:40:50,886 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (75 filas totales, 75 de esta semana)
+2026-04-30 21:40:50,886 INFO     ============================================================
+2026-04-30 21:40:50,886 INFO     Titulares leídos:  3589
+2026-04-30 21:40:50,886 INFO     Matches totales:   75  (2.1% de detección)
+2026-04-30 21:40:50,886 INFO     ────────────────────────────────────────
+2026-04-30 21:40:50,886 INFO     Menciones por palabra clave:
+2026-04-30 21:40:50,886 INFO       marcha            32
+2026-04-30 21:40:50,886 INFO       paro              16
+2026-04-30 21:40:50,886 INFO       reclamo            9
+2026-04-30 21:40:50,886 INFO       protesta           8
+2026-04-30 21:40:50,886 INFO       movilización       8
+2026-04-30 21:40:50,886 INFO       represión          2
+2026-04-30 21:40:50,886 INFO       huelga             2
+2026-04-30 21:40:50,886 INFO       piquete            1
+2026-04-30 21:40:50,886 INFO     ────────────────────────────────────────
+2026-04-30 21:40:50,886 INFO     Menciones por corpus:
+2026-04-30 21:40:50,886 INFO       provincial        64
+2026-04-30 21:40:50,886 INFO       nacional          11
+2026-04-30 21:40:50,886 INFO     ────────────────────────────────────────
+2026-04-30 21:40:50,886 INFO     Top 5 medios con más menciones:
+2026-04-30 21:40:50,886 INFO         5  RED 23 NOTICIAS
+2026-04-30 21:40:50,886 INFO         4  EL DIARIO DE LA PAMPA
+2026-04-30 21:40:50,886 INFO         3  HUARPE
+2026-04-30 21:40:50,886 INFO         3  EL CORDILLERANO
+2026-04-30 21:40:50,886 INFO         2  EL DÍA
+2026-04-30 21:40:50,886 INFO     ============================================================
