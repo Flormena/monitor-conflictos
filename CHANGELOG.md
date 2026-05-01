@@ -19,6 +19,20 @@
   de fondo constante y no se filtra. Consistente con el objetivo de detectar
   tendencias temporales, no eventos individuales (METODOLOGIA.md §1.2).
 
+### Corridas
+#### [2026-04-30] · Primera corrida completa del scraper
+- 79 medios procesados, 75 exitosos, 4 fallidos
+- 3589 titulares extraídos en `datos/crudos/2026-W18/`
+- Medios fallidos a revisar más adelante:
+  * RAFAELA NOTICIAS (Santa Fe) — ConnectionError
+  * CONTEXTO (Tucumán) — ConnectionError
+  * MINUTO FUEGUINO (Tierra del Fuego) — ConnectionError
+  * PUNTO UNO (Salta) — Conectó pero extrajo 0 titulares (probable problema de selectores)
+- Casos con baja extracción a monitorear:
+  * RIOJA VIRTUAL (8 titulares)
+  * CUTRAL CO AL INSTANTE (25 titulares)
+  * FORMOSA AHORA (19 titulares)
+
 ### Añadido
 - Dependencia `pyyaml` agregada al stack. Necesaria para que el scraper lea
   `config/parametros.yaml`.
