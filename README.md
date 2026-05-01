@@ -4,7 +4,7 @@ Rastreo automatizado de palabras clave en titulares de medios digitales argentin
 
 Inspirado metodológicamente en el trabajo de [Beverly Silver](https://en.wikipedia.org/wiki/Beverly_Silver) (*Forces of Labor*, Cambridge University Press, 2003), que rastreó menciones de conflictos laborales en diarios británicos desde el siglo XIX para construir series temporales largas.
 
-> 🔬 **Proyecto de divulgación con rigor metodológico.** No es un registro exhaustivo de conflictos ni una base de datos de eventos verificados.
+
 
 ---
 
