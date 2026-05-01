@@ -1,11 +1,11 @@
-diario,url,linea_editorial,activo
-La Nación,https://www.lanacion.com.ar,Centro-derecha mainstream,1
-Clarín,https://www.clarin.com,Centro-derecha mainstream,1
-Infobae,https://www.infobae.com,Centro-derecha generalista,1
-Perfil,https://www.perfil.com,Centro generalista,1
-Crónica,https://www.cronica.com.ar,Popular generalista,1
-Página 12,https://www.pagina12.com.ar,Centro-izquierda oficialismo K,1
-El Destape,https://www.eldestapeweb.com,Centro-izquierda oficialismo K,1
-Tiempo Argentino,https://www.tiempoar.com.ar,Centro-izquierda,1
-Ámbito,https://www.ambito.com,Centro-derecha económico,1
-El Cronista,https://www.cronista.com,Económico,1
+﻿diario,linea_editorial,url,activo
+INFOBAE,"Centro-derecha, generalista",https://www.infobae.com,True
+LA NACIÓN,"Centro-derecha, mainstream",https://www.lanacion.com.ar,True
+CLARÍN,"Centro-derecha, mainstream",https://www.clarin.com,True
+PÁGINA 12,"Centro-izquierda, oficialismo K",https://www.pagina12.com.ar,True
+PERFIL,"Centro, generalista",https://www.perfil.com,True
+EL DESTAPE,"Centro-izquierda, oficialismo K",https://www.eldestapeweb.com,True
+LA POLÍTICA ONLINE,"Centro, político",https://www.lapoliticaonline.com.ar,True
+TIEMPO ARGENTINO,Centro-izquierda,https://www.tiempoar.com.ar,True
+LA PRENSA,"Centro-derecha, tradicional",https://www.laprensa.com.ar,True
+ÁMBITO FINANCIERO,"Centro-derecha, económico",https://www.ambito.com,True

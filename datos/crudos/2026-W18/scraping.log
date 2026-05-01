@@ -1,0 +1,38 @@
+2026-04-30 21:06:25,832 INFO     Modo --test activo: máximo 3 medios por corpus
+2026-04-30 21:06:25,832 INFO     Semana: 2026-W18 | Medios a procesar: 6 (3 prov. + 3 nac.)
+2026-04-30 21:06:25,832 INFO     ============================================================
+2026-04-30 21:06:25,833 INFO     [PROVINCIAL] EL DÍA (Buenos Aires) — https://www.eldia.com
+2026-04-30 21:06:26,816 INFO       → OK | 50 titulares extraídos
+2026-04-30 21:06:28,833 INFO     [PROVINCIAL] EN ORSAI (Buenos Aires) — https://www.enorsai.com.ar
+2026-04-30 21:06:29,141 INFO       → OK | 47 titulares extraídos
+2026-04-30 21:06:31,143 INFO     [PROVINCIAL] 5 DÍAS (Buenos Aires) — https://www.diario5dias.com.ar
+2026-04-30 21:06:31,999 INFO       → OK | 35 titulares extraídos
+2026-04-30 21:06:34,001 INFO     [NACIONAL] INFOBAE — https://www.infobae.com
+2026-04-30 21:06:34,439 INFO       → OK | 50 titulares extraídos
+2026-04-30 21:06:36,441 INFO     [NACIONAL] LA NACIÓN — https://www.lanacion.com.ar
+2026-04-30 21:06:36,946 INFO       → OK | 50 titulares extraídos
+2026-04-30 21:06:38,960 INFO     [NACIONAL] CLARÍN — https://www.clarin.com
+2026-04-30 21:06:39,343 INFO       → OK | 50 titulares extraídos
+2026-04-30 21:06:39,343 INFO     ============================================================
+2026-04-30 21:06:39,343 INFO     Resumen: 6 medios procesados | 6 exitosos | 0 fallidos | 282 titulares totales
+2026-04-30 21:06:39,343 INFO     Titulares → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\crudos\2026-W18\titulares.csv
+2026-04-30 21:06:39,343 INFO     HTML crudos → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\crudos\2026-W18/
+2026-04-30 21:08:52,631 INFO     Modo --test activo: máximo 3 medios por corpus
+2026-04-30 21:08:52,631 INFO     Semana: 2026-W18 | Medios a procesar: 6 (3 prov. + 3 nac.)
+2026-04-30 21:08:52,631 INFO     ============================================================
+2026-04-30 21:08:52,631 INFO     [PROVINCIAL] EL DÍA (Buenos Aires) — https://www.eldia.com
+2026-04-30 21:08:53,622 INFO       → OK | 50 titulares extraídos
+2026-04-30 21:08:55,623 INFO     [PROVINCIAL] EN ORSAI (Buenos Aires) — https://www.enorsai.com.ar
+2026-04-30 21:08:55,917 INFO       → OK | 47 titulares extraídos
+2026-04-30 21:08:57,918 INFO     [PROVINCIAL] 5 DÍAS (Buenos Aires) — https://www.diario5dias.com.ar
+2026-04-30 21:08:58,770 INFO       → OK | 35 titulares extraídos
+2026-04-30 21:09:00,771 INFO     [NACIONAL] INFOBAE — https://www.infobae.com
+2026-04-30 21:09:01,225 INFO       → OK | 50 titulares extraídos
+2026-04-30 21:09:03,226 INFO     [NACIONAL] LA NACIÓN — https://www.lanacion.com.ar
+2026-04-30 21:09:03,636 INFO       → OK | 50 titulares extraídos
+2026-04-30 21:09:05,638 INFO     [NACIONAL] CLARÍN — https://www.clarin.com
+2026-04-30 21:09:06,021 INFO       → OK | 50 titulares extraídos
+2026-04-30 21:09:06,023 INFO     ============================================================
+2026-04-30 21:09:06,023 INFO     Resumen: 6 medios procesados | 6 exitosos | 0 fallidos | 282 titulares totales
+2026-04-30 21:09:06,023 INFO     Titulares → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\crudos\2026-W18\titulares.csv
+2026-04-30 21:09:06,023 INFO     HTML crudos → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\crudos\2026-W18/

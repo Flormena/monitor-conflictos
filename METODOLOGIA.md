@@ -225,6 +225,7 @@ Mapeo provincia → región:
 | NOA | Tucumán, Salta, Jujuy, Santiago del Estero, Catamarca, La Rioja |
 | NEA | Chaco, Corrientes, Misiones, Formosa |
 | Patagonia | Neuquén, Río Negro, Chubut, Santa Cruz, Tierra del Fuego, La Pampa |
+| Nacional | Aplicada a medios del corpus 2 (nacional). No se mezcla con las regiones provinciales en agregaciones, pero permite mostrarlos en gráficos comparativos. |
 
 ---
 

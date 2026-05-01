@@ -1,1 +1,70 @@
-diario,provincia,region,url,activo
+﻿diario,provincia,region,ciudad_origen,url,activo
+EL DÍA,Buenos Aires,AMBA,La Plata,https://www.eldia.com,True
+EN ORSAI,Buenos Aires,AMBA,Morón,https://www.enorsai.com.ar,True
+5 DÍAS,Buenos Aires,AMBA,Quilmes,https://www.diario5dias.com.ar,True
+LA VOZ DEL INTERIOR,Córdoba,Centro,Córdoba,https://www.lavoz.com.ar,True
+EL DIARIO,Córdoba,Centro,Villa Carlos Paz,https://www.eldiariodecarlospaz.com.ar,True
+EL DIARIO DEL CENTRO DEL PAÍS,Córdoba,Centro,Villa María,https://www.eldiariocba.com.ar,True
+EL DIARIO,Entre Ríos,Centro,Entre rios,https://www.eldiario.com.ar,True
+ELONCE,Entre Ríos,Centro,Entre rios,https://www.elonce.com,True
+UNO ENTRE RÍOS,Entre Ríos,Centro,Entre rios,https://www.unoentrerios.com.ar,True
+RAFAELA NOTICIAS,Santa Fe,Centro,Rafaela,https://www.rafaelanoticias.com.ar,True
+LA CAPITAL,Santa Fe,Centro,Rosario,https://www.lacapital.com.ar,True
+AIRE DIGITAL,Santa Fe,Centro,Santa Fe,https://www.airedesantafe.com.ar,True
+DIARIO UNO,Mendoza,Cuyo,Mendoza,https://www.diariouno.com.ar,True
+LOS ANDES,Mendoza,Cuyo,Mendoza,https://www.losandes.com.ar,True
+MDZ ONLINE,Mendoza,Cuyo,Mendoza,https://www.mdzol.com,True
+DIARIO DE CUYO,San Juan,Cuyo,San Juan,https://www.diariodecuyo.com.ar,True
+EL ZONDA,San Juan,Cuyo,San Juan,https://www.diarioelzondasj.com.ar,True
+HUARPE,San Juan,Cuyo,San Juan,https://www.diariohuarpe.com,True
+DIARIO DE LA REPÚBLICA,San Luis,Cuyo,San Luis,https://www.eldiariodelarepublica.com,True
+EL CHORRILLERO,San Luis,Cuyo,San Luis,https://www.elchorrillero.com,True
+VILLA MERCEDES INFO,San Luis,Cuyo,Villa Mercedes,https://www.villamercedes.info,True
+EL ANCASTI,Catamarca,NOA,Catamarca,https://www.elancasti.com.ar,True
+EL ESQUIÚ,Catamarca,NOA,Catamarca,https://www.elesquiu.com,True
+LA UNIÓN,Catamarca,NOA,Catamarca,https://www.launion.digital,True
+EL TRIBUNO,Jujuy,NOA,San Salvador de Jujuy,https://www.eltribunodejujuy.com,True
+LEA,Jujuy,NOA,San Salvador de Jujuy,https://www.periodicolea.com.ar,True
+PREGÓN,Jujuy,NOA,San Salvador de Jujuy,https://www.pregon.com.ar,True
+EL INDEPENDIENTE,La Rioja,NOA,La Rioja,https://www.elindependiente.com.ar,True
+NUEVA RIOJA,La Rioja,NOA,La Rioja,https://www.nuevarioja.com.ar,True
+RIOJA VIRTUAL,La Rioja,NOA,La Rioja,https://www.riojavirtual.com.ar,True
+EL TRIBUNO,Salta,NOA,Salta,https://www.eltribuno.com,True
+NUEVO DIARIO,Salta,NOA,Salta,https://www.nuevodiariodesalta.com.ar,True
+PUNTO UNO,Salta,NOA,Salta,https://www.diariopuntouno.com.ar,True
+EL LIBERAL,Santiago del Estero,NOA,Santiago del Estero,https://www.elliberal.com.ar,True
+NUEVO DIARIO,Santiago del Estero,NOA,Santiago del Estero,https://www.nuevodiarioweb.com.ar,True
+PANORAMA,Santiago del Estero,NOA,Santiago del Estero,https://www.diariopanorama.com,True
+CONTEXTO,Tucumán,NOA,Tucumán,https://www.contextotucuman.com.ar,True
+EL TUCUMANO,Tucumán,NOA,Tucumán,https://www.eltucumano.com,True
+LA GACETA,Tucumán,NOA,Tucumán,https://www.lagaceta.com.ar,True
+DIARIO CHACO,Chaco,NEA,Resistencia,https://www.diariochaco.com,True
+LA VOZ DEL CHACO,Chaco,NEA,Resistencia,https://www.diariolavozdelchaco.com,True
+NORTE,Chaco,NEA,Resistencia,https://www.diarionorte.com,True
+EL LIBERTADOR,Corrientes,NEA,Corrientes,https://www.diarioellibertador.com.ar,True
+EL LITORAL,Corrientes,NEA,Corrientes,https://www.ellitoral.com.ar,True
+ÉPOCA,Corrientes,NEA,Corrientes,https://www.diarioepoca.com,True
+EL COMERCIAL,Formosa,NEA,Formosa,https://www.elcomercial.com.ar,True
+FORMOSA,Formosa,NEA,Formosa,https://www.diarioformosa.net,True
+FORMOSA AHORA,Formosa,NEA,Formosa,https://www.formosaahora.com.ar,True
+EL TERRITORIO,Misiones,NEA,Posadas,https://www.elterritorio.com.ar,True
+MISIONES ON LINE,Misiones,NEA,Posadas,https://www.misionesonline.net,True
+PRIMERA EDICIÓN,Misiones,NEA,Posadas,https://www.primeraedicion.com.ar,True
+ADN SUR,Chubut,Patagonia,Comodoro Rivadavia,https://www.adnsur.com.ar,True
+CRÓNICA,Chubut,Patagonia,Comodoro Rivadavia,https://www.diariocronica.com.ar,True
+EL PATAGÓNICO,Chubut,Patagonia,Comodoro Rivadavia,https://www.elpatagonico.com,True
+EL DIARIO DE LA PAMPA,La Pampa,Patagonia,Santa Rosa,https://www.eldiariodelapampa.com.ar,True
+LA ARENA,La Pampa,Patagonia,Santa Rosa,https://www.laarena.com.ar,True
+PLAN B NOTICIAS,La Pampa,Patagonia,Santa Rosa,https://www.planbnoticias.com.ar,True
+CUTRAL CO AL INSTANTE,Neuquén,Patagonia,Cutral Có,https://www.cutralcoalinstante.com,True
+LM NEUQUÉN,Neuquén,Patagonia,Neuquén,https://www.lmneuquen.com,True
+LIMAY NOTICIAS,Neuquén,Patagonia,Plottier,https://www.limaynoticias.com.ar,True
+EL CORDILLERANO,Río Negro,Patagonia,Bariloche / Rio negro,https://www.elcordillerano.com.ar,True
+RÍO NEGRO,Río Negro,Patagonia,General Roca / Rio negro,https://www.rionegro.com.ar,True
+NOTICIASNET,Río Negro,Patagonia,Viedma / Rio negro,https://www.noticiasnet.com.ar,True
+LA OPINIÓN AUSTRAL,Santa Cruz,Patagonia,Santa Cruz,https://www.laopinionaustral.com.ar,True
+NUEVO DÍA,Santa Cruz,Patagonia,Santa Cruz,https://www.eldiarionuevodia.com.ar,True
+TIEMPO SUR,Santa Cruz,Patagonia,Santa Cruz,https://www.tiemposur.com.ar,True
+EL SUREÑO,Tierra del Fuego,Patagonia,Río Grande,https://www.surenio.com.ar,True
+MINUTO FUEGUINO,Tierra del Fuego,Patagonia,Río Grande,https://www.minutofueguino.com,True
+RED 23 NOTICIAS,Tierra del Fuego,Patagonia,Río Grande,https://www.red23noticias.com.ar,True
