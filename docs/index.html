@@ -1,0 +1,3011 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitor de Conflictividad Social · Argentina</title>
+  <style>
+    /* ── Variables de diseño ─────────────────────────────────────────────────
+       Cambiar estos valores modifica la paleta de colores de todo el dashboard.
+       --bg:         fondo de página  |  --card: fondo de tarjetas
+       --header-bg:  fondo del header |  --accent: color de énfasis (números KPI)
+       --text:       texto principal  |  --muted: texto secundario / etiquetas
+       --border:     bordes y separadores */
+    :root {
+      --bg:        #f0f2f5;
+      --card:      #ffffff;
+      --header-bg: #1a2535;
+      --accent:    #e74c3c;
+      --text:      #2c3e50;
+      --muted:     #7f8c8d;
+      --border:    #e8ecef;
+      --radius:    8px;
+    }
+
+    /* ── Reset mínimo y tipografía base ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Contenedor centrado con ancho máximo ───────────────────────────── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Encabezado principal ───────────────────────────────────────────── */
+    header { background: var(--header-bg); color: white; padding: 1.75rem 0; }
+    header h1 { font-size: 1.4rem; font-weight: 700; }
+    header p  { font-size: .9rem; opacity: .7; margin-top: .3rem; }
+    .header-meta { font-size: .78rem; opacity: .5; margin-top: .6rem; }
+
+    /* ── Tarjetas KPI: cuatro métricas grandes ──────────────────────────── */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .kpi {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    }
+    .kpi-value { font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1; }
+    .kpi-label { font-size: .82rem; color: var(--muted); margin-top: .35rem; }
+    .kpi-sub   { font-size: .8rem;  color: var(--text);  margin-top: .2rem; font-weight: 500; }
+
+    /* ── Sección genérica (tarjeta blanca con sombra) ────────────────────── */
+    .section {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.07);
+      margin-bottom: 1.25rem;
+    }
+    .section-title {
+      font-size: .77rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Dos columnas lado a lado (distribuciones) ──────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    /* En pantallas angostas las dos columnas se apilan verticalmente */
+    @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Gráfico de barras verticales (tendencia por semana) ────────────── */
+    .vchart {
+      display: flex;
+      align-items: flex-end;   /* las barras crecen hacia arriba desde la base */
+      gap: 2.5rem;
+      height: 160px;
+      border-bottom: 2px solid var(--border);
+      padding: 0 .5rem;
+    }
+    .vchart-col   { display: flex; flex-direction: column; align-items: center; flex: 1; }
+    .vchart-val   { font-size: .85rem; font-weight: 700; color: var(--text); margin-bottom: .3rem; }
+    .vchart-bar   { width: 100%; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 4px; }
+    .vchart-labels { display: flex; gap: 2.5rem; padding: .5rem .5rem 0; }
+    .vchart-lbl   { flex: 1; text-align: center; font-size: .8rem; color: var(--muted); }
+
+    /* ── Barras horizontales (distribución por palabra / región) ────────── */
+    .hbar         { display: flex; align-items: center; gap: .75rem; margin-bottom: .65rem; }
+    .hbar-label   { width: 115px; font-size: .83rem; text-align: right; flex-shrink: 0; color: var(--text); }
+    .hbar-track   { flex: 1; background: var(--bg); border-radius: 4px; height: 20px; overflow: hidden; }
+    .hbar-fill    { height: 100%; border-radius: 4px; }
+    .hbar-value   { width: 65px; font-size: .8rem; color: var(--muted); text-align: right; flex-shrink: 0; }
+
+    /* ── Filtros y controles de la tabla ────────────────────────────────── */
+    .filters { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1rem; align-items: center; }
+    .filters select,
+    .filters input[type=text] {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .4rem .7rem;
+      font-size: .83rem;
+      color: var(--text);
+      background: var(--card);
+    }
+    .filters input[type=text] { min-width: 170px; }
+    #tabla-count  { font-size: .82rem; color: var(--muted); margin-left: auto; }
+
+    /* ── Tabla de titulares ─────────────────────────────────────────────── */
+    .tabla-wrap { overflow-x: auto; }
+    table   { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    th {
+      text-align: left; padding: .55rem .75rem;
+      background: var(--bg); color: var(--muted);
+      font-size: .76rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .04em;
+      border-bottom: 2px solid var(--border); white-space: nowrap;
+    }
+    td { padding: .55rem .75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:hover td { background: #f8f9fb; }
+    .col-semana  { white-space: nowrap; color: var(--muted); }
+    .col-corpus  { white-space: nowrap; }
+    .col-titular { max-width: 360px; }
+
+    /* ── Badges de colores para palabras clave ──────────────────────────── */
+    .badge {
+      display: inline-block;
+      padding: .15rem .45rem;
+      border-radius: 4px;
+      font-size: .72rem;
+      font-weight: 600;
+      margin: .1rem .1rem .1rem 0;
+      color: white;
+    }
+
+    /* ── Nota metodológica (cuadro con borde izquierdo) ─────────────────── */
+    .nota {
+      font-size: .79rem;
+      color: var(--muted);
+      background: #f8f9fb;
+      border-left: 3px solid var(--border);
+      padding: .5rem .75rem;
+      border-radius: 0 4px 4px 0;
+      margin-top: 1rem;
+    }
+
+    /* ── Pie de página ──────────────────────────────────────────────────── */
+    footer { text-align: center; padding: 2rem 1rem; font-size: .79rem; color: var(--muted); }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+
+<body>
+
+
+<header>
+  <div class="container">
+    <h1>Monitor de Conflictividad Social · Argentina</h1>
+    <p>Rastreo semanal de palabras clave en titulares de medios locales y nacionales</p>
+    <div class="header-meta">
+      Última actualización: 01/06/2026
+      &nbsp;·&nbsp;
+      2 semanas de datos
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  
+  <div class="kpis">
+
+    <div class="kpi">
+      <div class="kpi-value">113</div>
+      <div class="kpi-label">Menciones totales</div>
+      <div class="kpi-sub">en 2 semanas</div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-value">2</div>
+      <div class="kpi-label">Semanas cubiertas</div>
+      <div class="kpi-sub">hasta 2026-W23</div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-value" style="color: #3498db">43</div>
+      <div class="kpi-label">Menciones de &ldquo;marcha&rdquo;</div>
+      <div class="kpi-sub">palabra más frecuente</div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-value">36</div>
+      <div class="kpi-label">Menciones en Patagonia</div>
+      <div class="kpi-sub">región más activa (corpus provincial)</div>
+    </div>
+
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Tendencia semanal — menciones totales</div>
+
+    
+    <div class="vchart">
+      
+      <div class="vchart-col">
+        <div class="vchart-val">68</div>
+        <div class="vchart-bar"
+             style="height: 100%"
+             title="2026-W18: 68 menciones">
+        </div>
+      </div>
+      
+      <div class="vchart-col">
+        <div class="vchart-val">45</div>
+        <div class="vchart-bar"
+             style="height: 66%"
+             title="2026-W23: 45 menciones">
+        </div>
+      </div>
+      
+    </div>
+    <div class="vchart-labels">
+      
+      <div class="vchart-lbl">W18</div>
+      
+      <div class="vchart-lbl">W23</div>
+      
+    </div>
+    
+
+    <p class="nota">
+      Cada barra es una corrida semanal del scraper.
+      Los valores son menciones absolutas (titulares con ≥1 palabra clave).
+      La métrica de densidad (menciones / titulares totales) se implementará en una versión futura.
+    </p>
+  </div>
+
+  
+  <div class="two-col">
+
+    
+    <div class="section" style="margin-bottom: 0">
+      <div class="section-title">Menciones por palabra clave</div>
+      
+      <div class="hbar">
+        <div class="hbar-label">marcha</div>
+        <div class="hbar-track">
+          <div class="hbar-fill"
+               style="width: 100%;
+                      background: #3498db">
+          </div>
+        </div>
+        <div class="hbar-value">
+          43
+          <small style="opacity:.65">&nbsp;35.2%</small>
+        </div>
+      </div>
+      
+      <div class="hbar">
+        <div class="hbar-label">paro</div>
+        <div class="hbar-track">
+          <div class="hbar-fill"
+               style="width: 79%;
+                      background: #e74c3c">
+          </div>
+        </div>
+        <div class="hbar-value">
+          34
+          <small style="opacity:.65">&nbsp;27.9%</small>
+        </div>
+      </div>
+      
+      <div class="hbar">
+        <div class="hbar-label">reclamo</div>
+        <div class="hbar-track">
+          <div class="hbar-fill"
+               style="width: 41%;
+                      background: #f39c12">
+          </div>
+        </div>
+        <div class="hbar-value">
+          18
+          <small style="opacity:.65">&nbsp;14.8%</small>
+        </div>
+      </div>
+      
+      <div class="hbar">
+        <div class="hbar-label">movilización</div>
+        <div class="hbar-track">
+          <div class="hbar-fill"
+               style="width: 27%;
+                      background: #27ae60">
+          </div>
+        </div>
+        <div class="hbar-value">
+          12
+          <small style="opacity:.65">&nbsp;9.8%</small>
+        </div>
+      </div>
+      
+      <div class="hbar">
+        <div class="hbar-label">protesta</div>
+        <div class="hbar-track">
+          <div class="hbar-fill"
+               style="width: 23%;
+                      background: #e67e22">
+          </div>
+        </div>
+        <div class="hbar-value">
+          10
+          <small style="opacity:.65">&nbsp;8.2%</small>
+        </div>
+      </div>
+      
+      <div class="hbar">
+        <div class="hbar-label">huelga</div>
+        <div class="hbar-track">
+          <div class="hbar-fill"
+               style="width: 4%;
+                      background: #8e44ad">
+          </div>
+        </div>
+        <div class="hbar-value">
+          2
+          <small style="opacity:.65">&nbsp;1.6%</small>
+        </div>
+      </div>
+      
+      <div class="hbar">
+        <div class="hbar-label">represión</div>
+        <div class="hbar-track">
+          <div class="hbar-fill"
+               style="width: 4%;
+                      background: #16a085">
+          </div>
+        </div>
+        <div class="hbar-value">
+          2
+          <small style="opacity:.65">&nbsp;1.6%</small>
+        </div>
+      </div>
+      
+      <div class="hbar">
+        <div class="hbar-label">piquete</div>
+        <div class="hbar-track">
+          <div class="hbar-fill"
+               style="width: 2%;
+                      background: #7f8c8d">
+          </div>
+        </div>
+        <div class="hbar-value">
+          1
+          <small style="opacity:.65">&nbsp;0.8%</small>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <div class="section" style="margin-bottom: 0">
+      <div class="section-title">Menciones por región (corpus provincial)</div>
+      
+        
+        <div class="hbar">
+          <div class="hbar-label">Patagonia</div>
+          <div class="hbar-track">
+            <div class="hbar-fill"
+                 style="width: 100%;
+                        background: #3d5a80">
+            </div>
+          </div>
+          <div class="hbar-value">36</div>
+        </div>
+        
+        <div class="hbar">
+          <div class="hbar-label">NEA</div>
+          <div class="hbar-track">
+            <div class="hbar-fill"
+                 style="width: 55%;
+                        background: #3d5a80">
+            </div>
+          </div>
+          <div class="hbar-value">20</div>
+        </div>
+        
+        <div class="hbar">
+          <div class="hbar-label">NOA</div>
+          <div class="hbar-track">
+            <div class="hbar-fill"
+                 style="width: 47%;
+                        background: #3d5a80">
+            </div>
+          </div>
+          <div class="hbar-value">17</div>
+        </div>
+        
+        <div class="hbar">
+          <div class="hbar-label">Centro</div>
+          <div class="hbar-track">
+            <div class="hbar-fill"
+                 style="width: 33%;
+                        background: #3d5a80">
+            </div>
+          </div>
+          <div class="hbar-value">12</div>
+        </div>
+        
+        <div class="hbar">
+          <div class="hbar-label">Cuyo</div>
+          <div class="hbar-track">
+            <div class="hbar-fill"
+                 style="width: 27%;
+                        background: #3d5a80">
+            </div>
+          </div>
+          <div class="hbar-value">10</div>
+        </div>
+        
+        <div class="hbar">
+          <div class="hbar-label">AMBA</div>
+          <div class="hbar-track">
+            <div class="hbar-fill"
+                 style="width: 8%;
+                        background: #3d5a80">
+            </div>
+          </div>
+          <div class="hbar-value">3</div>
+        </div>
+        
+        
+        <p class="nota">
+          Corpus nacional: 15 menciones adicionales
+          (no incluidas en este gráfico; ver tabla abajo).
+        </p>
+        
+      
+    </div>
+
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Titulares detectados</div>
+
+    <div class="filters">
+      <select id="f-corpus" onchange="filtrar()">
+        <option value="">Todos los corpus</option>
+        
+        <option value="nacional">Nacional</option>
+        
+        <option value="provincial">Provincial</option>
+        
+      </select>
+
+      <select id="f-region" onchange="filtrar()">
+        <option value="">Todas las regiones</option>
+        
+        <option value="AMBA">AMBA</option>
+        
+        <option value="Centro">Centro</option>
+        
+        <option value="Cuyo">Cuyo</option>
+        
+        <option value="NEA">NEA</option>
+        
+        <option value="NOA">NOA</option>
+        
+        <option value="Patagonia">Patagonia</option>
+        
+      </select>
+
+      <select id="f-palabra" onchange="filtrar()">
+        <option value="">Todas las palabras</option>
+        
+        <option value="huelga">huelga</option>
+        
+        <option value="marcha">marcha</option>
+        
+        <option value="movilización">movilización</option>
+        
+        <option value="paro">paro</option>
+        
+        <option value="piquete">piquete</option>
+        
+        <option value="protesta">protesta</option>
+        
+        <option value="reclamo">reclamo</option>
+        
+        <option value="represión">represión</option>
+        
+      </select>
+
+      <select id="f-semana" onchange="filtrar()">
+        <option value="">Todas las semanas</option>
+        
+        <option value="2026-W18">2026-W18</option>
+        
+        <option value="2026-W23">2026-W23</option>
+        
+      </select>
+
+      <input type="text" id="f-texto" placeholder="Buscar en titular…" oninput="filtrar()">
+
+      <span id="tabla-count">113 titulares</span>
+    </div>
+
+    <div class="tabla-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Semana</th>
+            <th>Corpus</th>
+            <th>Diario</th>
+            <th>Región</th>
+            <th>Titular</th>
+            <th>Palabras</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body">
+          
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="se levantó el paro en el subte c tras horas de caos y demoras que afectaron a miles de pasajeros en constitución">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">nacional</td>
+            <td>ÁMBITO FINANCIERO</td>
+            <td>Nacional</td>
+            <td class="col-titular">Se levantó el paro en el subte C tras horas de caos y demoras que afectaron a miles de pasajeros en Constitución</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="el femicidio de agostina será una de las consignas de la marcha federal de &#34;ni una menos&#34;">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>DIARIO DE LA REPÚBLICA</td>
+            <td>Cuyo</td>
+            <td class="col-titular">El femicidio de Agostina será una de las consignas de la marcha federal de &#34;Ni una Menos&#34;</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="ni una menos. sáenz peña se moviliza con una semana de actividades, debates y marcha contra la violencia de género">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>NORTE</td>
+            <td>NEA</td>
+            <td class="col-titular">Ni Una Menos. Sáenz Peña se moviliza con una semana de actividades, debates y marcha contra la violencia de género</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="ni una menos en sáenz peña: semana de actividades y marcha contra la violencia de género">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>DIARIO CHACO</td>
+            <td>NEA</td>
+            <td class="col-titular">Ni Una Menos en Sáenz Peña: semana de actividades y marcha contra la violencia de género</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="el trasfondo de las tensiones por el precio del boleto y qué podría motivar un paro de uta">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>LA GACETA</td>
+            <td>NOA</td>
+            <td class="col-titular">El trasfondo de las tensiones por el precio del boleto y qué podría motivar un paro de UTA</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="la unse estará de paro hasta el viernes, junto a todas las universidades del país">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>NUEVO DIARIO</td>
+            <td>NOA</td>
+            <td class="col-titular">La UNSE estará de paro hasta el viernes, junto a todas las universidades del país</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W23"
+            data-palabras="reclamo"
+            data-titular="ángela torres pidió justicia por el crimen de agostina vega y se sumó al reclamo de distintas artistas">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>NUEVA RIOJA</td>
+            <td>NOA</td>
+            <td class="col-titular">Ángela Torres pidió justicia por el crimen de Agostina Vega y se sumó al reclamo de distintas artistas</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="paro nacional universitario: cuándo es y a qué hora">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>LEA</td>
+            <td>NOA</td>
+            <td class="col-titular">Paro nacional universitario: cuándo es y a qué hora</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W23"
+            data-palabras="paro, movilización"
+            data-titular="profesionales estatales anuncian paro y movilización para este viernes">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL TRIBUNO</td>
+            <td>NOA</td>
+            <td class="col-titular">Profesionales estatales anuncian paro y movilización para este viernes</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="nueva marcha de ni una menos: “seguimos reclamando exactamente lo mismo que hace 11 años”">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL ESQUIÚ</td>
+            <td>NOA</td>
+            <td class="col-titular">Nueva marcha de Ni Una Menos: “Seguimos reclamando exactamente lo mismo que hace 11 años”</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="ate apoyó la eliminación de coseguros, pidió eliminar los plus médicos y ratificó el paro">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL ESQUIÚ</td>
+            <td>NOA</td>
+            <td class="col-titular">ATE apoyó la eliminación de coseguros, pidió eliminar los plus médicos y ratificó el paro</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W23"
+            data-palabras="reclamo"
+            data-titular="reclamo judicial. damnificados del barrio textil exigen avances en la investigación por la presunta estafa">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL ZONDA</td>
+            <td>Cuyo</td>
+            <td class="col-titular">Reclamo judicial. Damnificados del barrio Textil exigen avances en la investigación por la presunta estafa</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W23"
+            data-palabras="reclamo"
+            data-titular="asesinato de agostina. concejala cordobesa reclamó el jury contra el fiscal garzón">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>NORTE</td>
+            <td>NEA</td>
+            <td class="col-titular">Asesinato de Agostina. Concejala cordobesa reclamó el Jury contra el fiscal Garzón</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="san juan y una nueva marcha de ni una menos en medio del dolor por dos crímenes que conmocionan al país">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>DIARIO DE CUYO</td>
+            <td>Cuyo</td>
+            <td class="col-titular">San Juan y una nueva marcha de Ni Una Menos en medio del dolor por dos crímenes que conmocionan al país</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W23"
+            data-palabras="reclamo"
+            data-titular="caso agostina vega: monteoliva reclamó &#34;conocer la verdad completa&#34; tras los avances de la causa">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>MDZ ONLINE</td>
+            <td>Cuyo</td>
+            <td class="col-titular">Caso Agostina Vega: Monteoliva reclamó &#34;conocer la verdad completa&#34; tras los avances de la causa</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="marcha por ni una menos: el gobierno afirma que &#34;no hay motivos&#34; para criticar y sostiene que bajaron los femicidios">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>MDZ ONLINE</td>
+            <td>Cuyo</td>
+            <td class="col-titular">Marcha por Ni Una Menos: el Gobierno afirma que &#34;no hay motivos&#34; para criticar y sostiene que bajaron los femicidios</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W23"
+            data-palabras="paro, movilización"
+            data-titular="ni una menos: convocan a paro activo y movilización">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>UNO ENTRE RÍOS</td>
+            <td>Centro</td>
+            <td class="col-titular">Ni Una Menos: convocan a paro activo y movilización</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W23"
+            data-palabras="paro, movilización, marcha"
+            data-titular="marcha ni una menos: convocan a un paro activo y movilización este 3 de junio en paraná">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>ELONCE</td>
+            <td>Centro</td>
+            <td class="col-titular">Marcha Ni Una Menos: convocan a un paro activo y movilización este 3 de junio en Paraná</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="caos en capital: paro sorpresivo en el subte c por asbesto">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL DIARIO</td>
+            <td>Centro</td>
+            <td class="col-titular">Caos en Capital: paro sorpresivo en el Subte C por asbesto</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W23"
+            data-palabras="paro, marcha"
+            data-titular="paro y ruidazo: paraná se prepara para la marcha ni una menos del 3 de junio">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL DIARIO</td>
+            <td>Centro</td>
+            <td class="col-titular">Paro y ruidazo: Paraná se prepara para la marcha Ni Una Menos del 3 de junio</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="marcha ni una menos: la convocatoria será en plaza centenario">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL DIARIO DEL CENTRO DEL PAÍS</td>
+            <td>Centro</td>
+            <td class="col-titular">Marcha Ni Una Menos: la convocatoria será en plaza Centenario</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="ciudad de córdoba. convocan a una nueva marcha de ni una menos este miércoles">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>LA VOZ DEL INTERIOR</td>
+            <td>Centro</td>
+            <td class="col-titular">Ciudad de Córdoba. Convocan a una nueva marcha de Ni Una Menos este miércoles</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="dolor y pedido de justicia: las imágenes de la marcha por graciela lópez">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>NORTE</td>
+            <td>NEA</td>
+            <td class="col-titular">Dolor y pedido de justicia: las imágenes de la marcha por Graciela López</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="en la marcha por agostina: una madre buscaba a su hija y la halló tras más de dos semanas">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>PANORAMA</td>
+            <td>NOA</td>
+            <td class="col-titular">En la marcha por Agostina: una madre buscaba a su hija y la halló tras más de dos semanas</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="piden ampliar la indagatoria del único detenido mientras la familia marcha para reclamar por la menor desaparecida en córdoba">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL COMERCIAL</td>
+            <td>NEA</td>
+            <td class="col-titular">Piden ampliar la indagatoria del único detenido mientras la familia marcha para reclamar por la menor desaparecida en Córdoba</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="movilización"
+            data-titular="a 11 años de la primera movilización convocan al &#34;ni una menos&#34; el 3j">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>TIEMPO SUR</td>
+            <td>Patagonia</td>
+            <td class="col-titular">A 11 años de la primera movilización Convocan al &#34;Ni Una Menos&#34; el 3J</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="subte: se levantó el paro y la línea c ya circula entre cabeceras">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">nacional</td>
+            <td>LA PRENSA</td>
+            <td>Nacional</td>
+            <td class="col-titular">Subte: se levantó el paro y la línea C ya circula entre cabeceras</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="llamado a una masiva marcha para este miércoles">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">nacional</td>
+            <td>TIEMPO ARGENTINO</td>
+            <td>Nacional</td>
+            <td class="col-titular">llamado a una masiva marcha para este miércoles</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="los metrodelegados levantaron el paro sorpresivo en la línea c y se normaliza el servicio de subtes">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">nacional</td>
+            <td>TIEMPO ARGENTINO</td>
+            <td>Nacional</td>
+            <td class="col-titular">Los metrodelegados levantaron el paro sorpresivo en la Línea C y se normaliza el servicio de subtes</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="sutef confirmó un nuevo paro y crece el deterioro del ciclo lectivo">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>RED 23 NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">SUTEF confirmó un nuevo paro y crece el deterioro del ciclo lectivo</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="paro, reclamo"
+            data-titular="fagdut profundiza el reclamo con paro docente en todo el país">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>RED 23 NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">FAGDUT profundiza el reclamo con paro docente en todo el país</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W23"
+            data-palabras="reclamo"
+            data-titular="nacif “ detrás de un reclamo genuino se evidencia el interes político de intervenir la provincia”">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>FORMOSA AHORA</td>
+            <td>NEA</td>
+            <td class="col-titular">Nacif “ detrás de un reclamo genuino se evidencia el interes político de intervenir la Provincia”</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="sutef: rechazo a la propuesta de gobierno y paro de 48 horas">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL SUREÑO</td>
+            <td>Patagonia</td>
+            <td class="col-titular">SUTEF: rechazo a la propuesta de Gobierno y paro de 48 horas</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="reclamo"
+            data-titular="malvinas: el documento que da un vuelco al reclamo de soberanía">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL SUREÑO</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Malvinas: el documento que da un vuelco al reclamo de soberanía</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="protesta"
+            data-titular="la encontraron aprovechó la protesta por el caso agostina para pedir ayuda por su hija desaparecida">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>TIEMPO SUR</td>
+            <td>Patagonia</td>
+            <td class="col-titular">La encontraron Aprovechó la protesta por el caso Agostina para pedir ayuda por su hija desaparecida</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="protesta"
+            data-titular="médicos realizaron una protesta salarial en río grande">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>RED 23 NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Médicos realizaron una protesta salarial en Río Grande</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="adosac irá a paritaria sin paro, pero advierte por descuentos">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>NUEVO DÍA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">ADOSAC irá a paritaria sin paro, pero advierte por descuentos</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="fue a una marcha por agostina vega para reclamar por su hija desaparecida y la encontró">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>LM NEUQUÉN</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Fue a una marcha por Agostina Vega para reclamar por su hija desaparecida y la encontró</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="la mamá de agustina fernández pidió &#34;justicia&#34; para agostina y convocó a una marcha en santa rosa">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>LA ARENA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">La mamá de Agustina Fernández pidió &#34;Justicia&#34; para Agostina y convocó a una marcha en Santa Rosa</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="aprovechó una marcha por agostina para pedir por su hija desaparecida y la encontró">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>LA ARENA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Aprovechó una marcha por Agostina para pedir por su hija desaparecida y la encontró</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="ate ratificó el paro por tres días en chubut">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>CRÓNICA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">ATE ratificó el paro por tres días en Chubut</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="reclamo"
+            data-titular="le dieron tres días para demoler su casa y un desesperado reclamo logró frenar la medida">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>ADN SUR</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Le dieron tres días para demoler su casa y un desesperado reclamo logró frenar la medida</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W23"
+            data-palabras="reclamo"
+            data-titular="femicidio de dulce maría candia: la familia reclamó justicia y la policía confirmó que el detenido pertenece al entorno de la adolescente asesinada">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>PRIMERA EDICIÓN</td>
+            <td>NEA</td>
+            <td class="col-titular">Femicidio de Dulce María Candia: la familia reclamó justicia y la Policía confirmó que el detenido pertenece al entorno de la adolescente asesinada</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W23"
+            data-palabras="marcha"
+            data-titular="&#39;ni una menos&#39; convocó a una marcha por el femicidio de agostina vega">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL TERRITORIO</td>
+            <td>NEA</td>
+            <td class="col-titular">&#39;Ni Una Menos&#39; convocó a una marcha por el femicidio de Agostina Vega</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W23"
+            data-palabras="paro"
+            data-titular="adosac inicia su primera semana del año sin paro y rechaza la incorporación de uda a la paritaria">
+            <td class="col-semana">W23</td>
+            <td class="col-corpus">provincial</td>
+            <td>LA OPINIÓN AUSTRAL</td>
+            <td>Patagonia</td>
+            <td class="col-titular">ADOSAC inicia su primera semana del año sin paro y rechaza la incorporación de UDA a la paritaria</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="un sector de la cgt presiona para un nuevo paro contra milei: &#34;se acabó la paciencia&#34;">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>EL DESTAPE</td>
+            <td>Nacional</td>
+            <td class="col-titular">Un sector de la CGT presiona para un nuevo paro contra Milei: &#34;Se acabó la paciencia&#34;</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="marcha de la cgt">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>CLARÍN</td>
+            <td>Nacional</td>
+            <td class="col-titular">Marcha de la CGT</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="la cgt marchó a plaza de mayo y llamó a profundizar “la lucha” contra milei, pero pateó la definición de un nuevo paro">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>CLARÍN</td>
+            <td>Nacional</td>
+            <td class="col-titular">La CGT marchó a Plaza de Mayo y llamó a profundizar “la lucha” contra Milei, pero pateó la definición de un nuevo paro</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="“el trabajo es con derechos o es esclavo”: la cgt movilizó en plaza de mayo y redobló la presión por un paro general">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>PERFIL</td>
+            <td>Nacional</td>
+            <td class="col-titular">“El trabajo es con derechos o es esclavo”: la CGT movilizó en Plaza de Mayo y redobló la presión por un paro general</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="el servicio meteorológico nacional levantó el paro y lo reemplazó por protestas: vuelos sin cambios en todo el país">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>PERFIL</td>
+            <td>Nacional</td>
+            <td class="col-titular">El Servicio Meteorológico Nacional levantó el paro y lo reemplazó por protestas: vuelos sin cambios en todo el país</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt llamó a ponerle “límites&#34; al gobierno de milei en la marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>LA PRENSA</td>
+            <td>Nacional</td>
+            <td class="col-titular">La CGT llamó a ponerle “límites&#34; al Gobierno de Milei en la marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="reclamo"
+            data-titular="fuerte reclamo de los jueces a kicillof para que complete la suprema corte bonaerense">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>LA POLÍTICA ONLINE</td>
+            <td>Nacional</td>
+            <td class="col-titular">Fuerte reclamo de los jueces a Kicillof para que complete la Suprema Corte bonaerense</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>TIEMPO ARGENTINO</td>
+            <td>Nacional</td>
+            <td class="col-titular">Marcha por el día del trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="crónica de la marcha">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>TIEMPO ARGENTINO</td>
+            <td>Nacional</td>
+            <td class="col-titular">Crónica de la marcha</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="huelga, paro"
+            data-titular="la cgt le bajó el tono a un nuevo paro y recrudeció la interna: un sector propone una huelga de 36 horas">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>INFOBAE</td>
+            <td>Nacional</td>
+            <td class="col-titular">La CGT le bajó el tono a un nuevo paro y recrudeció la interna: un sector propone una huelga de 36 horas</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #8e44ad">
+                huelga
+              </span>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="nacional"
+            data-region="Nacional"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="desafío a milei. la cgt cuestionó el rumbo económico, pero por ahora evita activar otro paro general">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">nacional</td>
+            <td>LA NACIÓN</td>
+            <td>Nacional</td>
+            <td class="col-titular">Desafío a Milei. La CGT cuestionó el rumbo económico, pero por ahora evita activar otro paro general</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="AMBA"
+            data-semana="2026-W18"
+            data-palabras="piquete"
+            data-titular="una diputada bonaerense y un dirigente platense de la izquierda detenidos por el ejército de israel: piquete en 7 y 50">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL DÍA</td>
+            <td>AMBA</td>
+            <td class="col-titular">Una diputada bonaerense y un dirigente platense de la Izquierda detenidos por el ejército de Israel: piquete en 7 y 50</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #7f8c8d">
+                piquete
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="AMBA"
+            data-semana="2026-W18"
+            data-palabras="represión"
+            data-titular="la multisectorial de quilmes convocó a movilizarse por el día del trabajador y denunció despidos, ajuste y represión">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>5 DÍAS</td>
+            <td>AMBA</td>
+            <td class="col-titular">La Multisectorial de Quilmes convocó a movilizarse por el Día del Trabajador y denunció despidos, ajuste y represión</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #16a085">
+                represión
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="protesta"
+            data-titular="“es ahora”: catena busca sumar a otros gremios y ampliar la protesta en tierra del fuego">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>RED 23 NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">“Es ahora”: Catena busca sumar a otros gremios y ampliar la protesta en Tierra del Fuego</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="marcha por el día del trabajador: la cgt llamó a ponerle “un límite&#34; al gobierno de milei">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL LITORAL</td>
+            <td>NEA</td>
+            <td class="col-titular">Marcha por el Día del Trabajador: la CGT llamó a ponerle “un límite&#34; al Gobierno de Milei</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="marcha por justicia por el crimen de jonathan romero">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>NORTE</td>
+            <td>NEA</td>
+            <td class="col-titular">Marcha por justicia por el crimen de Jonathan Romero</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="movilización"
+            data-titular="cgt convoca a movilización en resistencia: críticas a zdero y fuerte mensaje en la previa del día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>LA VOZ DEL CHACO</td>
+            <td>NEA</td>
+            <td class="col-titular">CGT convoca a movilización en Resistencia: críticas a Zdero y fuerte mensaje en la previa del Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="reclamo"
+            data-titular="sander confirmó que la ciudad logró desagotar los barrios y reclamó obras">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>LA VOZ DEL CHACO</td>
+            <td>NEA</td>
+            <td class="col-titular">Sander confirmó que la ciudad logró desagotar los barrios y reclamó obras</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W18"
+            data-palabras="movilización"
+            data-titular="la cgt desafía el rumbo de milei con una masiva movilización a plaza de mayo">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>LA GACETA</td>
+            <td>NOA</td>
+            <td class="col-titular">La CGT desafía el rumbo de Milei con una masiva movilización a Plaza de Mayo</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt contundente: llamó a ponerle &#34;un límite&#34; al gobierno de milei en la marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL LIBERAL</td>
+            <td>NOA</td>
+            <td class="col-titular">La CGT contundente: llamó a ponerle &#34;un límite&#34; al Gobierno de Milei en la marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W18"
+            data-palabras="reclamo"
+            data-titular="continúa el reclamo de padres en una escuela de el trigal, en la poma">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>NUEVO DIARIO</td>
+            <td>NOA</td>
+            <td class="col-titular">Continúa el reclamo de padres en una escuela de El Trigal, en La Poma</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt llamó a ponerle “un límite&#34; al gobierno de milei en la marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL TRIBUNO</td>
+            <td>NOA</td>
+            <td class="col-titular">La CGT llamó a ponerle “un límite&#34; al Gobierno de Milei en la marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W18"
+            data-palabras="protesta"
+            data-titular="nueva protesta de la cgt en rechazo al ajuste del gobierno nacional">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>NUEVA RIOJA</td>
+            <td>NOA</td>
+            <td class="col-titular">Nueva protesta de la CGT en rechazo al ajuste del Gobierno Nacional</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt llamó a ponerle “un límite&#34; al gobierno de milei en la marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>NUEVA RIOJA</td>
+            <td>NOA</td>
+            <td class="col-titular">La CGT llamó a ponerle “un límite&#34; al Gobierno de Milei en la marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="convocan a una marcha por el día del animal en chilecito">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL INDEPENDIENTE</td>
+            <td>NOA</td>
+            <td class="col-titular">Convocan a una marcha por el Día del Animal en Chilecito</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W18"
+            data-palabras="protesta"
+            data-titular="cómo quedó el vínculo entre el gobierno y la cgt tras una nueva protesta">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>PREGÓN</td>
+            <td>NOA</td>
+            <td class="col-titular">Cómo quedó el vínculo entre el Gobierno y la CGT tras una nueva protesta</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NOA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="marcha por los derechos de las personas con discapacidad">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL TRIBUNO</td>
+            <td>NOA</td>
+            <td class="col-titular">Marcha por los derechos de las personas con discapacidad</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W18"
+            data-palabras="reclamo"
+            data-titular="san luis: un jubilado electrodependiente denunció corte de luz por error y protagonizó un tenso reclamo en edesal">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>VILLA MERCEDES INFO</td>
+            <td>Cuyo</td>
+            <td class="col-titular">San Luis: un jubilado electrodependiente denunció corte de luz por error y protagonizó un tenso reclamo en EDESAL</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="la cgt marchó por el día del trabajador y por ahora evita convocar a otro paro general">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL CHORRILLERO</td>
+            <td>Cuyo</td>
+            <td class="col-titular">La CGT marchó por el Día del Trabajador y por ahora evita convocar a otro paro general</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W18"
+            data-palabras="reclamo"
+            data-titular="un reclamo que directivos se negaron a oir">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>DIARIO DE LA REPÚBLICA</td>
+            <td>Cuyo</td>
+            <td class="col-titular">Un reclamo que directivos se negaron a oir</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W18"
+            data-palabras="reclamo"
+            data-titular="reclamo indígena en la onu por el agua y la consulta previa">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>HUARPE</td>
+            <td>Cuyo</td>
+            <td class="col-titular">Reclamo indígena en la ONU por el agua y la consulta previa</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Cuyo"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt marcha a la plaza de mayo contra el gobierno y la reforma laboral">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>HUARPE</td>
+            <td>Cuyo</td>
+            <td class="col-titular">La CGT marcha a la Plaza de Mayo contra el Gobierno y la reforma laboral</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W18"
+            data-palabras="protesta"
+            data-titular="la historia de los mártires de chicago: la protesta que terminó en tragedia y dio origen al 1° de mayo">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>AIRE DIGITAL</td>
+            <td>Centro</td>
+            <td class="col-titular">La historia de los Mártires de Chicago: la protesta que terminó en tragedia y dio origen al 1° de mayo</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="conflicto en correo argentino: reincorporan despedidos y se levanta el paro">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>AIRE DIGITAL</td>
+            <td>Centro</td>
+            <td class="col-titular">Conflicto en Correo Argentino: reincorporan despedidos y se levanta el paro</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W18"
+            data-palabras="reclamo"
+            data-titular="personal de salud reclamó por salarios y denunciaron sobrecarga laboral: las notas elevadas al ministro daniel blanzaco">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>UNO ENTRE RÍOS</td>
+            <td>Centro</td>
+            <td class="col-titular">Personal de salud reclamó por salarios y denunciaron sobrecarga laboral: las notas elevadas al ministro Daniel Blanzaco</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt llamó a ponerle &#34;un límite&#34; a javier milei en la marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>UNO ENTRE RÍOS</td>
+            <td>Centro</td>
+            <td class="col-titular">La CGT llamó a ponerle &#34;un límite&#34; a Javier Milei en la marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W18"
+            data-palabras="protesta"
+            data-titular="el superior tribunal descuenta sueldos por paros: ajer frena la protesta">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL DIARIO</td>
+            <td>Centro</td>
+            <td class="col-titular">El Superior Tribunal descuenta sueldos por paros: AJER frena la protesta</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Centro"
+            data-semana="2026-W18"
+            data-palabras="protesta"
+            data-titular="protesta. la cgt marchó a plaza de mayo contra la reforma laboral: &#34;vamos a profundizar los conflictos&#34;, advirtieron">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>LA VOZ DEL INTERIOR</td>
+            <td>Centro</td>
+            <td class="col-titular">Protesta. La CGT marchó a Plaza de Mayo contra la reforma laboral: &#34;Vamos a profundizar los conflictos&#34;, advirtieron</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="AMBA"
+            data-semana="2026-W18"
+            data-palabras="represión"
+            data-titular="la multisectorial de quilmes convocó a movilizarse por el día del trabajador y denunció despidos, ajuste y represión el documento cierra con fuertes críticas al rumbo económico del gobierno nacional, al que acusan de favorecer a grandes empresas en detrimento de la población. leer más">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>5 DÍAS</td>
+            <td>AMBA</td>
+            <td class="col-titular">La Multisectorial de Quilmes convocó a movilizarse por el Día del Trabajador y denunció despidos, ajuste y represión El documento cierra con fuertes críticas al rumbo económico del Gobierno nacional, al que acusan de favorecer a grandes empresas en detrimento de la población. Leer más</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #16a085">
+                represión
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="caso giovanni: pese a tanta policía hubo marcha">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>ÉPOCA</td>
+            <td>NEA</td>
+            <td class="col-titular">Caso Giovanni: pese a tanta Policía hubo marcha</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt llamó a ponerle &#34;un límite&#34; al gobierno de milei en la marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>ÉPOCA</td>
+            <td>NEA</td>
+            <td class="col-titular">La CGT llamó a ponerle &#34;un límite&#34; al Gobierno de Milei en la marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="paro del servicio meteorológico nacional: cómo afectará a los vuelos en todo el país y qué aeropuertos tendrán demoras y cancelaciones">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL COMERCIAL</td>
+            <td>NEA</td>
+            <td class="col-titular">Paro del Servicio Meteorológico Nacional: cómo afectará a los vuelos en todo el país y qué aeropuertos tendrán demoras y cancelaciones</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt llamó a ponerle “un límite” al gobierno de milei en la marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>PLAN B NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">La CGT llamó a ponerle “un límite” al Gobierno de Milei en la marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="el paro judicial profundiza demoras y genera alarma en abogados">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>RED 23 NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">El paro judicial profundiza demoras y genera alarma en abogados</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="movilización"
+            data-titular="movilización de la uom en río grande: crece la tensión por la crisis industrial y la pérdida de empleos">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>RED 23 NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Movilización de la UOM en Río Grande: crece la tensión por la crisis industrial y la pérdida de empleos</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="protesta"
+            data-titular="trasladaron bs. as. la protesta contra la instalación de salmoneras en el canal beagle">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>RED 23 NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Trasladaron Bs. As. la protesta contra la instalación de salmoneras en el Canal Beagle</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt realiza hoy una marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL SUREÑO</td>
+            <td>Patagonia</td>
+            <td class="col-titular">La CGT realiza hoy una marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="correo argentino: paro y alerta por 400 despidos en todo el país">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>NUEVO DÍA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Correo Argentino: paro y alerta por 400 despidos en todo el país</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="multitudinaria marcha de la cgt en plaza de mayo por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>NOTICIASNET</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Multitudinaria marcha de la CGT en Plaza de Mayo por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="multitudinaria marcha de la cgt en plaza de mayo por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL CORDILLERANO</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Multitudinaria marcha de la CGT en Plaza de Mayo por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="protesta"
+            data-titular="estudiantes de la unrn realizaron una jornada de protesta y visibilización por el financiamiento universitario">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL CORDILLERANO</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Estudiantes de la UNRN realizaron una jornada de protesta y visibilización por el financiamiento universitario</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e67e22">
+                protesta
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="dos días de paro de docentes en la provincia de río negro">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL CORDILLERANO</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Dos días de paro de docentes en la provincia de Río Negro</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="paro, movilización"
+            data-titular="movilización de la cgt en plaza de mayo: &#34;vamos camino a un gran paro general&#34;">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>LM NEUQUÉN</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Movilización de la CGT en Plaza de Mayo: &#34;Vamos camino a un gran paro general&#34;</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="huelga"
+            data-titular="jones huala comenzó una huelga de hambre por sus condiciones de detención">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>PLAN B NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Jones Huala comenzó una huelga de hambre por sus condiciones de detención</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #8e44ad">
+                huelga
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="movilización"
+            data-titular="movilización de fundaciones de discapacidad: siguen sin cobrar y denuncian abandono">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL DIARIO DE LA PAMPA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Movilización de fundaciones de discapacidad: siguen sin cobrar y denuncian abandono</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="arrancó la marcha de la cgt en rechazo a la reforma laboral">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL TERRITORIO</td>
+            <td>NEA</td>
+            <td class="col-titular">Arrancó la marcha de la CGT en rechazo a la reforma laboral</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="paro en el servicio meteorológico: advierten por demoras y cancelaciones de vuelos">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL DIARIO DE LA PAMPA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Paro en el Servicio Meteorológico: advierten por demoras y cancelaciones de vuelos</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt llamó a ponerle &#34;un límite&#34; al gobierno de milei en la marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL DIARIO DE LA PAMPA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">La CGT llamó a ponerle &#34;un límite&#34; al Gobierno de Milei en la marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="movilización"
+            data-titular="el día del trabajador se conmemora en santa rosa con una movilización multisectorial">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>EL DIARIO DE LA PAMPA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">El Día del Trabajador se conmemora en Santa Rosa con una movilización multisectorial</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="movilización"
+            data-titular="la cgt encabeza una movilización masiva a plaza de mayo este jueves">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>CRÓNICA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">La CGT encabeza una movilización masiva a Plaza de Mayo este jueves</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="masiva marcha de antorchas en trelew y rawson">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>CRÓNICA</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Masiva marcha de antorchas en Trelew y Rawson</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="en la marcha por el día del trabajador, la cgt le advirtió al gobierno que “se acabó la paciencia”">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>ADN SUR</td>
+            <td>Patagonia</td>
+            <td class="col-titular">En la marcha por el Día del Trabajador, la CGT le advirtió al Gobierno que “se acabó la paciencia”</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="reclamo"
+            data-titular="jubilados de comodoro llevaron su reclamo al municipio y al concejo para advertir por el “impacto social” de la crisis del pami">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>ADN SUR</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Jubilados de Comodoro llevaron su reclamo al Municipio y al Concejo para advertir por el “impacto social” de la crisis del PAMI</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="reclamo"
+            data-titular="productores yerbateros llevaron su reclamo al congreso y redoblan la presión contra el dnu">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>PRIMERA EDICIÓN</td>
+            <td>NEA</td>
+            <td class="col-titular">Productores yerbateros llevaron su reclamo al Congreso y redoblan la presión contra el DNU</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #f39c12">
+                reclamo
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="la cgt llamó a ponerle “un límite” al gobierno de milei en la marcha por el día del trabajador">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>PRIMERA EDICIÓN</td>
+            <td>NEA</td>
+            <td class="col-titular">La CGT llamó a ponerle “un límite” al Gobierno de Milei en la marcha por el Día del Trabajador</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="marcha"
+            data-titular="el documento que leyó la cgt durante la marcha: “un gobierno que divide al pueblo y promueve la descalificación”">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>MISIONES ON LINE</td>
+            <td>NEA</td>
+            <td class="col-titular">El documento que leyó la CGT durante la marcha: “Un gobierno que divide al pueblo y promueve la descalificación”</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #3498db">
+                marcha
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="NEA"
+            data-semana="2026-W18"
+            data-palabras="paro"
+            data-titular="en la previa del día del trabajador, la cgt se movilizó a plaza de mayo y anticipó un paro general si no mejora la economía: “el humor en la calle ya está alterado”">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>MISIONES ON LINE</td>
+            <td>NEA</td>
+            <td class="col-titular">En la previa del Día del Trabajador, la CGT se movilizó a Plaza de Mayo y anticipó un paro general si no mejora la economía: “El humor en la calle ya está alterado”</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+            </td>
+          </tr>
+          
+          <tr
+            data-corpus="provincial"
+            data-region="Patagonia"
+            data-semana="2026-W18"
+            data-palabras="paro, movilización"
+            data-titular="paro de 48 horas y movilización judicial en tierra del fuego">
+            <td class="col-semana">W18</td>
+            <td class="col-corpus">provincial</td>
+            <td>RED 23 NOTICIAS</td>
+            <td>Patagonia</td>
+            <td class="col-titular">Paro de 48 horas y movilización judicial en Tierra del Fuego</td>
+            <td>
+              
+              <span class="badge"
+                    style="background: #e74c3c">
+                paro
+              </span>
+              
+              <span class="badge"
+                    style="background: #27ae60">
+                movilización
+              </span>
+              
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+
+<footer>
+  <p>Monitor de Conflictividad Social · Argentina</p>
+  <p style="margin-top: .3rem">
+    Datos, metodología y código en
+    <a href="https://github.com/Flormena/monitor-conflictos" target="_blank">GitHub</a>
+    &nbsp;·&nbsp;
+    Generado el 01/06/2026
+  </p>
+</footer>
+
+
+<script>
+  function filtrar() {
+    var corpus  = document.getElementById('f-corpus').value;
+    var region  = document.getElementById('f-region').value;
+    var palabra = document.getElementById('f-palabra').value;
+    var semana  = document.getElementById('f-semana').value;
+    var texto   = document.getElementById('f-texto').value.toLowerCase().trim();
+
+    var filas = document.querySelectorAll('#tabla-body tr');
+    var visibles = 0;
+
+    filas.forEach(function(tr) {
+      // Cada condición elimina la fila si el filtro está activo y no coincide
+      var ok = true;
+      if (corpus  && tr.dataset.corpus  !== corpus)  ok = false;
+      if (region  && tr.dataset.region  !== region)  ok = false;
+      if (semana  && tr.dataset.semana  !== semana)  ok = false;
+      if (palabra) {
+        // Las palabras pueden ser múltiples: "paro, marcha" → comparar cada una
+        var palabrasFila = tr.dataset.palabras.split(',').map(function(p){ return p.trim(); });
+        if (palabrasFila.indexOf(palabra) === -1) ok = false;
+      }
+      if (texto && tr.dataset.titular.indexOf(texto) === -1) ok = false;
+
+      tr.style.display = ok ? '' : 'none';
+      if (ok) visibles++;
+    });
+
+    document.getElementById('tabla-count').textContent =
+      visibles + ' titular' + (visibles !== 1 ? 'es' : '');
+  }
+</script>
+
+</body>
+</html>

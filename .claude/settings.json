@@ -4,7 +4,9 @@
       "Bash(git commit -m ' *)",
       "Bash(python tools/scraper.py --test)",
       "Bash(python tools/analyzer.py --semana 2026-W23)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(python tools/generar_dashboard.py)",
+      "Bash(python -c ' *)"
     ]
   }
 }

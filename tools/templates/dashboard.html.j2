@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ titulo }}</title>
+  <style>
+    /* ── Variables de diseño ─────────────────────────────────────────────────
+       Cambiar estos valores modifica la paleta de colores de todo el dashboard.
+       --bg:         fondo de página  |  --card: fondo de tarjetas
+       --header-bg:  fondo del header |  --accent: color de énfasis (números KPI)
+       --text:       texto principal  |  --muted: texto secundario / etiquetas
+       --border:     bordes y separadores */
+    :root {
+      --bg:        #f0f2f5;
+      --card:      #ffffff;
+      --header-bg: #1a2535;
+      --accent:    #e74c3c;
+      --text:      #2c3e50;
+      --muted:     #7f8c8d;
+      --border:    #e8ecef;
+      --radius:    8px;
+    }
+
+    /* ── Reset mínimo y tipografía base ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Contenedor centrado con ancho máximo ───────────────────────────── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Encabezado principal ───────────────────────────────────────────── */
+    header { background: var(--header-bg); color: white; padding: 1.75rem 0; }
+    header h1 { font-size: 1.4rem; font-weight: 700; }
+    header p  { font-size: .9rem; opacity: .7; margin-top: .3rem; }
+    .header-meta { font-size: .78rem; opacity: .5; margin-top: .6rem; }
+
+    /* ── Tarjetas KPI: cuatro métricas grandes ──────────────────────────── */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .kpi {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    }
+    .kpi-value { font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1; }
+    .kpi-label { font-size: .82rem; color: var(--muted); margin-top: .35rem; }
+    .kpi-sub   { font-size: .8rem;  color: var(--text);  margin-top: .2rem; font-weight: 500; }
+
+    /* ── Sección genérica (tarjeta blanca con sombra) ────────────────────── */
+    .section {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.07);
+      margin-bottom: 1.25rem;
+    }
+    .section-title {
+      font-size: .77rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Dos columnas lado a lado (distribuciones) ──────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    /* En pantallas angostas las dos columnas se apilan verticalmente */
+    @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Gráfico de barras verticales (tendencia por semana) ────────────── */
+    .vchart {
+      display: flex;
+      align-items: flex-end;   /* las barras crecen hacia arriba desde la base */
+      gap: 2.5rem;
+      height: 160px;
+      border-bottom: 2px solid var(--border);
+      padding: 0 .5rem;
+    }
+    .vchart-col   { display: flex; flex-direction: column; align-items: center; flex: 1; }
+    .vchart-val   { font-size: .85rem; font-weight: 700; color: var(--text); margin-bottom: .3rem; }
+    .vchart-bar   { width: 100%; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 4px; }
+    .vchart-labels { display: flex; gap: 2.5rem; padding: .5rem .5rem 0; }
+    .vchart-lbl   { flex: 1; text-align: center; font-size: .8rem; color: var(--muted); }
+
+    /* ── Barras horizontales (distribución por palabra / región) ────────── */
+    .hbar         { display: flex; align-items: center; gap: .75rem; margin-bottom: .65rem; }
+    .hbar-label   { width: 115px; font-size: .83rem; text-align: right; flex-shrink: 0; color: var(--text); }
+    .hbar-track   { flex: 1; background: var(--bg); border-radius: 4px; height: 20px; overflow: hidden; }
+    .hbar-fill    { height: 100%; border-radius: 4px; }
+    .hbar-value   { width: 65px; font-size: .8rem; color: var(--muted); text-align: right; flex-shrink: 0; }
+
+    /* ── Filtros y controles de la tabla ────────────────────────────────── */
+    .filters { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1rem; align-items: center; }
+    .filters select,
+    .filters input[type=text] {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .4rem .7rem;
+      font-size: .83rem;
+      color: var(--text);
+      background: var(--card);
+    }
+    .filters input[type=text] { min-width: 170px; }
+    #tabla-count  { font-size: .82rem; color: var(--muted); margin-left: auto; }
+
+    /* ── Tabla de titulares ─────────────────────────────────────────────── */
+    .tabla-wrap { overflow-x: auto; }
+    table   { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    th {
+      text-align: left; padding: .55rem .75rem;
+      background: var(--bg); color: var(--muted);
+      font-size: .76rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .04em;
+      border-bottom: 2px solid var(--border); white-space: nowrap;
+    }
+    td { padding: .55rem .75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:hover td { background: #f8f9fb; }
+    .col-semana  { white-space: nowrap; color: var(--muted); }
+    .col-corpus  { white-space: nowrap; }
+    .col-titular { max-width: 360px; }
+
+    /* ── Badges de colores para palabras clave ──────────────────────────── */
+    .badge {
+      display: inline-block;
+      padding: .15rem .45rem;
+      border-radius: 4px;
+      font-size: .72rem;
+      font-weight: 600;
+      margin: .1rem .1rem .1rem 0;
+      color: white;
+    }
+
+    /* ── Nota metodológica (cuadro con borde izquierdo) ─────────────────── */
+    .nota {
+      font-size: .79rem;
+      color: var(--muted);
+      background: #f8f9fb;
+      border-left: 3px solid var(--border);
+      padding: .5rem .75rem;
+      border-radius: 0 4px 4px 0;
+      margin-top: 1rem;
+    }
+
+    /* ── Pie de página ──────────────────────────────────────────────────── */
+    footer { text-align: center; padding: 2rem 1rem; font-size: .79rem; color: var(--muted); }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+
+<body>
+
+{# ── Encabezado ─────────────────────────────────────────────────────────────
+   Muestra el título, descripción y fecha de la última actualización.
+   Todos los valores vienen del script Python; no editar este archivo para cambiarlos. #}
+<header>
+  <div class="container">
+    <h1>{{ titulo }}</h1>
+    <p>{{ subtitulo }}</p>
+    <div class="header-meta">
+      Última actualización: {{ fecha_generacion }}
+      &nbsp;·&nbsp;
+      {{ semanas_cubiertas }} semana{% if semanas_cubiertas != 1 %}s{% endif %} de datos
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  {# ── KPIs ──────────────────────────────────────────────────────────────────
+     Cuatro tarjetas con métricas resumen. El color del número de la palabra top
+     usa el color asignado a esa palabra en COLORES_PALABRAS del script Python. #}
+  <div class="kpis">
+
+    <div class="kpi">
+      <div class="kpi-value">{{ total_menciones }}</div>
+      <div class="kpi-label">Menciones totales</div>
+      <div class="kpi-sub">en {{ semanas_cubiertas }} semana{% if semanas_cubiertas != 1 %}s{% endif %}</div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-value">{{ semanas_cubiertas }}</div>
+      <div class="kpi-label">Semanas cubiertas</div>
+      <div class="kpi-sub">hasta {{ ultima_semana }}</div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-value" style="color: {{ colores.get(palabra_top, color_fallback) }}">{{ palabra_top_count }}</div>
+      <div class="kpi-label">Menciones de &ldquo;{{ palabra_top }}&rdquo;</div>
+      <div class="kpi-sub">palabra más frecuente</div>
+    </div>
+
+    <div class="kpi">
+      <div class="kpi-value">{{ region_top_count }}</div>
+      <div class="kpi-label">Menciones en {{ region_top }}</div>
+      <div class="kpi-sub">región más activa (corpus provincial)</div>
+    </div>
+
+  </div>
+
+  {# ── Tendencia semanal ─────────────────────────────────────────────────────
+     Barras verticales: una por semana, altura proporcional al total de menciones.
+     La barra más alta ocupa el 100%; el resto se escala relativamente.
+     Con pocas semanas el gráfico se ve simple pero crece a medida que
+     se acumulan corridas semanales. #}
+  <div class="section">
+    <div class="section-title">Tendencia semanal — menciones totales</div>
+
+    {% if semanas_cubiertas < 2 %}
+    <p class="nota">
+      Con una sola semana de datos no hay tendencia que mostrar.
+      El gráfico aparecerá a partir de la segunda corrida semanal.
+    </p>
+    {% else %}
+    <div class="vchart">
+      {% for sc in semanas_cortas %}
+      <div class="vchart-col">
+        <div class="vchart-val">{{ total_por_semana[loop.index0] }}</div>
+        <div class="vchart-bar"
+             style="height: {{ ((total_por_semana[loop.index0] / max_semanal) * 100)|int }}%"
+             title="{{ semanas[loop.index0] }}: {{ total_por_semana[loop.index0] }} menciones">
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="vchart-labels">
+      {% for sc in semanas_cortas %}
+      <div class="vchart-lbl">{{ sc }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <p class="nota">
+      Cada barra es una corrida semanal del scraper.
+      Los valores son menciones absolutas (titulares con ≥1 palabra clave).
+      La métrica de densidad (menciones / titulares totales) se implementará en una versión futura.
+    </p>
+  </div>
+
+  {# ── Dos columnas: distribución por palabra y por región ──────────────────
+     Izquierda: acumulado total de menciones por palabra clave.
+     Derecha: acumulado por región geográfica (solo corpus provincial).
+     El corpus nacional se reporta como nota al pie de la columna derecha. #}
+  <div class="two-col">
+
+    {# Distribución por palabra clave: barras proporcionales al máximo #}
+    <div class="section" style="margin-bottom: 0">
+      <div class="section-title">Menciones por palabra clave</div>
+      {% for item in dist_palabras %}
+      <div class="hbar">
+        <div class="hbar-label">{{ item.palabra }}</div>
+        <div class="hbar-track">
+          <div class="hbar-fill"
+               style="width: {{ ((item.total / max_palabra) * 100)|int }}%;
+                      background: {{ item.color }}">
+          </div>
+        </div>
+        <div class="hbar-value">
+          {{ item.total }}
+          <small style="opacity:.65">&nbsp;{{ item.porcentaje }}%</small>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {# Distribución por región: solo corpus provincial, ordenado de mayor a menor #}
+    <div class="section" style="margin-bottom: 0">
+      <div class="section-title">Menciones por región (corpus provincial)</div>
+      {% if dist_regiones %}
+        {% for item in dist_regiones %}
+        <div class="hbar">
+          <div class="hbar-label">{{ item.region }}</div>
+          <div class="hbar-track">
+            <div class="hbar-fill"
+                 style="width: {{ ((item.total / max_region) * 100)|int }}%;
+                        background: {{ color_region }}">
+            </div>
+          </div>
+          <div class="hbar-value">{{ item.total }}</div>
+        </div>
+        {% endfor %}
+        {% if total_nacional > 0 %}
+        <p class="nota">
+          Corpus nacional: {{ total_nacional }} menciones adicionales
+          (no incluidas en este gráfico; ver tabla abajo).
+        </p>
+        {% endif %}
+      {% else %}
+        <p class="nota">Sin datos provinciales disponibles todavía.</p>
+      {% endif %}
+    </div>
+
+  </div>
+
+  {# ── Tabla de titulares filtrable ──────────────────────────────────────────
+     Muestra todas las filas del CSV procesado. Los filtros operan en el browser
+     con JavaScript puro: no hay recarga de página ni llamadas al servidor.
+     Los data-* en cada <tr> son los valores sobre los que filtra el JS. #}
+  <div class="section">
+    <div class="section-title">Titulares detectados</div>
+
+    <div class="filters">
+      <select id="f-corpus" onchange="filtrar()">
+        <option value="">Todos los corpus</option>
+        {% for c in corpus_opciones %}
+        <option value="{{ c }}">{{ c | capitalize }}</option>
+        {% endfor %}
+      </select>
+
+      <select id="f-region" onchange="filtrar()">
+        <option value="">Todas las regiones</option>
+        {% for r in regiones_opciones %}
+        <option value="{{ r }}">{{ r }}</option>
+        {% endfor %}
+      </select>
+
+      <select id="f-palabra" onchange="filtrar()">
+        <option value="">Todas las palabras</option>
+        {% for p in palabras_opciones %}
+        <option value="{{ p }}">{{ p }}</option>
+        {% endfor %}
+      </select>
+
+      <select id="f-semana" onchange="filtrar()">
+        <option value="">Todas las semanas</option>
+        {% for s in semanas %}
+        <option value="{{ s }}">{{ s }}</option>
+        {% endfor %}
+      </select>
+
+      <input type="text" id="f-texto" placeholder="Buscar en titular…" oninput="filtrar()">
+
+      <span id="tabla-count">{{ filas_tabla | length }} titulares</span>
+    </div>
+
+    <div class="tabla-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Semana</th>
+            <th>Corpus</th>
+            <th>Diario</th>
+            <th>Región</th>
+            <th>Titular</th>
+            <th>Palabras</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body">
+          {# Cada fila lleva data-* con los valores normalizados que usa el filtro JS.
+             data-titular guarda el texto en minúsculas para facilitar la búsqueda. #}
+          {% for fila in filas_tabla %}
+          <tr
+            data-corpus="{{ fila.corpus }}"
+            data-region="{{ fila.region }}"
+            data-semana="{{ fila.semana_iso }}"
+            data-palabras="{{ fila.palabras_encontradas }}"
+            data-titular="{{ fila.titular | lower }}">
+            <td class="col-semana">{{ fila.semana_iso.split('-')[1] }}</td>
+            <td class="col-corpus">{{ fila.corpus }}</td>
+            <td>{{ fila.diario }}</td>
+            <td>{{ fila.region }}</td>
+            <td class="col-titular">{{ fila.titular }}</td>
+            <td>
+              {% for p in fila.palabras_encontradas.split(', ') %}
+              <span class="badge"
+                    style="background: {{ colores.get(p.strip(), color_fallback) }}">
+                {{ p.strip() }}
+              </span>
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+{# ── Pie de página ────────────────────────────────────────────────────────── #}
+<footer>
+  <p>Monitor de Conflictividad Social · Argentina</p>
+  <p style="margin-top: .3rem">
+    Datos, metodología y código en
+    <a href="https://github.com/Flormena/monitor-conflictos" target="_blank">GitHub</a>
+    &nbsp;·&nbsp;
+    Generado el {{ fecha_generacion }}
+  </p>
+</footer>
+
+{# ── JavaScript para filtrado de la tabla ────────────────────────────────────
+   Lee los data-attributes de cada fila y la muestra u oculta según los filtros.
+   No modifica el DOM más allá de cambiar display: los datos están pre-renderizados
+   por Jinja2. No usa librerías externas: vanilla JS puro. #}
+<script>
+  function filtrar() {
+    var corpus  = document.getElementById('f-corpus').value;
+    var region  = document.getElementById('f-region').value;
+    var palabra = document.getElementById('f-palabra').value;
+    var semana  = document.getElementById('f-semana').value;
+    var texto   = document.getElementById('f-texto').value.toLowerCase().trim();
+
+    var filas = document.querySelectorAll('#tabla-body tr');
+    var visibles = 0;
+
+    filas.forEach(function(tr) {
+      // Cada condición elimina la fila si el filtro está activo y no coincide
+      var ok = true;
+      if (corpus  && tr.dataset.corpus  !== corpus)  ok = false;
+      if (region  && tr.dataset.region  !== region)  ok = false;
+      if (semana  && tr.dataset.semana  !== semana)  ok = false;
+      if (palabra) {
+        // Las palabras pueden ser múltiples: "paro, marcha" → comparar cada una
+        var palabrasFila = tr.dataset.palabras.split(',').map(function(p){ return p.trim(); });
+        if (palabrasFila.indexOf(palabra) === -1) ok = false;
+      }
+      if (texto && tr.dataset.titular.indexOf(texto) === -1) ok = false;
+
+      tr.style.display = ok ? '' : 'none';
+      if (ok) visibles++;
+    });
+
+    document.getElementById('tabla-count').textContent =
+      visibles + ' titular' + (visibles !== 1 ? 'es' : '');
+  }
+</script>
+
+</body>
+</html>
