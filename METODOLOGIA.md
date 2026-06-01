@@ -322,21 +322,32 @@ HTML autocontenido (un solo archivo) con datos embebidos como JSON. Sin dependen
 
 ### 8.2 Filtrado de falsos positivos
 
-**Pregunta:** ¿cómo manejar falsos positivos como "paro cardíaco" o "la marcha de la economía"?
+**✅ DECISIÓN TOMADA — 2026-06-01: Opción B (lista de exclusión por bigramas)**
 
-**Opciones:**
+**Motivación:** análisis de W18 y W23 mostró que "marcha" tiene tasa de falsos positivos
+del 22% (7/32 en W18), muy por encima del umbral del 15% para aplicar Opción B.
+La casi totalidad de los FP corresponde a la frase "en marcha" (puso/pone/pondrá/está
+en marcha) y variantes como "marcha atrás".
 
-- **A) No filtrar.** Asumir el ruido como ruido de fondo constante. Si los falsos positivos representan ~2-5% del total y son estables en el tiempo, no afectan tendencias.
-- **B) Lista de exclusión por bigramas.** Mantener una lista de combinaciones que cancelan el match: `paro cardíaco`, `paro de motor`, `marcha de la economía`. Si el titular contiene un bigrama de exclusión, no cuenta.
-- **C) Filtrado contextual.** Análisis más sofisticado del contexto de la palabra (palabras circundantes). Más complejo, requiere reglas o modelo NLP.
+**Implementación:** lista `BIGRAMAS_EXCLUIDOS` en `tools/analyzer.py` (sección
+PARÁMETROS EDITABLES). Si el titular normalizado contiene algún bigrama de exclusión,
+el match de esa palabra se cancela. El titular puede igualmente matchear otras palabras
+clave no excluidas.
 
-**Criterios para decidir:**
-- Estimar magnitud real de falsos positivos en una muestra de las primeras semanas
-- Si <5% y constantes: opción A
-- Si 5-15%: opción B con lista mantenida en `config/`
-- Si >15% o creciente: revisar opción C
+**Lista inicial (palabra "marcha"):**
+- `en marcha` — cubre: puso/pone/está/pondrá/puesta en marcha, etc.
+- `marcha atras` — marcha atrás (decisión revertida)
+- `marcha blanca` — período de prueba
+- `marcha de la economia` — contexto económico genérico
+- `marcha de los precios` — contexto económico
 
-**Cuándo decidir:** tras 4-6 semanas de datos, cuando se pueda muestrear y cuantificar.
+**Limitación asumida:** si un mismo titular contiene tanto un FP ("puso en marcha")
+como un uso legítimo ("llamaron a la marcha"), el titular queda excluido. Se acepta
+este costo por ser casos extremadamente raros.
+
+**Extensión futura:** el dict `BIGRAMAS_EXCLUIDOS` admite otras palabras clave.
+Agregar entradas para "paro", "protesta", "reclamo" cuando los datos justifiquen
+la tasa de FP correspondiente.
 
 ### 8.3 Incorporación de secciones internas
 

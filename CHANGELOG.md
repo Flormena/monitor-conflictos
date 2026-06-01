@@ -8,6 +8,11 @@
 ## [No publicado]
 
 ### Decisiones metodológicas
+- **Filtro de bigramas para "marcha" (§8.2 resuelta)**: se adopta Opción B —
+  lista de exclusión por bigramas. Análisis de W18 y W23 mostró tasa de FP del 22%
+  en "marcha" (umbral para Opción B: >15%). Lista inicial: `en marcha`,
+  `marcha atras`, `marcha blanca`, `marcha de la economia`, `marcha de los precios`.
+  Implementada en `BIGRAMAS_EXCLUIDOS` en `tools/analyzer.py`. Ver METODOLOGIA.md §8.2.
 - **Categorización de medios nacionales**: los medios del corpus 2 (nacional) se
   registran con `provincia = "Nacional"`, `region = "Nacional"` y
   `ciudad_origen = "Nacional"` en lugar de vacío. Permite agruparlos coherentemente

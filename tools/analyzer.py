@@ -22,6 +22,20 @@ RUTA_SNAPSHOTS = RAIZ / "datos" / "snapshots"
 RUTA_DATOS_CRUDOS = RAIZ / "datos" / "crudos"
 # La ruta del titulares.csv se construye como:
 #   RUTA_DATOS_CRUDOS / {semana} / "titulares.csv"
+
+# Bigramas de exclusión por palabra clave (ver METODOLOGIA.md §8.2).
+# Si el titular normalizado contiene alguno de estos bigramas, el match de esa
+# palabra se cancela. Agregar entradas para otras palabras clave cuando los datos
+# justifiquen su tasa de falsos positivos.
+BIGRAMAS_EXCLUIDOS: dict[str, list[str]] = {
+    "marcha": [
+        "en marcha",              # puso/pone/está/pondrá/puesta en marcha, etc.
+        "marcha atras",           # marcha atrás (decisión revertida)
+        "marcha blanca",          # período de prueba
+        "marcha de la economia",  # contexto económico genérico
+        "marcha de los precios",  # contexto económico
+    ],
+}
 # ═══════════════════════════════
 
 COLUMNAS_SALIDA = [
@@ -89,27 +103,46 @@ def cargar_titulares(semana: str) -> list[dict]:
         return list(csv.DictReader(f))
 
 
-def detectar_palabras(titular: str, palabras: list[str]) -> list[str]:
-    # DECISIÓN METODOLÓGICA: ver METODOLOGIA.md §3.3 y §5.1
+def es_falso_positivo(titular_norm: str, palabra_norm: str) -> bool:
+    # DECISIÓN METODOLÓGICA: ver METODOLOGIA.md §8.2
+    # Comprueba si el titular normalizado contiene algún bigrama de exclusión
+    # para la palabra dada. Si lo contiene, el match se cancela completamente.
+    bigramas = BIGRAMAS_EXCLUIDOS.get(palabra_norm, [])
+    return any(bigrama in titular_norm for bigrama in bigramas)
+
+
+def detectar_palabras(titular: str, palabras: list[str]) -> tuple[list[str], list[str]]:
+    # DECISIÓN METODOLÓGICA: ver METODOLOGIA.md §3.3, §5.1 y §8.2
     # Matching por palabra completa (\b...\b) sobre el texto normalizado.
     # "movilización" no matchea "automovilización" ni "desmovilización".
-    # DEDUPLICACIÓN y FALSOS POSITIVOS: no implementados (§8.6 y §8.2 pendientes).
+    # Retorna (encontradas, excluidas_por_bigrama).
+    # DEDUPLICACIÓN: no implementada (§8.6 pendiente).
     titular_norm = normalizar_para_matching(titular)
     encontradas = []
+    excluidas = []
     for palabra in palabras:
-        patron = r"\b" + re.escape(normalizar_para_matching(palabra)) + r"\b"
+        palabra_norm = normalizar_para_matching(palabra)
+        patron = r"\b" + re.escape(palabra_norm) + r"\b"
         if re.search(patron, titular_norm):
-            encontradas.append(palabra)
-    return encontradas
+            if es_falso_positivo(titular_norm, palabra_norm):
+                excluidas.append(palabra)
+            else:
+                encontradas.append(palabra)
+    return encontradas, excluidas
 
 
-def analizar(titulares: list[dict], palabras: list[str]) -> list[dict]:
+def analizar(titulares: list[dict], palabras: list[str]) -> tuple[list[dict], Counter]:
     # DECISIÓN METODOLÓGICA: ver METODOLOGIA.md §5.2 y §8.5
     # 1 fila por titular con ≥1 match; si tiene varias palabras se listan en
     # "palabras_encontradas". La suma por palabra ≠ total de titulares (correcto).
+    # Retorna (matches, conteo_excluidos) donde conteo_excluidos registra cuántas
+    # veces fue cancelado el match de cada palabra por el filtro de bigramas.
     matches = []
+    conteo_excluidos: Counter = Counter()
     for fila in titulares:
-        encontradas = detectar_palabras(fila["titular"], palabras)
+        encontradas, excluidas = detectar_palabras(fila["titular"], palabras)
+        for palabra in excluidas:
+            conteo_excluidos[palabra] += 1
         if encontradas:
             matches.append({
                 "fecha": fila["fecha"],
@@ -124,7 +157,7 @@ def analizar(titulares: list[dict], palabras: list[str]) -> list[dict]:
                 "palabras_encontradas": ", ".join(encontradas),
                 "cantidad_palabras": len(encontradas),
             })
-    return matches
+    return matches, conteo_excluidos
 
 
 def guardar_snapshot(matches: list[dict], semana: str) -> None:
@@ -162,7 +195,11 @@ def guardar_acumulativo(matches: list[dict], semana: str) -> None:
     )
 
 
-def loggear_resumen(titulares: list[dict], matches: list[dict]) -> None:
+def loggear_resumen(
+    titulares: list[dict],
+    matches: list[dict],
+    conteo_excluidos: Counter,
+) -> None:
     tasa = len(matches) / len(titulares) * 100 if titulares else 0
 
     logging.info("=" * 60)
@@ -177,6 +214,12 @@ def loggear_resumen(titulares: list[dict], matches: list[dict]) -> None:
             conteo_palabras[p.strip()] += 1
     for palabra, count in sorted(conteo_palabras.items(), key=lambda x: -x[1]):
         logging.info(f"  {palabra:<15} {count:>4}")
+
+    if conteo_excluidos:
+        logging.info("─" * 40)
+        logging.info("Excluidos por filtro de bigramas:")
+        for palabra, count in sorted(conteo_excluidos.items(), key=lambda x: -x[1]):
+            logging.info(f"  {palabra:<15} {count:>4}")
 
     logging.info("─" * 40)
     logging.info("Menciones por corpus:")
@@ -218,11 +261,11 @@ def main() -> None:
     titulares = cargar_titulares(semana)
     logging.info(f"Titulares cargados: {len(titulares)}")
 
-    matches = analizar(titulares, palabras)
+    matches, conteo_excluidos = analizar(titulares, palabras)
 
     guardar_snapshot(matches, semana)
     guardar_acumulativo(matches, semana)
-    loggear_resumen(titulares, matches)
+    loggear_resumen(titulares, matches, conteo_excluidos)
 
 
 if __name__ == "__main__":

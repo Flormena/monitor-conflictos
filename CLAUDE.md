@@ -55,11 +55,12 @@ Si el usuario pide saltarse pasos, recordáselo.
 
 ## Restricciones
 
-- No agregar dependencias sin avisar (stack actual: requests, beautifulsoup4, pandas, lxml, jinja2)
+- No agregar dependencias sin avisar (stack actual: requests, beautifulsoup4, pandas, lxml, jinja2, pyyaml)
 - No automatizar (GitHub Actions, cron) hasta que el usuario lo indique. Fase actual: manual.
 - No borrar `datos/crudos/`. Permiten reprocesar si cambia el método.
 - No editar `docs/index.html` a mano: regenerarlo con `tools/generar_dashboard.py`
 - No usar Playwright sin consultar. Para diarios que bloquean: primero RSS, después request con headers, recién después escalar.
+- No abrir CSVs del proyecto con Excel — corrompe encoding y tildes. Usar VS Code, Notepad o Google Sheets para visualización y edición de CSVs.
 
 ## Flujo manual (fase actual)
 
