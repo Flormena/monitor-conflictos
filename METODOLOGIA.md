@@ -263,23 +263,36 @@ Todos los niveles se mantendrán disponibles en el dashboard.
 
 ### 7.1 Formato del dashboard
 
-HTML autocontenido (un solo archivo) con datos embebidos como JSON. Sin dependencias de servidor: se publica como sitio estático en GitHub Pages.
+`docs/index.html` generado por `tools/generar_dashboard.py`. Activos JS/CSS
+servidos localmente desde `docs/assets/` (Chart.js v4), sin dependencias de CDN.
+El SVG del mapa se hornea en Python al momento de generar: no se carga ninguna
+librería de mapas en el browser.
+
+Para inicializar los activos estáticos por primera vez (o actualizarlos):
+```bash
+python tools/descargar_assets.py   # descarga Chart.js y GeoJSON de provincias
+```
 
 ### 7.2 Visualizaciones incluidas
 
-- KPIs: menciones totales, medios cubiertos, provincias activas, palabra y región más frecuentes
-- Serie temporal con media móvil
-- Distribución por palabra clave
-- Heatmap provincia × palabra
-- Ranking de provincias
-- Tabla de titulares filtrable
+- **KPIs**: menciones totales, semanas cubiertas, palabra más frecuente, región más activa
+- **Tendencia semanal**: línea Chart.js con el total de menciones por semana
+- **Small multiples**: 8 mini-gráficos SVG (uno por palabra clave), misma escala Y para comparación directa
+- **Distribución por palabra clave**: barras horizontales acumuladas
+- **Distribución por región**: barras horizontales (solo corpus provincial)
+- **Mapa de símbolos proporcionales**: círculo por provincia, radio = √menciones, color = palabra dominante. Las formas provinciales son paths SVG generados en Python a partir de GeoJSON oficial (GADM 4.1). El mapa y los círculos muestran **menciones en medios (eco mediático)**, no eventos verificados. Cada provincia tiene igual peso en el corpus (3 medios). CABA no tiene medios en el corpus provincial.
+- **Composición del conflicto**: barra apilada Chart.js (mezcla de palabras clave por semana)
+- **Tabla de titulares filtrable**: filtros por corpus, región, palabra clave, semana y texto libre
+
+> **Nota §7.2:** el streamgraph (flujo temporal) está implementado como bloque comentado en el template. Se activará cuando haya ≥6 meses de datos; requiere D3 v7 que en ese momento se descargará con `descargar_assets.py`.
 
 ### 7.3 Filtros del dashboard
 
+- Por corpus (provincial / nacional)
 - Por región
-- Por provincia
 - Por palabra clave
-- Por rango de fechas
+- Por semana
+- Búsqueda libre en titular
 
 ### 7.4 Publicación
 

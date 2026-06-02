@@ -7,6 +7,25 @@
 
 ## [No publicado]
 
+### Dashboard v2 (2026-06-01)
+- **Paleta Okabe-Ito apta para daltónicos**: reemplaza la paleta anterior. Rojo `#CC0000`
+  reservado para "represión"; el resto usa Okabe-Ito (distinguible para deuteranopía,
+  protanopía y tritanopía).
+- **Tendencia semanal**: reemplaza el gráfico de barras CSS por una línea Chart.js.
+- **Small multiples**: 8 mini-gráficos SVG (uno por palabra) con la misma escala Y para
+  comparación directa. Generados por Jinja2 en Python, sin librería JS.
+- **Mapa de símbolos proporcionales**: círculos por provincia, radio = √menciones, color =
+  palabra dominante. Paths SVG horneados en Python desde GeoJSON GADM 4.1. Sin librería
+  de mapas en el browser. El mapa muestra menciones (eco mediático), no eventos verificados.
+  Ponderación igual por provincia (3 medios cada una). Ver METODOLOGIA.md §7.2.
+- **Composición del conflicto**: barra apilada Chart.js por semana.
+- **Sin CDN**: Chart.js servido localmente desde `docs/assets/chart.v4.min.js`.
+  Script one-shot `tools/descargar_assets.py` descarga Chart.js y el GeoJSON.
+- **Streamgraph**: bloque comentado en el template para activar cuando haya ≥6 meses de datos.
+  Requerirá D3 v7 cuando se active.
+- **METODOLOGIA.md §7.1 y §7.2** actualizados para reflejar la arquitectura de activos locales
+  y las nuevas visualizaciones.
+
 ### Decisiones metodológicas
 - **Filtro de bigramas para "marcha" (§8.2 resuelta)**: se adopta Opción B —
   lista de exclusión por bigramas. Análisis de W18 y W23 mostró tasa de FP del 22%
