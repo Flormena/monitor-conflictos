@@ -10,7 +10,7 @@ Inspirado metodológicamente en el trabajo de [Beverly Silver](https://en.wikipe
 
 ## 🌐 Dashboard en vivo
 
-→ **[Ver dashboard](https://TU_USUARIO.github.io/monitoreo-conflictos/)**
+→ **[Ver dashboard](https://flormena.github.io/monitor-conflictos/)**
 
 ---
 

@@ -50,6 +50,7 @@ COLORES_PALABRAS = {
     "huelga":       "#8B4513",
     "piquete":      "#7F7F7F",
     "represión":    "#CC0000",
+    "conflicto":    "#D55E00",
 }
 # EDITABLE: paleta Okabe-Ito apta para daltónicos. El rojo (#CC0000) está reservado
 # para "represión". Afecta barras, badges, circles del mapa y gráficos de línea.

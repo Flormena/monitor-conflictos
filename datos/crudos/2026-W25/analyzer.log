@@ -28,3 +28,34 @@
 2026-06-17 21:13:44,568 INFO         2  NOTICIASNET
 2026-06-17 21:13:44,568 INFO         2  RED 23 NOTICIAS
 2026-06-17 21:13:44,568 INFO     ============================================================
+2026-06-17 21:36:02,072 INFO     Analizando semana: 2026-W25
+2026-06-17 21:36:02,073 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo, conflicto
+2026-06-17 21:36:02,082 INFO     Titulares cargados: 3517
+2026-06-17 21:36:02,183 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W25.csv (38 filas)
+2026-06-17 21:36:02,221 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (169 filas totales, 38 de esta semana)
+2026-06-17 21:36:02,221 INFO     ============================================================
+2026-06-17 21:36:02,221 INFO     Titulares leídos:  3517
+2026-06-17 21:36:02,221 INFO     Matches totales:   38  (1.1% de detección)
+2026-06-17 21:36:02,221 INFO     ────────────────────────────────────────
+2026-06-17 21:36:02,221 INFO     Menciones por palabra clave:
+2026-06-17 21:36:02,222 INFO       paro              13
+2026-06-17 21:36:02,222 INFO       reclamo           10
+2026-06-17 21:36:02,222 INFO       conflicto         10
+2026-06-17 21:36:02,222 INFO       protesta           3
+2026-06-17 21:36:02,222 INFO       marcha             3
+2026-06-17 21:36:02,222 INFO       movilización       1
+2026-06-17 21:36:02,222 INFO     ────────────────────────────────────────
+2026-06-17 21:36:02,222 INFO     Excluidos por filtro de bigramas:
+2026-06-17 21:36:02,222 INFO       marcha             6
+2026-06-17 21:36:02,222 INFO     ────────────────────────────────────────
+2026-06-17 21:36:02,222 INFO     Menciones por corpus:
+2026-06-17 21:36:02,222 INFO       provincial        31
+2026-06-17 21:36:02,222 INFO       nacional           7
+2026-06-17 21:36:02,222 INFO     ────────────────────────────────────────
+2026-06-17 21:36:02,222 INFO     Top 5 medios con más menciones:
+2026-06-17 21:36:02,223 INFO         4  AIRE DIGITAL
+2026-06-17 21:36:02,223 INFO         3  EL DIARIO DE LA PAMPA
+2026-06-17 21:36:02,223 INFO         3  RED 23 NOTICIAS
+2026-06-17 21:36:02,223 INFO         2  EL DÍA
+2026-06-17 21:36:02,223 INFO         2  NUEVO DIARIO
+2026-06-17 21:36:02,223 INFO     ============================================================
