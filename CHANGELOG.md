@@ -27,13 +27,11 @@
   y las nuevas visualizaciones.
 
 ### Decisiones metodológicas
-- **Incorporación de "conflicto" como 9ª palabra clave (2026-06-17)**: se suma
-  `conflicto` a la lista de palabras rastreadas. Captura situaciones de enfrentamiento
-  o disputa social, laboral o política que las 8 palabras previas no cubrían directamente.
-  Falsos positivos esperados: "conflicto bélico", "conflicto armado", menciones a conflictos
-  internacionales. Se evaluará filtro de bigramas tras las primeras semanas de datos.
-  Series W18 y W23 reprocesadas para mantener la serie histórica sin puntos de quiebre.
-  Ver METODOLOGIA.md §3.1 y §3.4.
+- **"conflicto" evaluada y revertida (2026-06-17)**: se probó agregar "conflicto"
+  como 9ª palabra clave y se reprocesaron W18/W23/W25, pero se revirtió antes de
+  publicarse. Falta analizar su tasa de falsos positivos (conflictos internacionales,
+  uso genérico no social) antes de incorporarla. Queda pendiente para sesión dedicada,
+  posiblemente con filtro de bigramas igual que "marcha". Ver METODOLOGIA.md §3.1.
 - **Filtro de bigramas para "marcha" (§8.2 resuelta)**: se adopta Opción B —
   lista de exclusión por bigramas. Análisis de W18 y W23 mostró tasa de FP del 22%
   en "marcha" (umbral para Opción B: >15%). Lista inicial: `en marcha`,

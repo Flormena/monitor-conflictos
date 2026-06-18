@@ -50,7 +50,6 @@ COLORES_PALABRAS = {
     "huelga":       "#8B4513",
     "piquete":      "#7F7F7F",
     "represión":    "#CC0000",
-    "conflicto":    "#D55E00",
 }
 # EDITABLE: paleta Okabe-Ito apta para daltónicos. El rojo (#CC0000) está reservado
 # para "represión". Afecta barras, badges, circles del mapa y gráficos de línea.
@@ -260,6 +259,50 @@ def formato_semana(semana_iso: str) -> str:
     return semana_iso.split("-", 1)[1]
 
 
+def calcular_tendencia(total_por_semana: list[int]) -> dict:
+    """
+    Compara la última semana contra la anterior. Devuelve dirección (alza/baja/estable)
+    y porcentaje de variación, usados para la flecha de tendencia junto al KPI principal.
+    """
+    if len(total_por_semana) < 2:
+        return {"direccion": None, "delta": 0, "pct": 0}
+    actual, anterior = total_por_semana[-1], total_por_semana[-2]
+    delta = actual - anterior
+    pct = round(abs(delta) / anterior * 100) if anterior > 0 else 0
+    if delta > 0:
+        direccion = "alza"
+    elif delta < 0:
+        direccion = "baja"
+    else:
+        direccion = "estable"
+    return {"direccion": direccion, "delta": delta, "pct": pct}
+
+
+def generar_resumen_automatico(
+    tendencia: dict,
+    palabra_top: str, palabra_top_count: int,
+    region_top: str, region_top_count: int,
+) -> str:
+    """
+    Construye una oración de resumen en lenguaje natural a partir de los datos calculados.
+    Da contexto inmediato al lector antes de que explore los gráficos en detalle.
+    """
+    partes = []
+    if tendencia["direccion"] == "alza":
+        partes.append(f"Las menciones subieron {tendencia['pct']}% respecto a la semana anterior")
+    elif tendencia["direccion"] == "baja":
+        partes.append(f"Las menciones bajaron {tendencia['pct']}% respecto a la semana anterior")
+    elif tendencia["direccion"] == "estable":
+        partes.append("Las menciones se mantuvieron estables respecto a la semana anterior")
+
+    partes.append(f"&ldquo;{palabra_top}&rdquo; fue la palabra más mencionada ({palabra_top_count} veces)")
+
+    if region_top != "—":
+        partes.append(f"{region_top} concentra la mayor actividad provincial ({region_top_count} menciones)")
+
+    return ". ".join(partes) + "."
+
+
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
 
@@ -371,6 +414,14 @@ def main() -> None:
 
     total_nacional = int((df["corpus"] == "nacional").sum())
 
+    # ── Tendencia y resumen automático ────────────────────────────────────────
+    # Compara la última semana contra la anterior y redacta una oración de contexto.
+    # Da una lectura inmediata antes de que el usuario explore los gráficos en detalle.
+    tendencia = calcular_tendencia(total_por_semana)
+    resumen_automatico = generar_resumen_automatico(
+        tendencia, palabra_top, palabra_top_count, region_top, region_top_count
+    )
+
     # ── Mapa SVG: paths y círculos por provincia ──────────────────────────────
     # El GeoJSON se proyecta a SVG en Python; el HTML final no carga ninguna librería de mapas.
     if not RUTA_GEOJSON.exists():
@@ -378,9 +429,18 @@ def main() -> None:
         print("  Corré: python tools/descargar_assets.py")
     provincias_mapa = preparar_datos_mapa(df)
 
+    # ── Ranking de provincias: top 10 con menciones, para la lista junto al mapa ─
+    # El mapa y esta lista están vinculados en el browser: clic en una provincia
+    # filtra ambos (ver JS al final del template).
+    provincias_ranking = sorted(
+        (p for p in provincias_mapa if not p["sin_datos"]),
+        key=lambda p: -p["menciones"],
+    )[:10]
+
     # ── Tabla filtrable: todas las filas del CSV ──────────────────────────────
     # Ordenadas de más reciente a más antiguo; el filtrado ocurre en el browser con JS.
-    columnas_tabla = ["semana_iso", "corpus", "diario", "region", "titular", "palabras_encontradas"]
+    # Incluye "provincia" para que el clic en el mapa pueda filtrar la tabla.
+    columnas_tabla = ["semana_iso", "corpus", "diario", "provincia", "region", "titular", "palabras_encontradas"]
     filas_tabla = (
         df.sort_values("fecha", ascending=False)[columnas_tabla]
         .fillna("")
@@ -416,6 +476,8 @@ def main() -> None:
         "palabra_top_count":    palabra_top_count,
         "region_top":           region_top,
         "region_top_count":     region_top_count,
+        "tendencia":            tendencia,
+        "resumen_automatico":   resumen_automatico,
         # Serie temporal
         "semanas":              semanas_sorted,
         "semanas_cortas":       [formato_semana(s) for s in semanas_sorted],
@@ -433,6 +495,7 @@ def main() -> None:
         "total_nacional":       total_nacional,
         # Mapa
         "provincias_mapa":      provincias_mapa,
+        "provincias_ranking":   provincias_ranking,
         "mapa_ancho":           MAPA_ANCHO,
         "mapa_alto":            MAPA_ALTO,
         # Composición

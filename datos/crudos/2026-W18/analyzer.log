@@ -95,3 +95,36 @@
 2026-06-17 21:36:01,795 INFO         3  PERFIL
 2026-06-17 21:36:01,795 INFO         2  5 DÍAS
 2026-06-17 21:36:01,795 INFO     ============================================================
+2026-06-18 14:40:45,196 INFO     Analizando semana: 2026-W18
+2026-06-18 14:40:45,197 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-18 14:40:45,228 INFO     Titulares cargados: 3589
+2026-06-18 14:40:45,323 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W18.csv (68 filas)
+2026-06-18 14:40:45,380 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (159 filas totales, 68 de esta semana)
+2026-06-18 14:40:45,381 INFO     ============================================================
+2026-06-18 14:40:45,381 INFO     Titulares leídos:  3589
+2026-06-18 14:40:45,381 INFO     Matches totales:   68  (1.9% de detección)
+2026-06-18 14:40:45,381 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,381 INFO     Menciones por palabra clave:
+2026-06-18 14:40:45,381 INFO       marcha            25
+2026-06-18 14:40:45,381 INFO       paro              16
+2026-06-18 14:40:45,381 INFO       reclamo            9
+2026-06-18 14:40:45,381 INFO       protesta           8
+2026-06-18 14:40:45,381 INFO       movilización       8
+2026-06-18 14:40:45,381 INFO       represión          2
+2026-06-18 14:40:45,381 INFO       huelga             2
+2026-06-18 14:40:45,381 INFO       piquete            1
+2026-06-18 14:40:45,381 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,381 INFO     Excluidos por filtro de bigramas:
+2026-06-18 14:40:45,381 INFO       marcha             7
+2026-06-18 14:40:45,381 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,381 INFO     Menciones por corpus:
+2026-06-18 14:40:45,381 INFO       provincial        57
+2026-06-18 14:40:45,381 INFO       nacional          11
+2026-06-18 14:40:45,381 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,381 INFO     Top 5 medios con más menciones:
+2026-06-18 14:40:45,382 INFO         5  RED 23 NOTICIAS
+2026-06-18 14:40:45,382 INFO         4  EL DIARIO DE LA PAMPA
+2026-06-18 14:40:45,382 INFO         3  EL CORDILLERANO
+2026-06-18 14:40:45,382 INFO         2  5 DÍAS
+2026-06-18 14:40:45,382 INFO         2  UNO ENTRE RÍOS
+2026-06-18 14:40:45,382 INFO     ============================================================

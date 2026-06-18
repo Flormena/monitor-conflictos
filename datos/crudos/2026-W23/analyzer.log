@@ -143,3 +143,33 @@
 2026-06-17 21:36:02,012 INFO         2  EL DIARIO
 2026-06-17 21:36:02,012 INFO         2  MDZ ONLINE
 2026-06-17 21:36:02,012 INFO     ============================================================
+2026-06-18 14:40:45,440 INFO     Analizando semana: 2026-W23
+2026-06-18 14:40:45,440 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-18 14:40:45,459 INFO     Titulares cargados: 3566
+2026-06-18 14:40:45,555 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W23.csv (45 filas)
+2026-06-18 14:40:45,593 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (151 filas totales, 45 de esta semana)
+2026-06-18 14:40:45,594 INFO     ============================================================
+2026-06-18 14:40:45,594 INFO     Titulares leídos:  3566
+2026-06-18 14:40:45,594 INFO     Matches totales:   45  (1.3% de detección)
+2026-06-18 14:40:45,594 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,594 INFO     Menciones por palabra clave:
+2026-06-18 14:40:45,594 INFO       marcha            18
+2026-06-18 14:40:45,594 INFO       paro              18
+2026-06-18 14:40:45,594 INFO       reclamo            9
+2026-06-18 14:40:45,594 INFO       movilización       4
+2026-06-18 14:40:45,594 INFO       protesta           2
+2026-06-18 14:40:45,594 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,594 INFO     Excluidos por filtro de bigramas:
+2026-06-18 14:40:45,594 INFO       marcha            11
+2026-06-18 14:40:45,594 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,594 INFO     Menciones por corpus:
+2026-06-18 14:40:45,594 INFO       provincial        41
+2026-06-18 14:40:45,594 INFO       nacional           4
+2026-06-18 14:40:45,594 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,594 INFO     Top 5 medios con más menciones:
+2026-06-18 14:40:45,594 INFO         3  NORTE
+2026-06-18 14:40:45,594 INFO         3  RED 23 NOTICIAS
+2026-06-18 14:40:45,594 INFO         2  EL DIARIO
+2026-06-18 14:40:45,594 INFO         2  MDZ ONLINE
+2026-06-18 14:40:45,594 INFO         2  EL ESQUIÚ
+2026-06-18 14:40:45,594 INFO     ============================================================

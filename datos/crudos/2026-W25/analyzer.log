@@ -59,3 +59,33 @@
 2026-06-17 21:36:02,223 INFO         2  EL DÍA
 2026-06-17 21:36:02,223 INFO         2  NUEVO DIARIO
 2026-06-17 21:36:02,223 INFO     ============================================================
+2026-06-18 14:40:45,685 INFO     Analizando semana: 2026-W25
+2026-06-18 14:40:45,685 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-18 14:40:45,702 INFO     Titulares cargados: 3517
+2026-06-18 14:40:45,793 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W25.csv (29 filas)
+2026-06-18 14:40:45,834 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (142 filas totales, 29 de esta semana)
+2026-06-18 14:40:45,834 INFO     ============================================================
+2026-06-18 14:40:45,834 INFO     Titulares leídos:  3517
+2026-06-18 14:40:45,834 INFO     Matches totales:   29  (0.8% de detección)
+2026-06-18 14:40:45,834 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,834 INFO     Menciones por palabra clave:
+2026-06-18 14:40:45,834 INFO       paro              13
+2026-06-18 14:40:45,834 INFO       reclamo           10
+2026-06-18 14:40:45,836 INFO       protesta           3
+2026-06-18 14:40:45,836 INFO       marcha             3
+2026-06-18 14:40:45,836 INFO       movilización       1
+2026-06-18 14:40:45,836 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,836 INFO     Excluidos por filtro de bigramas:
+2026-06-18 14:40:45,836 INFO       marcha             6
+2026-06-18 14:40:45,836 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,836 INFO     Menciones por corpus:
+2026-06-18 14:40:45,836 INFO       provincial        23
+2026-06-18 14:40:45,836 INFO       nacional           6
+2026-06-18 14:40:45,836 INFO     ────────────────────────────────────────
+2026-06-18 14:40:45,836 INFO     Top 5 medios con más menciones:
+2026-06-18 14:40:45,836 INFO         3  AIRE DIGITAL
+2026-06-18 14:40:45,837 INFO         3  EL DIARIO DE LA PAMPA
+2026-06-18 14:40:45,837 INFO         2  EL DÍA
+2026-06-18 14:40:45,837 INFO         2  NOTICIASNET
+2026-06-18 14:40:45,837 INFO         2  RED 23 NOTICIAS
+2026-06-18 14:40:45,837 INFO     ============================================================

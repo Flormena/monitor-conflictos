@@ -80,7 +80,7 @@ Cuando se modifique el corpus:
 
 ### 3.1 Lista actual
 
-Las 9 palabras clave en uso son:
+Las 8 palabras clave en uso son:
 
 | Palabra | Conflicto rastreado |
 |---|---|
@@ -92,12 +92,13 @@ Las 9 palabras clave en uso son:
 | protesta | Manifestación pública de oposición |
 | marcha | Desplazamiento colectivo con finalidad reivindicativa |
 | reclamo | Demanda explícita ante instituciones o empresas |
-| conflicto | Situación de enfrentamiento o disputa social, laboral o política |
 
 Lista canónica en `config/palabras_clave.csv`.
 
-**Punto de quiebre:** "conflicto" se incorpora a partir de la semana 2026-W25.
-Las semanas W18 y W23 fueron reprocesadas para mantener la serie histórica comparable.
+**Nota:** se evaluó incorporar "conflicto" el 2026-06-17, pero se revirtió antes de
+publicarse: requiere primero analizar su tasa de falsos positivos (conflictos
+internacionales, uso genérico) y posiblemente un filtro de bigramas, igual que se
+hizo con "marcha" (§8.2). Queda pendiente para una sesión dedicada.
 
 ### 3.2 Justificación
 
@@ -123,7 +124,6 @@ Casos en que una palabra clave aparece sin referirse a un conflicto:
 - **"marcha"** → "la marcha de la economía", "ponerse en marcha", "Marcha (banda)"
 - **"protesta"** → "objeto de protesta" (en contextos no políticos)
 - **"reclamo"** → "reclamo publicitario", "reclamo de seguros"
-- **"conflicto"** → "conflicto bélico", "conflicto armado", "conflicto en Ucrania/Gaza/Medio Oriente" (conflictos internacionales, no locales). Evaluar bigramas de exclusión con datos de las primeras semanas.
 
 🔶 **DECISIÓN PENDIENTE — Sección 8.2:** estrategia de filtrado de falsos positivos.
 
