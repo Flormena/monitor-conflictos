@@ -1,30 +1,21 @@
 ﻿fecha,semana_iso,corpus,diario,provincia,region,ciudad_origen,url_medio,titular,palabras_encontradas,cantidad_palabras
-2026-06-17,2026-W25,provincial,EL DÍA,Buenos Aires,AMBA,La Plata,https://www.eldia.com,"La UTA alertó que ""se trabó"" la paritaria y amenazó con un nuevo paro de micros",paro,1
-2026-06-17,2026-W25,provincial,EL DÍA,Buenos Aires,AMBA,La Plata,https://www.eldia.com,"En el centro de La Plata, un grupo de docentes realizó una protesta",protesta,1
-2026-06-17,2026-W25,provincial,EL DIARIO DEL CENTRO DEL PAÍS,Córdoba,Centro,Villa María,https://www.eldiariocba.com.ar,Judiciales continúan con su reclamo,reclamo,1
-2026-06-17,2026-W25,provincial,AIRE DIGITAL,Santa Fe,Centro,Santa Fe,https://www.airedesantafe.com.ar,Reclamo en Guadalupe Oeste: vecinos denuncian ocho años de desbordes cloacales y agua contaminada en sus casas,reclamo,1
-2026-06-17,2026-W25,provincial,AIRE DIGITAL,Santa Fe,Centro,Santa Fe,https://www.airedesantafe.com.ar,Día de la Bandera: convocan en Rosario a una marcha contra Milei y su visita oficial,marcha,1
-2026-06-17,2026-W25,provincial,AIRE DIGITAL,Santa Fe,Centro,Santa Fe,https://www.airedesantafe.com.ar,"""Nos están llevando al extremo"": fuerte protesta contra Lácteos Verónica y pedido desesperado de intervención judicial",protesta,1
-2026-06-17,2026-W25,provincial,MDZ ONLINE,Mendoza,Cuyo,Mendoza,https://www.mdzol.com,Paro docente en la Provincia de Buenos Aires: este jueves no habrá clases en las escuelas públicas,paro,1
-2026-06-17,2026-W25,provincial,NUEVO DIARIO,Santiago del Estero,NOA,Santiago del Estero,https://www.nuevodiarioweb.com.ar,Caso Lourdes Mariana Ibáñez: el reclamo de justicia de la familia llegó a LV11 y piden cambiar la imputación a homicidio con dolo eventual,reclamo,1
-2026-06-17,2026-W25,provincial,LA VOZ DEL CHACO,Chaco,NEA,Resistencia,https://www.diariolavozdelchaco.com,Justicia por Nelson Gusak y los jóvenes desaparecidos: convocan a una movilización provincial este domingo en Resistencia,movilización,1
-2026-06-17,2026-W25,provincial,NORTE,Chaco,NEA,Resistencia,https://www.diarionorte.com,"Marcha por Axel López, a casi un mes de su desaparición",marcha,1
-2026-06-17,2026-W25,provincial,EL COMERCIAL,Formosa,NEA,Formosa,https://www.elcomercial.com.ar,"El papa León XIV elogió el acuerdo entre EEUU e Irán y reclamó ""caminos de diálogo"" para Ucrania",reclamo,1
-2026-06-17,2026-W25,provincial,EL PATAGÓNICO,Chubut,Patagonia,Comodoro Rivadavia,https://www.elpatagonico.com,Se agudiza reclamo policial en Santa Cruz,reclamo,1
-2026-06-17,2026-W25,provincial,EL DIARIO DE LA PAMPA,La Pampa,Patagonia,Santa Rosa,https://www.eldiariodelapampa.com.ar,El reclamo a la fundación Cambiando Vidas es por más de $314 millones,reclamo,1
-2026-06-17,2026-W25,provincial,EL DIARIO DE LA PAMPA,La Pampa,Patagonia,Santa Rosa,https://www.eldiariodelapampa.com.ar,"Debate en la CGT: hay consenso para medidas de fuerza sectoriales, pero no un paro general",paro,1
-2026-06-17,2026-W25,provincial,EL DIARIO DE LA PAMPA,La Pampa,Patagonia,Santa Rosa,https://www.eldiariodelapampa.com.ar,Segundo día de paro de la docencia universitaria,paro,1
-2026-06-17,2026-W25,provincial,RÍO NEGRO,Río Negro,Patagonia,General Roca / Rio negro,https://www.rionegro.com.ar,Conflicto en salud de Neuquén: dictaron la conciliación obligatoria por el paro que lanzó ATE,paro,1
-2026-06-17,2026-W25,provincial,NOTICIASNET,Río Negro,Patagonia,Viedma / Rio negro,https://www.noticiasnet.com.ar,Dejó de funcionar un semáforo y muchos pasan sin aminorar la marcha,marcha,1
-2026-06-17,2026-W25,provincial,NOTICIASNET,Río Negro,Patagonia,Viedma / Rio negro,https://www.noticiasnet.com.ar,Maltrato a la vejez: un reclamo de jubilados se mostró en la calle,reclamo,1
-2026-06-17,2026-W25,provincial,NUEVO DÍA,Santa Cruz,Patagonia,Santa Cruz,https://www.eldiarionuevodia.com.ar,Paritaria central: ATE rechazó el 13% y anunció un paro de 72 horas,paro,1
-2026-06-17,2026-W25,provincial,TIEMPO SUR,Santa Cruz,Patagonia,Santa Cruz,https://www.tiemposur.com.ar,"Reclamo al PAMI Mateo Brunetti: “Hay jubilados que deben elegir entre comer o comprar la medicación""",reclamo,1
-2026-06-17,2026-W25,provincial,EL SUREÑO,Tierra del Fuego,Patagonia,Río Grande,https://www.surenio.com.ar,Paro docente el jueves: SUTEF se suma a la medida de fuerza nacional,paro,1
-2026-06-17,2026-W25,provincial,RED 23 NOTICIAS,Tierra del Fuego,Patagonia,Río Grande,https://www.red23noticias.com.ar,Hospitales 24 hs: el paro médico paraliza la atención en toda Tierra del Fuego,paro,1
-2026-06-17,2026-W25,provincial,RED 23 NOTICIAS,Tierra del Fuego,Patagonia,Río Grande,https://www.red23noticias.com.ar,El reclamo por el GLP escala: presentan proyecto propio ante la falta de respuestas,reclamo,1
-2026-06-17,2026-W25,nacional,INFOBAE,Nacional,Nacional,Nacional,https://www.infobae.com,"Fuerte debate en la CGT: hay consenso para iniciar medidas de fuerza sectoriales, pero no un paro general en forma inminente",paro,1
-2026-06-17,2026-W25,nacional,CLARÍN,Nacional,Nacional,Nacional,https://www.clarin.com,La pitonisa de la Música Popular Brasileña que se convirtió en un símbolo de la protesta contra la dictadura militar,protesta,1
-2026-06-17,2026-W25,nacional,PÁGINA 12,Nacional,Nacional,Nacional,https://www.pagina12.com.ar,La UTA advierte por un paro de colectivos en el AMBA,paro,1
-2026-06-17,2026-W25,nacional,EL DESTAPE,Nacional,Nacional,Nacional,https://www.eldestapeweb.com,La UTA endurece su reclamo salarial y no descarta un paro,"paro, reclamo",2
-2026-06-17,2026-W25,nacional,TIEMPO ARGENTINO,Nacional,Nacional,Nacional,https://www.tiempoar.com.ar,Sigue el paro universitario: cuánto cobrará un docente con el acuerdo y cuánto debería cobrar según la Ley de Financiamiento,paro,1
-2026-06-17,2026-W25,nacional,ÁMBITO FINANCIERO,Nacional,Nacional,Nacional,https://www.ambito.com,La UTA amenaza con un paro de colectivos en el AMBA tras la negativa a un aumento salarial,paro,1
+2026-06-18,2026-W25,provincial,ELONCE,Entre Ríos,Centro,Entre rios,https://www.elonce.com,La Multisectorial en Defensa de la Caja anunció volanteadas y anticipó un paro contra la reforma jubilatoria,paro,1
+2026-06-18,2026-W25,provincial,ELONCE,Entre Ríos,Centro,Entre rios,https://www.elonce.com,"Adolescente muerto en Federación: incidentes, daños y detenidos durante reclamo por justicia",reclamo,1
+2026-06-18,2026-W25,provincial,AIRE DIGITAL,Santa Fe,Centro,Santa Fe,https://www.airedesantafe.com.ar,"""Nos están llevando al extremo"": fuerte protesta contra Lácteos Verónica y pedido desesperado de intervención judicial",protesta,1
+2026-06-18,2026-W25,provincial,EL ANCASTI,Catamarca,NOA,Catamarca,https://www.elancasti.com.ar,UTA Catamarca declaró estado de alerta y movilización por demora en el pago de diferencias salariales,movilización,1
+2026-06-18,2026-W25,provincial,EL ESQUIÚ,Catamarca,NOA,Catamarca,https://www.elesquiu.com,"Arévalo confirmó que ATE participará de la conciliación por el conflicto en Valle Viejo y reclamó que hagan ""el mayor esfuerzo” salarial",reclamo,1
+2026-06-18,2026-W25,provincial,LA UNIÓN,Catamarca,NOA,Catamarca,https://www.launion.digital,UTA declaró el estado de alerta y movilización y el servicio vuelve a estar en duda,movilización,1
+2026-06-18,2026-W25,provincial,LA UNIÓN,Catamarca,NOA,Catamarca,https://www.launion.digital,Estudiantes del IES Pomán sostienen la toma y convocan a una marcha,marcha,1
+2026-06-18,2026-W25,provincial,NUEVO DIARIO,Salta,NOA,Salta,https://www.nuevodiariodesalta.com.ar,Municipales de Hipólito Yrigoyen con un corte de la RN 50 endurecen el paro,paro,1
+2026-06-18,2026-W25,provincial,NUEVO DIARIO,Santiago del Estero,NOA,Santiago del Estero,https://www.nuevodiarioweb.com.ar,Caso Lourdes Mariana Ibáñez: el reclamo de justicia de la familia llegó a LV11 y piden cambiar la imputación a homicidio con dolo eventual,reclamo,1
+2026-06-18,2026-W25,provincial,LA VOZ DEL CHACO,Chaco,NEA,Resistencia,https://www.diariolavozdelchaco.com,Justicia por Nelson Gusak y los jóvenes desaparecidos: convocan a una movilización provincial este domingo en Resistencia,movilización,1
+2026-06-18,2026-W25,provincial,NORTE,Chaco,NEA,Resistencia,https://www.diarionorte.com,"Marcha por Axel López, a casi un mes de su desaparición",marcha,1
+2026-06-18,2026-W25,provincial,EL COMERCIAL,Formosa,NEA,Formosa,https://www.elcomercial.com.ar,Docentes autoconvocados marcharon por el centro de Formosa en reclamo de una recomposición salarial,reclamo,1
+2026-06-18,2026-W25,provincial,EL COMERCIAL,Formosa,NEA,Formosa,https://www.elcomercial.com.ar,"El papa León XIV elogió el acuerdo entre EEUU e Irán y reclamó ""caminos de diálogo"" para Ucrania",reclamo,1
+2026-06-18,2026-W25,provincial,NOTICIASNET,Río Negro,Patagonia,Viedma / Rio negro,https://www.noticiasnet.com.ar,Dejó de funcionar un semáforo y muchos pasan sin aminorar la marcha,marcha,1
+2026-06-18,2026-W25,provincial,NUEVO DÍA,Santa Cruz,Patagonia,Santa Cruz,https://www.eldiarionuevodia.com.ar,Nueva marcha del Frente Sindical de Santa Cruz: cuándo será y los motivos,marcha,1
+2026-06-18,2026-W25,provincial,NUEVO DÍA,Santa Cruz,Patagonia,Santa Cruz,https://www.eldiarionuevodia.com.ar,Paritaria central: ATE rechazó el 13% y anunció un paro de 72 horas,paro,1
+2026-06-18,2026-W25,provincial,EL SUREÑO,Tierra del Fuego,Patagonia,Río Grande,https://www.surenio.com.ar,Paro docente el jueves: SUTEF se suma a la medida de fuerza nacional,paro,1
+2026-06-18,2026-W25,provincial,RED 23 NOTICIAS,Tierra del Fuego,Patagonia,Río Grande,https://www.red23noticias.com.ar,El reclamo por el GLP escala: presentan proyecto propio ante la falta de respuestas,reclamo,1
+2026-06-18,2026-W25,nacional,PÁGINA 12,Nacional,Nacional,Nacional,https://www.pagina12.com.ar,No hubo acuerdo con la UTA y podría haber paro de colectivos,paro,1
+2026-06-18,2026-W25,nacional,TIEMPO ARGENTINO,Nacional,Nacional,Nacional,https://www.tiempoar.com.ar,Sigue el paro universitario: cuánto cobrará un docente con el acuerdo y cuánto debería cobrar según la Ley de Financiamiento,paro,1

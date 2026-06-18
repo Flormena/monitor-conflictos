@@ -89,3 +89,33 @@
 2026-06-18 14:40:45,837 INFO         2  NOTICIASNET
 2026-06-18 14:40:45,837 INFO         2  RED 23 NOTICIAS
 2026-06-18 14:40:45,837 INFO     ============================================================
+2026-06-18 15:10:47,690 INFO     Analizando semana: 2026-W25
+2026-06-18 15:10:47,690 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-18 15:10:47,717 INFO     Titulares cargados: 3561
+2026-06-18 15:10:47,813 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W25.csv (20 filas)
+2026-06-18 15:10:47,814 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (133 filas totales, 20 de esta semana)
+2026-06-18 15:10:47,814 INFO     ============================================================
+2026-06-18 15:10:47,815 INFO     Titulares leídos:  3561
+2026-06-18 15:10:47,815 INFO     Matches totales:   20  (0.6% de detección)
+2026-06-18 15:10:47,815 INFO     ────────────────────────────────────────
+2026-06-18 15:10:47,815 INFO     Menciones por palabra clave:
+2026-06-18 15:10:47,815 INFO       paro               6
+2026-06-18 15:10:47,815 INFO       reclamo            6
+2026-06-18 15:10:47,815 INFO       marcha             4
+2026-06-18 15:10:47,815 INFO       movilización       3
+2026-06-18 15:10:47,815 INFO       protesta           1
+2026-06-18 15:10:47,815 INFO     ────────────────────────────────────────
+2026-06-18 15:10:47,815 INFO     Excluidos por filtro de bigramas:
+2026-06-18 15:10:47,815 INFO       marcha            13
+2026-06-18 15:10:47,815 INFO     ────────────────────────────────────────
+2026-06-18 15:10:47,815 INFO     Menciones por corpus:
+2026-06-18 15:10:47,815 INFO       provincial        18
+2026-06-18 15:10:47,815 INFO       nacional           2
+2026-06-18 15:10:47,815 INFO     ────────────────────────────────────────
+2026-06-18 15:10:47,815 INFO     Top 5 medios con más menciones:
+2026-06-18 15:10:47,816 INFO         2  ELONCE
+2026-06-18 15:10:47,816 INFO         2  LA UNIÓN
+2026-06-18 15:10:47,816 INFO         2  NUEVO DIARIO
+2026-06-18 15:10:47,816 INFO         2  EL COMERCIAL
+2026-06-18 15:10:47,816 INFO         2  NUEVO DÍA
+2026-06-18 15:10:47,816 INFO     ============================================================
