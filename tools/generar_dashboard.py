@@ -52,14 +52,11 @@ COLORES_PALABRAS = {
     "represión":    "#CC0000",
 }
 # EDITABLE: paleta Okabe-Ito apta para daltónicos. El rojo (#CC0000) está reservado
-# para "represión". Afecta barras, badges, circles del mapa y gráficos de línea.
+# para "represión". Afecta barras, badges, círculos del mapa y celdas del heatmap.
 # Si se agrega una palabra nueva en config/palabras_clave.csv, agregar su color aquí.
 
 COLOR_FALLBACK = "#bdc3c7"
 # EDITABLE: color para palabras sin entrada en COLORES_PALABRAS (caso excepcional).
-
-COLOR_REGION = "#3d5a80"
-# EDITABLE: color de las barras del gráfico de distribución por región.
 
 # ── Parámetros del mapa SVG ───────────────────────────────────────────────────
 MAPA_ANCHO = 520
@@ -89,17 +86,17 @@ MAPA_LON_MIN, MAPA_LON_MAX = -74.0, -52.0
 MAPA_LAT_MIN, MAPA_LAT_MAX = -57.0, -21.0
 # EDITABLE: latitud sur y norte del área visible del mapa (grados decimales).
 
-# ── Parámetros de small multiples (mini-gráficos por palabra) ────────────────
-MINI_W, MINI_H, MINI_PAD = 160, 80, 12
-# EDITABLE: dimensiones del viewBox de cada mini-gráfico (W, H) y margen interior (PAD).
-# Son unidades SVG, no píxeles de pantalla; el tamaño real lo controla el CSS.
-
 MAPEO_NOMBRES_PROVINCIA = {}
 # EDITABLE: mapeo de nombre en conflictos.csv (clave) → nombre exacto en el GeoJSON (valor).
 # Con la fuente click_that_hood los nombres coinciden directamente.
 # Si una provincia no aparece en el mapa, agregar aquí la discrepancia de nombre.
 # Ejemplos de entradas que podrían ser necesarias con otras fuentes:
 #   "Tierra del Fuego": "Tierra del Fuego, Antártida e Islas del Atlántico Sur"
+
+HEATMAP_TOP_N = 12
+# EDITABLE: cantidad de provincias mostradas en el heatmap provincia × palabra,
+# ordenadas por total de menciones descendente. Subir muestra más provincias
+# pero hace la tabla más larga; bajar la deja más compacta.
 # ═══════════════════════════════
 
 
@@ -233,27 +230,6 @@ def preparar_datos_mapa(df: pd.DataFrame) -> list[dict]:
     return resultado
 
 
-# ── Funciones de small multiples ─────────────────────────────────────────────
-
-def puntos_minigrafico(valores: list[int], max_global: int) -> list[tuple[float, float]]:
-    """
-    Convierte lista de valores enteros a coordenadas SVG para el mini-gráfico de una palabra.
-    Todos los mini-gráficos usan el mismo max_global para comparar con la misma escala Y.
-    """
-    n = len(valores)
-    if n == 0:
-        return []
-    puntos = []
-    for i, val in enumerate(valores):
-        x = MINI_PAD + (i / max(n - 1, 1)) * (MINI_W - 2 * MINI_PAD)
-        if max_global > 0:
-            y = MINI_PAD + (1 - val / max_global) * (MINI_H - 2 * MINI_PAD)
-        else:
-            y = float(MINI_H - MINI_PAD)
-        puntos.append((round(x, 1), round(y, 1)))
-    return puntos
-
-
 def formato_semana(semana_iso: str) -> str:
     """Convierte '2026-W18' en 'W18' para etiquetas cortas en gráficos."""
     return semana_iso.split("-", 1)[1]
@@ -289,25 +265,60 @@ def generar_resumen_automatico(
     """
     partes = []
     if tendencia["direccion"] == "alza":
-        partes.append(f"Las menciones subieron {tendencia['pct']}% respecto a la semana anterior")
+        partes.append(f"las menciones subieron {tendencia['pct']}% vs. semana anterior")
     elif tendencia["direccion"] == "baja":
-        partes.append(f"Las menciones bajaron {tendencia['pct']}% respecto a la semana anterior")
+        partes.append(f"las menciones bajaron {tendencia['pct']}% vs. semana anterior")
     elif tendencia["direccion"] == "estable":
-        partes.append("Las menciones se mantuvieron estables respecto a la semana anterior")
+        partes.append("las menciones se mantuvieron estables vs. semana anterior")
 
-    partes.append(f"&ldquo;{palabra_top}&rdquo; fue la palabra más mencionada ({palabra_top_count} veces)")
+    partes.append(f'"{palabra_top}" es la palabra más frecuente ({palabra_top_count})')
 
     if region_top != "—":
-        partes.append(f"{region_top} concentra la mayor actividad provincial ({region_top_count} menciones)")
+        partes.append(f"{region_top} concentra la mayor actividad provincial ({region_top_count})")
 
-    return ". ".join(partes) + "."
+    return "; ".join(partes) + "."
+
+
+def preparar_heatmap(df_exp: pd.DataFrame, palabras_orden: list[str]) -> dict:
+    """
+    Construye la matriz provincia × palabra para el heatmap (corpus provincial únicamente).
+    Selecciona las HEATMAP_TOP_N provincias con más menciones totales. La intensidad de
+    cada celda (0-1) se usa en el template como opacidad del color de esa palabra, así
+    el heatmap respeta la paleta Okabe-Ito en vez de una escala arcoíris genérica.
+    """
+    df_prov_exp = df_exp[df_exp["corpus"] == "provincial"]
+    if df_prov_exp.empty:
+        return {"filas": [], "max_celda": 0}
+
+    conteo = df_prov_exp.groupby(["provincia", "palabra"]).size()
+    top_provincias = (
+        df_prov_exp.groupby("provincia").size()
+        .sort_values(ascending=False)
+        .head(HEATMAP_TOP_N)
+        .index.tolist()
+    )
+
+    max_celda = 1
+    filas = []
+    for prov in top_provincias:
+        celdas = []
+        for palabra in palabras_orden:
+            valor = int(conteo.get((prov, palabra), 0))
+            max_celda = max(max_celda, valor)
+            celdas.append({"palabra": palabra, "valor": valor, "color": COLORES_PALABRAS.get(palabra, COLOR_FALLBACK)})
+        filas.append({"provincia": prov, "celdas": celdas})
+
+    for fila in filas:
+        for celda in fila["celdas"]:
+            celda["intensidad"] = round(celda["valor"] / max_celda, 2) if celda["valor"] else 0
+
+    return {"filas": filas, "max_celda": max_celda}
 
 
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
 
     # ── Verificar que existe el CSV de conflictos ─────────────────────────────
-    # Si no existe, el usuario todavía no corrió el analyzer.
     if not RUTA_CONFLICTOS.exists():
         print(f"Error: no se encontró {RUTA_CONFLICTOS}")
         print("Corré primero: python tools/analyzer.py")
@@ -322,24 +333,24 @@ def main() -> None:
 
     # ── Expandir filas con múltiples palabras clave ───────────────────────────
     # "paro, marcha" → dos filas separadas para poder contar por palabra.
-    # El df_exp solo se usa para conteos; el df original no se modifica.
     df_exp = df.copy()
     df_exp["palabra"] = df_exp["palabras_encontradas"].str.split(r",\s*")
     df_exp = df_exp.explode("palabra")
     df_exp["palabra"] = df_exp["palabra"].str.strip()
 
-    # ── KPIs: cuatro métricas de cabecera ─────────────────────────────────────
-    # Representan el estado global del monitor desde la primera semana hasta hoy.
+    # ── KPIs de cabecera ───────────────────────────────────────────────────────
     total_menciones = len(df)
     semanas_sorted = sorted(df["semana_iso"].unique().tolist())
     semanas_cubiertas = len(semanas_sorted)
     ultima_semana = semanas_sorted[-1]
+    medios_unicos = int(df["diario"].nunique())
 
     conteo_palabras = df_exp.groupby("palabra").size().sort_values(ascending=False)
     palabra_top       = conteo_palabras.index[0]
     palabra_top_count = int(conteo_palabras.iloc[0])
 
     df_prov = df[df["corpus"] == "provincial"]
+    provincias_unicas = int(df_prov["provincia"].nunique()) if not df_prov.empty else 0
     if not df_prov.empty:
         conteo_reg_kpi  = df_prov.groupby("region").size().sort_values(ascending=False)
         region_top       = conteo_reg_kpi.index[0]
@@ -347,99 +358,46 @@ def main() -> None:
     else:
         region_top, region_top_count = "—", 0
 
-    # ── Serie temporal: totales por semana (para Chart.js line) ──────────────
-    # Una lista de enteros: menciones totales en cada semana en orden cronológico.
+    # ── Serie temporal: totales por semana (Chart.js línea) ──────────────────
     total_por_semana = [int((df["semana_iso"] == s).sum()) for s in semanas_sorted]
-
-    # ── Conteo por semana × palabra (para small multiples y composición) ──────
-    # Diccionario anidado {semana: {palabra: count}} que alimenta dos visualizaciones.
-    conteo_sem_pal: dict[str, dict[str, int]] = {}
-    for semana in semanas_sorted:
-        df_sem = df_exp[df_exp["semana_iso"] == semana]
-        conteo_sem_pal[semana] = df_sem.groupby("palabra").size().to_dict()
-
-    # ── Small multiples: un mini-gráfico por palabra clave ───────────────────
-    # Todos usan la misma escala Y (max_global) para ser comparables entre sí.
-    # DECISIÓN METODOLÓGICA: el orden sigue COLORES_PALABRAS (no por frecuencia),
-    # para que la posición de cada palabra sea consistente entre dashboards.
-    max_global_sm = max(
-        (conteo_sem_pal[s].get(p, 0) for s in semanas_sorted for p in COLORES_PALABRAS),
-        default=1,
-    ) or 1
-
-    small_multiples = []
-    for palabra in COLORES_PALABRAS:
-        valores = [conteo_sem_pal[s].get(palabra, 0) for s in semanas_sorted]
-        small_multiples.append({
-            "palabra":    palabra,
-            "color":      COLORES_PALABRAS[palabra],
-            "valores":    valores,
-            "puntos":     puntos_minigrafico(valores, max_global_sm),
-            "max_val":    max(valores) if valores else 0,
-        })
-
-    # ── Composición: datasets para Chart.js stacked bar ──────────────────────
-    # Una serie por palabra; el mismo orden que COLORES_PALABRAS.
-    composicion_datasets = [
-        {
-            "label": palabra,
-            "color": COLORES_PALABRAS[palabra],
-            "data":  [conteo_sem_pal[s].get(palabra, 0) for s in semanas_sorted],
-        }
-        for palabra in COLORES_PALABRAS
-    ]
-
-    # ── Distribución acumulada por palabra (barras horizontales) ─────────────
-    total_palabras_sum = int(conteo_palabras.sum())
-    dist_palabras = [
-        {
-            "palabra":    p,
-            "total":      int(conteo_palabras[p]),
-            "porcentaje": round(float(conteo_palabras[p]) / total_palabras_sum * 100, 1),
-            "color":      COLORES_PALABRAS.get(p, COLOR_FALLBACK),
-        }
-        for p in conteo_palabras.index
-    ]
-    max_palabra = int(conteo_palabras.iloc[0]) if not conteo_palabras.empty else 1
-
-    # ── Distribución por región (solo corpus provincial) ─────────────────────
-    # El corpus nacional se reporta por separado (METODOLOGIA.md §2.2).
-    if not df_prov.empty:
-        conteo_reg  = df_prov.groupby("region").size().sort_values(ascending=False)
-        dist_regiones = [{"region": r, "total": int(conteo_reg[r])} for r in conteo_reg.index]
-        max_region    = int(conteo_reg.iloc[0])
-    else:
-        dist_regiones = []
-        max_region    = 1
-
-    total_nacional = int((df["corpus"] == "nacional").sum())
-
-    # ── Tendencia y resumen automático ────────────────────────────────────────
-    # Compara la última semana contra la anterior y redacta una oración de contexto.
-    # Da una lectura inmediata antes de que el usuario explore los gráficos en detalle.
     tendencia = calcular_tendencia(total_por_semana)
     resumen_automatico = generar_resumen_automatico(
         tendencia, palabra_top, palabra_top_count, region_top, region_top_count
     )
 
+    # ── Distribución acumulada por palabra (Chart.js barra) ──────────────────
+    total_palabras_sum = int(conteo_palabras.sum())
+    palabras_orden = list(COLORES_PALABRAS.keys())
+    dist_palabras = [
+        {
+            "palabra":    p,
+            "total":      int(conteo_palabras.get(p, 0)),
+            "porcentaje": round(float(conteo_palabras.get(p, 0)) / total_palabras_sum * 100, 1),
+            "color":      COLORES_PALABRAS.get(p, COLOR_FALLBACK),
+        }
+        for p in conteo_palabras.index
+    ]
+
+    total_nacional = int((df["corpus"] == "nacional").sum())
+
+    # ── Heatmap provincia × palabra (corpus provincial) ───────────────────────
+    # Ver METODOLOGIA.md §5.4: con pocas semanas la matriz es naturalmente sparse;
+    # eso es información real (baja conflictividad), no un error de visualización.
+    heatmap = preparar_heatmap(df_exp, palabras_orden)
+
     # ── Mapa SVG: paths y círculos por provincia ──────────────────────────────
-    # El GeoJSON se proyecta a SVG en Python; el HTML final no carga ninguna librería de mapas.
     if not RUTA_GEOJSON.exists():
         print("Advertencia: GeoJSON no encontrado → el mapa no se generará.")
         print("  Corré: python tools/descargar_assets.py")
     provincias_mapa = preparar_datos_mapa(df)
 
-    # ── Ranking de provincias: top 10 con menciones, para la lista junto al mapa ─
-    # El mapa y esta lista están vinculados en el browser: clic en una provincia
-    # filtra ambos (ver JS al final del template).
+    # ── Ranking de provincias: top 10, vinculado al mapa en el browser ────────
     provincias_ranking = sorted(
         (p for p in provincias_mapa if not p["sin_datos"]),
         key=lambda p: -p["menciones"],
     )[:10]
 
     # ── Tabla filtrable: todas las filas del CSV ──────────────────────────────
-    # Ordenadas de más reciente a más antiguo; el filtrado ocurre en el browser con JS.
-    # Incluye "provincia" para que el clic en el mapa pueda filtrar la tabla.
     columnas_tabla = ["semana_iso", "corpus", "diario", "provincia", "region", "titular", "palabras_encontradas"]
     filas_tabla = (
         df.sort_values("fecha", ascending=False)[columnas_tabla]
@@ -451,15 +409,13 @@ def main() -> None:
     corpus_opciones    = sorted(df["corpus"].unique().tolist())
     regiones_opciones  = sorted(df[df["region"] != "Nacional"]["region"].unique().tolist())
     palabras_opciones  = sorted(df_exp["palabra"].unique().tolist())
+    provincias_opciones = sorted(df_prov["provincia"].unique().tolist()) if not df_prov.empty else []
 
     # ── Renderizar con Jinja2 ─────────────────────────────────────────────────
-    # La plantilla recibe todos los datos ya calculados. No hay lógica de negocio
-    # en el template: todo llega listo para renderizar.
     env = Environment(
         loader=FileSystemLoader(str(RUTA_TEMPLATES)),
         autoescape=True,
     )
-    # Filtro tojson: convierte objetos Python a JSON embebible en <script> con | tojson | safe
     env.filters["tojson"] = lambda obj: json.dumps(obj, ensure_ascii=False)
 
     template = env.get_template("dashboard.html.j2")
@@ -472,49 +428,42 @@ def main() -> None:
         "total_menciones":      total_menciones,
         "semanas_cubiertas":    semanas_cubiertas,
         "ultima_semana":        ultima_semana,
+        "primera_semana":       semanas_sorted[0],
+        "medios_unicos":        medios_unicos,
+        "provincias_unicas":    provincias_unicas,
         "palabra_top":          palabra_top,
         "palabra_top_count":    palabra_top_count,
         "region_top":           region_top,
         "region_top_count":     region_top_count,
         "tendencia":            tendencia,
         "resumen_automatico":   resumen_automatico,
-        # Serie temporal
+        # Serie temporal y distribución por palabra
         "semanas":              semanas_sorted,
         "semanas_cortas":       [formato_semana(s) for s in semanas_sorted],
         "total_por_semana":     total_por_semana,
-        # Small multiples
-        "small_multiples":      small_multiples,
-        "mini_w":               MINI_W,
-        "mini_h":               MINI_H,
-        "mini_pad":             MINI_PAD,
-        # Distribuciones
         "dist_palabras":        dist_palabras,
-        "max_palabra":          max_palabra,
-        "dist_regiones":        dist_regiones,
-        "max_region":           max_region,
         "total_nacional":       total_nacional,
+        # Heatmap
+        "heatmap":              heatmap,
+        "palabras_orden":       palabras_orden,
         # Mapa
         "provincias_mapa":      provincias_mapa,
         "provincias_ranking":   provincias_ranking,
         "mapa_ancho":           MAPA_ANCHO,
         "mapa_alto":            MAPA_ALTO,
-        # Composición
-        "composicion_datasets": composicion_datasets,
         # Tabla
         "filas_tabla":          filas_tabla,
         "corpus_opciones":      corpus_opciones,
         "regiones_opciones":    regiones_opciones,
         "palabras_opciones":    palabras_opciones,
+        "provincias_opciones":  provincias_opciones,
         "semanas_opciones":     semanas_sorted,
         # Colores
         "colores":              COLORES_PALABRAS,
         "color_fallback":       COLOR_FALLBACK,
-        "color_region":         COLOR_REGION,
     }
 
     # ── Escribir docs/index.html ──────────────────────────────────────────────
-    # GitHub Pages publica todo lo que está en docs/. No editar index.html a mano:
-    # siempre regenerar con este script para que los datos estén al día.
     RUTA_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     RUTA_OUTPUT.write_text(template.render(**contexto), encoding="utf-8")
 
