@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Seguimiento diario — prueba de una semana</title>
+<script src="../docs/assets/chart.v4.min.js"></script>
+<style>
+  body { font-family: system-ui, sans-serif; background:#0d0f14; color:#cdd6f4; padding:2rem; max-width:900px; margin:0 auto; }
+  h1 { font-size: 1.15rem; font-weight:600; }
+  .nota { color:#6c7086; font-size:.82rem; margin-top:1.25rem; line-height:1.6; }
+  table { border-collapse: collapse; margin-top:1.5rem; font-size:.85rem; width:100%; }
+  th, td { padding: .45rem .8rem; border-bottom: 1px solid #1e2330; text-align:left; }
+  th { color:#6c7086; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; }
+</style>
+</head>
+<body>
+  <h1>Seguimiento diario — prueba de una semana (1 corrida registrada)</h1>
+  <canvas id="c" height="110"></canvas>
+  <table>
+    <tr><th>Fecha</th><th>Semana</th><th>Titulares scrapeados</th><th>Matches</th></tr>
+    <tr><td>2026-06-18</td><td>2026-W25</td><td>3561</td><td>20</td></tr>
+  </table>
+  <p class="nota">
+    Generado por analisis/seguimiento_diario.py. Esto NO es el dashboard oficial
+    (docs/index.html): es una herramienta temporal para evaluar si conviene una
+    cadencia de corrida más frecuente que la semanal, antes de fijar día y horario
+    definitivos (METODOLOGIA.md §8.4, todavía pendiente).
+  </p>
+</body>
+<script>
+new Chart(document.getElementById('c').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: ["2026-06-18"],
+    datasets: [
+      {
+        label: 'Matches (palabras clave)',
+        data: [20],
+        borderColor: '#4cc9f0',
+        backgroundColor: 'rgba(76,201,240,0.1)',
+        fill: true,
+        tension: 0.2,
+        pointRadius: 4,
+      },
+      {
+        label: 'Titulares scrapeados',
+        data: [3561],
+        borderColor: '#6c7086',
+        borderDash: [4,4],
+        fill: false,
+        pointRadius: 3,
+        yAxisID: 'y2',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y:  { beginAtZero: true, ticks: { color:'#6c7086' }, grid: { color:'#1e2330' } },
+      y2: { position: 'right', beginAtZero: true, ticks: { color:'#6c7086' }, grid: { display:false } },
+      x:  { ticks: { color:'#6c7086' }, grid: { color:'#1e2330' } }
+    },
+    plugins: { legend: { labels: { color:'#cdd6f4' } } }
+  }
+});
+</script>
+</html>

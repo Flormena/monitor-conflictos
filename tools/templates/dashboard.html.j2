@@ -325,6 +325,25 @@
 
 <div class="resumen">{{ resumen_automatico }}</div>
 
+{# ── PROVISORIO: seguimiento diario ──────────────────────────────────────────
+   Bloque temporal para la prueba de cadencia diaria (analisis/seguimiento_diario.py).
+   Solo se renderiza si existe analisis/seguimiento_diario.csv. Cuando termine la
+   semana de prueba, borrar este bloque completo (y lo correspondiente en
+   generar_dashboard.py, ver comentario PROVISORIO ahí). #}
+{% if seguimiento_diario %}
+<div class="panel" style="border-bottom:2px dashed var(--accent-2)">
+  <div class="panel-title">
+    <span style="color:var(--accent-2)">⚠ PRUEBA TEMPORAL · SEGUIMIENTO DIARIO</span>
+    <span class="hl">{{ seguimiento_diario.n }} corrida{{ 's' if seguimiento_diario.n != 1 else '' }}</span>
+  </div>
+  <canvas id="chart-seguimiento" height="90"></canvas>
+  <div class="panel-nota">
+    bloque provisorio para evaluar la cadencia de corrida (METODOLOGIA.md §8.4 pendiente);
+    no es parte del dashboard oficial y se va a quitar al terminar la prueba
+  </div>
+</div>
+{% endif %}
+
 <!-- Mapa de conflictividad -->
 <div class="panel" style="border-bottom:1px solid var(--border)">
   <div class="panel-title">
@@ -554,6 +573,46 @@ new Chart(document.getElementById('chart-palabras').getContext('2d'), {
     }
   }
 });
+
+{% if seguimiento_diario %}
+// PROVISORIO: gráfico de la prueba temporal de cadencia diaria. Quitar junto
+// con el bloque HTML correspondiente cuando termine la semana de prueba.
+new Chart(document.getElementById('chart-seguimiento').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: {{ seguimiento_diario.fechas | tojson | safe }},
+    datasets: [
+      {
+        label: 'Matches (palabras clave)',
+        data: {{ seguimiento_diario.matches | tojson | safe }},
+        borderColor: '#ffb703',
+        backgroundColor: 'rgba(255,183,3,0.1)',
+        fill: true,
+        tension: 0.2,
+        pointRadius: 4,
+      },
+      {
+        label: 'Titulares scrapeados',
+        data: {{ seguimiento_diario.titulares | tojson | safe }},
+        borderColor: '#6c7086',
+        borderDash: [4,4],
+        fill: false,
+        pointRadius: 3,
+        yAxisID: 'y2',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y:  { beginAtZero: true, ticks: { color: '#6c7086', precision: 0 }, grid: { color: '#1e2330' } },
+      y2: { position: 'right', beginAtZero: true, ticks: { color: '#6c7086', precision: 0 }, grid: { display: false } },
+      x:  { ticks: { color: '#6c7086', font: { family: 'ui-monospace, monospace', size: 11 } }, grid: { color: '#1e2330' } }
+    },
+    plugins: { legend: { labels: { color: '#cdd6f4', font: { size: 11 } } } }
+  }
+});
+{% endif %}
 
 // ── Vínculo mapa ↔ ranking ↔ selector ↔ tabla ─────────────────────────────────
 var provinciaSeleccionada = null;

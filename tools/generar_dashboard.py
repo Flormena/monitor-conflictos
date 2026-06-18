@@ -35,6 +35,14 @@ RUTA_GEOJSON = RUTA_ASSETS / "provincias.geojson"
 # EDITABLE: GeoJSON de provincias argentinas generado por tools/descargar_assets.py.
 # Si no existe, el mapa aparece vacío con un mensaje. No detiene la generación.
 
+RUTA_SEGUIMIENTO_DIARIO = RAIZ / "analisis" / "seguimiento_diario.csv"
+# PROVISORIO: bloque de prueba temporal (analisis/seguimiento_diario.py), para evaluar
+# la cadencia de corrida antes de fijar METODOLOGIA.md §8.4. Si este archivo no existe,
+# el bloque correspondiente del dashboard simplemente no se renderiza. Cuando termine
+# la semana de prueba: borrar esta constante, la función cargar_seguimiento_diario(),
+# la clave "seguimiento_diario" del contexto, y el bloque marcado PROVISORIO en
+# tools/templates/dashboard.html.j2.
+
 TITULO = "Monitor de Conflictividad Social · Argentina"
 # EDITABLE: título en la pestaña del browser y en el encabezado del dashboard.
 
@@ -315,6 +323,32 @@ def preparar_heatmap(df_exp: pd.DataFrame, palabras_orden: list[str]) -> dict:
     return {"filas": filas, "max_celda": max_celda}
 
 
+def cargar_seguimiento_diario() -> dict | None:
+    """
+    PROVISORIO: lee analisis/seguimiento_diario.csv (prueba temporal de cadencia diaria).
+    Devuelve None si el archivo no existe, para que el template no muestre el bloque.
+    No usa pandas a propósito: es un CSV chico y así queda autocontenida la función
+    a remover cuando termine la prueba.
+    """
+    import csv as csv_mod
+
+    if not RUTA_SEGUIMIENTO_DIARIO.exists():
+        return None
+
+    with open(RUTA_SEGUIMIENTO_DIARIO, encoding="utf-8-sig") as f:
+        filas = list(csv_mod.DictReader(f))
+
+    if not filas:
+        return None
+
+    return {
+        "fechas":     [r["fecha"] for r in filas],
+        "matches":    [int(r["matches"]) for r in filas],
+        "titulares":  [int(r["titulares_scrapeados"]) for r in filas],
+        "n":          len(filas),
+    }
+
+
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
 
@@ -380,6 +414,9 @@ def main() -> None:
 
     total_nacional = int((df["corpus"] == "nacional").sum())
 
+    # ── PROVISORIO: seguimiento diario (prueba temporal, ver workflows/correr_manual.md) ─
+    seguimiento_diario = cargar_seguimiento_diario()
+
     # ── Heatmap provincia × palabra (corpus provincial) ───────────────────────
     # Ver METODOLOGIA.md §5.4: con pocas semanas la matriz es naturalmente sparse;
     # eso es información real (baja conflictividad), no un error de visualización.
@@ -437,6 +474,7 @@ def main() -> None:
         "region_top_count":     region_top_count,
         "tendencia":            tendencia,
         "resumen_automatico":   resumen_automatico,
+        "seguimiento_diario":   seguimiento_diario,  # PROVISORIO: None si no hay prueba activa
         # Serie temporal y distribución por palabra
         "semanas":              semanas_sorted,
         "semanas_cortas":       [formato_semana(s) for s in semanas_sorted],

@@ -325,6 +325,21 @@
 
 <div class="resumen">las menciones bajaron 56% vs. semana anterior; &#34;marcha&#34; es la palabra más frecuente (47); Patagonia concentra la mayor actividad provincial (41).</div>
 
+
+
+<div class="panel" style="border-bottom:2px dashed var(--accent-2)">
+  <div class="panel-title">
+    <span style="color:var(--accent-2)">⚠ PRUEBA TEMPORAL · SEGUIMIENTO DIARIO</span>
+    <span class="hl">1 corrida</span>
+  </div>
+  <canvas id="chart-seguimiento" height="90"></canvas>
+  <div class="panel-nota">
+    bloque provisorio para evaluar la cadencia de corrida (METODOLOGIA.md §8.4 pendiente);
+    no es parte del dashboard oficial y se va a quitar al terminar la prueba
+  </div>
+</div>
+
+
 <!-- Mapa de conflictividad -->
 <div class="panel" style="border-bottom:1px solid var(--border)">
   <div class="panel-title">
@@ -3897,6 +3912,46 @@ new Chart(document.getElementById('chart-palabras').getContext('2d'), {
     }
   }
 });
+
+
+// PROVISORIO: gráfico de la prueba temporal de cadencia diaria. Quitar junto
+// con el bloque HTML correspondiente cuando termine la semana de prueba.
+new Chart(document.getElementById('chart-seguimiento').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: ["2026-06-18"],
+    datasets: [
+      {
+        label: 'Matches (palabras clave)',
+        data: [20],
+        borderColor: '#ffb703',
+        backgroundColor: 'rgba(255,183,3,0.1)',
+        fill: true,
+        tension: 0.2,
+        pointRadius: 4,
+      },
+      {
+        label: 'Titulares scrapeados',
+        data: [3561],
+        borderColor: '#6c7086',
+        borderDash: [4,4],
+        fill: false,
+        pointRadius: 3,
+        yAxisID: 'y2',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y:  { beginAtZero: true, ticks: { color: '#6c7086', precision: 0 }, grid: { color: '#1e2330' } },
+      y2: { position: 'right', beginAtZero: true, ticks: { color: '#6c7086', precision: 0 }, grid: { display: false } },
+      x:  { ticks: { color: '#6c7086', font: { family: 'ui-monospace, monospace', size: 11 } }, grid: { color: '#1e2330' } }
+    },
+    plugins: { legend: { labels: { color: '#cdd6f4', font: { size: 11 } } } }
+  }
+});
+
 
 // ── Vínculo mapa ↔ ranking ↔ selector ↔ tabla ─────────────────────────────────
 var provinciaSeleccionada = null;
