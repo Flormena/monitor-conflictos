@@ -18,7 +18,7 @@
   <canvas id="c" height="110"></canvas>
   <table>
     <tr><th>Fecha</th><th>Semana</th><th>Titulares scrapeados</th><th>Matches</th></tr>
-    <tr><td>2026-06-18</td><td>2026-W25</td><td>3561</td><td>20</td></tr><tr><td>2026-06-19</td><td>2026-W25</td><td>3557</td><td>32</td></tr>
+    <tr><td>2026-06-18</td><td>2026-W25</td><td>3561</td><td>20</td></tr><tr><td>2026-06-19</td><td>2026-W25</td><td>3556</td><td>22</td></tr>
   </table>
   <p class="nota">
     Generado por analisis/seguimiento_diario.py. Esto NO es el dashboard oficial
@@ -35,7 +35,7 @@ new Chart(document.getElementById('c').getContext('2d'), {
     datasets: [
       {
         label: 'Matches (palabras clave)',
-        data: [20, 32],
+        data: [20, 22],
         borderColor: '#4cc9f0',
         backgroundColor: 'rgba(76,201,240,0.1)',
         fill: true,
@@ -44,7 +44,7 @@ new Chart(document.getElementById('c').getContext('2d'), {
       },
       {
         label: 'Titulares scrapeados',
-        data: [3561, 3557],
+        data: [3561, 3556],
         borderColor: '#6c7086',
         borderDash: [4,4],
         fill: false,

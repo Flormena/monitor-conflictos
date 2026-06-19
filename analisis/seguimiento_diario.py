@@ -65,11 +65,19 @@ def main() -> None:
     total_matches = len(matches)
 
     # ── Registrar la fila de hoy en el log acumulado ──────────────────────────
-    existe = RUTA_LOG.exists()
-    with open(RUTA_LOG, mode="a", newline="", encoding="utf-8-sig") as f:
+    # Idempotente por día: si ya existe una fila con la fecha de hoy (ej. se
+    # corrió el scraper dos veces el mismo día, o se reprocesó con un filtro
+    # nuevo), se reemplaza en vez de duplicar la fecha en el gráfico.
+    filas_previas = []
+    if RUTA_LOG.exists():
+        with open(RUTA_LOG, encoding="utf-8-sig") as f:
+            filas_previas = [r for r in csv.DictReader(f) if r["fecha"] != hoy]
+
+    with open(RUTA_LOG, mode="w", newline="", encoding="utf-8-sig") as f:
         writer = csv.writer(f)
-        if not existe:
-            writer.writerow(["fecha", "semana_iso", "titulares_scrapeados", "matches"])
+        writer.writerow(["fecha", "semana_iso", "titulares_scrapeados", "matches"])
+        for r in filas_previas:
+            writer.writerow([r["fecha"], r["semana_iso"], r["titulares_scrapeados"], r["matches"]])
         writer.writerow([hoy, semana, total_titulares, total_matches])
 
     print(f"Registrado: {hoy} → {total_matches} matches / {total_titulares} titulares")

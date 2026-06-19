@@ -180,3 +180,34 @@
 2026-06-19 20:46:54,840 INFO         1  LA UNIÓN
 2026-06-19 20:46:54,840 INFO         1  EL LIBERAL
 2026-06-19 20:46:54,840 INFO     ============================================================
+2026-06-19 20:54:13,799 INFO     Analizando semana: 2026-W25
+2026-06-19 20:54:13,799 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-19 20:54:13,843 INFO     Titulares cargados: 3556
+2026-06-19 20:54:13,935 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W25.csv (22 filas)
+2026-06-19 20:54:13,936 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (131 filas totales, 22 de esta semana)
+2026-06-19 20:54:13,936 INFO     ============================================================
+2026-06-19 20:54:13,936 INFO     Titulares leídos:  3556
+2026-06-19 20:54:13,936 INFO     Matches totales:   22  (0.6% de detección)
+2026-06-19 20:54:13,936 INFO     ────────────────────────────────────────
+2026-06-19 20:54:13,936 INFO     Menciones por palabra clave:
+2026-06-19 20:54:13,936 INFO       reclamo           12
+2026-06-19 20:54:13,936 INFO       paro               4
+2026-06-19 20:54:13,936 INFO       marcha             3
+2026-06-19 20:54:13,936 INFO       movilización       2
+2026-06-19 20:54:13,936 INFO       protesta           1
+2026-06-19 20:54:13,937 INFO     ────────────────────────────────────────
+2026-06-19 20:54:13,937 INFO     Excluidos por filtro de bigramas:
+2026-06-19 20:54:13,937 INFO       reclamo           11
+2026-06-19 20:54:13,937 INFO       marcha             9
+2026-06-19 20:54:13,937 INFO     ────────────────────────────────────────
+2026-06-19 20:54:13,937 INFO     Menciones por corpus:
+2026-06-19 20:54:13,937 INFO       provincial        20
+2026-06-19 20:54:13,937 INFO       nacional           2
+2026-06-19 20:54:13,937 INFO     ────────────────────────────────────────
+2026-06-19 20:54:13,937 INFO     Top 5 medios con más menciones:
+2026-06-19 20:54:13,937 INFO         3  TIEMPO SUR
+2026-06-19 20:54:13,937 INFO         2  LA VOZ DEL INTERIOR
+2026-06-19 20:54:13,937 INFO         2  EL ZONDA
+2026-06-19 20:54:13,937 INFO         1  MDZ ONLINE
+2026-06-19 20:54:13,937 INFO         1  EL ESQUIÚ
+2026-06-19 20:54:13,937 INFO     ============================================================
