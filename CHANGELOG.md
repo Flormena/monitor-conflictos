@@ -7,6 +7,17 @@
 
 ## [No publicado]
 
+### Decisión metodológica — 2026-06-19: filtro de bigramas para "reclamo"
+- Análisis de 43 menciones acumuladas (W18+W23+W25) detectó ~65% de falsos positivos
+  en "reclamo": disputas deportivas internacionales (Argelia–FIFA), reclamos
+  territoriales/de soberanía (La Rioja–San Juan, Malvinas), búsqueda de justicia
+  en causas penales. Detectado durante la prueba temporal de cadencia diaria.
+- Se agregan 14 bigramas de exclusión a `BIGRAMAS_EXCLUIDOS["reclamo"]` en
+  `tools/analyzer.py`. Reduce los FP de ~65% a ~46% sobre la muestra (no elimina
+  todo el ruido: persisten reclamos políticos/institucionales y casos de justicia
+  sin patrón sintáctico estandarizado). Ver METODOLOGIA.md §8.2.
+- W18, W23 y W25 reprocesadas con el nuevo filtro.
+
 ### Dashboard v2 (2026-06-01)
 - **Paleta Okabe-Ito apta para daltónicos**: reemplaza la paleta anterior. Rojo `#CC0000`
   reservado para "represión"; el resto usa Okabe-Ito (distinguible para deuteranopía,

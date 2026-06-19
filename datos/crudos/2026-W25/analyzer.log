@@ -119,3 +119,64 @@
 2026-06-18 15:10:47,816 INFO         2  EL COMERCIAL
 2026-06-18 15:10:47,816 INFO         2  NUEVO DÍA
 2026-06-18 15:10:47,816 INFO     ============================================================
+2026-06-19 19:56:32,737 INFO     Analizando semana: 2026-W25
+2026-06-19 19:56:32,737 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-19 19:56:32,770 INFO     Titulares cargados: 3557
+2026-06-19 19:56:32,869 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W25.csv (32 filas)
+2026-06-19 19:56:32,913 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (145 filas totales, 32 de esta semana)
+2026-06-19 19:56:32,913 INFO     ============================================================
+2026-06-19 19:56:32,913 INFO     Titulares leídos:  3557
+2026-06-19 19:56:32,913 INFO     Matches totales:   32  (0.9% de detección)
+2026-06-19 19:56:32,913 INFO     ────────────────────────────────────────
+2026-06-19 19:56:32,913 INFO     Menciones por palabra clave:
+2026-06-19 19:56:32,913 INFO       reclamo           25
+2026-06-19 19:56:32,913 INFO       paro               2
+2026-06-19 19:56:32,913 INFO       movilización       2
+2026-06-19 19:56:32,913 INFO       marcha             2
+2026-06-19 19:56:32,913 INFO       protesta           1
+2026-06-19 19:56:32,913 INFO     ────────────────────────────────────────
+2026-06-19 19:56:32,913 INFO     Excluidos por filtro de bigramas:
+2026-06-19 19:56:32,913 INFO       marcha             9
+2026-06-19 19:56:32,913 INFO     ────────────────────────────────────────
+2026-06-19 19:56:32,913 INFO     Menciones por corpus:
+2026-06-19 19:56:32,913 INFO       provincial        27
+2026-06-19 19:56:32,913 INFO       nacional           5
+2026-06-19 19:56:32,916 INFO     ────────────────────────────────────────
+2026-06-19 19:56:32,916 INFO     Top 5 medios con más menciones:
+2026-06-19 19:56:32,916 INFO         3  LA VOZ DEL INTERIOR
+2026-06-19 19:56:32,916 INFO         3  EL ZONDA
+2026-06-19 19:56:32,916 INFO         3  TIEMPO SUR
+2026-06-19 19:56:32,916 INFO         2  NUEVA RIOJA
+2026-06-19 19:56:32,916 INFO         1  EL CHORRILLERO
+2026-06-19 19:56:32,916 INFO     ============================================================
+2026-06-19 20:46:54,707 INFO     Analizando semana: 2026-W25
+2026-06-19 20:46:54,707 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-19 20:46:54,707 INFO     Titulares cargados: 3557
+2026-06-19 20:46:54,810 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W25.csv (21 filas)
+2026-06-19 20:46:54,840 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (130 filas totales, 21 de esta semana)
+2026-06-19 20:46:54,840 INFO     ============================================================
+2026-06-19 20:46:54,840 INFO     Titulares leídos:  3557
+2026-06-19 20:46:54,840 INFO     Matches totales:   21  (0.6% de detección)
+2026-06-19 20:46:54,840 INFO     ────────────────────────────────────────
+2026-06-19 20:46:54,840 INFO     Menciones por palabra clave:
+2026-06-19 20:46:54,840 INFO       reclamo           14
+2026-06-19 20:46:54,840 INFO       paro               2
+2026-06-19 20:46:54,840 INFO       movilización       2
+2026-06-19 20:46:54,840 INFO       marcha             2
+2026-06-19 20:46:54,840 INFO       protesta           1
+2026-06-19 20:46:54,840 INFO     ────────────────────────────────────────
+2026-06-19 20:46:54,840 INFO     Excluidos por filtro de bigramas:
+2026-06-19 20:46:54,840 INFO       reclamo           11
+2026-06-19 20:46:54,840 INFO       marcha             9
+2026-06-19 20:46:54,840 INFO     ────────────────────────────────────────
+2026-06-19 20:46:54,840 INFO     Menciones por corpus:
+2026-06-19 20:46:54,840 INFO       provincial        19
+2026-06-19 20:46:54,840 INFO       nacional           2
+2026-06-19 20:46:54,840 INFO     ────────────────────────────────────────
+2026-06-19 20:46:54,840 INFO     Top 5 medios con más menciones:
+2026-06-19 20:46:54,840 INFO         3  LA VOZ DEL INTERIOR
+2026-06-19 20:46:54,840 INFO         3  TIEMPO SUR
+2026-06-19 20:46:54,840 INFO         2  EL ZONDA
+2026-06-19 20:46:54,840 INFO         1  LA UNIÓN
+2026-06-19 20:46:54,840 INFO         1  EL LIBERAL
+2026-06-19 20:46:54,840 INFO     ============================================================

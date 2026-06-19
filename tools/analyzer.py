@@ -35,6 +35,13 @@ BIGRAMAS_EXCLUIDOS: dict[str, list[str]] = {
         "marcha de la economia",  # contexto económico genérico
         "marcha de los precios",  # contexto económico
     ],
+    "reclamo": [
+        "a la fifa", "ante la fifa", "contra la fifa", "ante fifa",  # disputas deportivas internacionales
+        "de soberania", "reclamo territorial", "reclamo de territorio",  # disputas territoriales
+        "limites provinciales", "limites con",  # disputas de límites entre provincias
+        "avances en la causa", "avances de la causa",  # búsqueda de justicia en causas penales
+        "reclamo judicial", "reclamo justicia", "reclamo de justicia",
+    ],
 }
 # ═══════════════════════════════
 

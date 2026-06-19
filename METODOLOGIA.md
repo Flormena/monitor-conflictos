@@ -364,8 +364,36 @@ como un uso legítimo ("llamaron a la marcha"), el titular queda excluido. Se ac
 este costo por ser casos extremadamente raros.
 
 **Extensión futura:** el dict `BIGRAMAS_EXCLUIDOS` admite otras palabras clave.
-Agregar entradas para "paro", "protesta", "reclamo" cuando los datos justifiquen
-la tasa de FP correspondiente.
+Agregar entradas para "paro" y "protesta" cuando los datos justifiquen la tasa
+de FP correspondiente.
+
+**✅ Extensión — 2026-06-19: "reclamo"**
+
+**Motivación:** análisis de las 43 menciones acumuladas de "reclamo" en W18, W23
+y W25 mostró una tasa de falsos positivos muy alta (~65%), detectada durante la
+prueba temporal de cadencia diaria (`analisis/seguimiento_diario.py`). A diferencia
+de "marcha", los falsos positivos de "reclamo" no se concentran en un solo patrón
+sintáctico, sino en varios: disputas deportivas internacionales (Argelia–FIFA por
+el Mundial), reclamos territoriales/de soberanía entre provincias o países (La
+Rioja–San Juan, Malvinas), y búsqueda de justicia en causas penales ("reclamó
+avances en la causa", "reclamo judicial").
+
+**Lista agregada (palabra "reclamo"):**
+- `a la fifa`, `ante la fifa`, `contra la fifa`, `ante fifa` — disputas deportivas internacionales
+- `de soberania`, `reclamo territorial`, `reclamo de territorio` — disputas territoriales
+- `limites provinciales`, `limites con` — disputas de límites entre provincias
+- `avances en la causa`, `avances de la causa`, `reclamo judicial`,
+  `reclamo justicia`, `reclamo de justicia` — búsqueda de justicia en causas penales
+
+**Limitación reconocida — distinta a la de "marcha":** esta lista cubre los
+patrones más explícitos y reduce los FP de ~65% a ~46% sobre la muestra analizada
+(28/43 mencionados quedan, de los cuales varios siguen siendo ruido: reclamos
+políticos/institucionales genéricos, búsqueda de justicia con frases no
+estandarizadas, un caso de comentario internacional sin patrón recurrente). Esto
+sugiere que "reclamo" podría requerir eventualmente la **Opción C (filtrado
+contextual)** de esta misma sección si la tasa residual no mejora con más datos.
+Se opta por aplicar Opción B como mitigación parcial ahora, dado que ya reduce el
+ruido significativamente, y revisar de nuevo tras acumular más semanas.
 
 ### 8.3 Incorporación de secciones internas
 
