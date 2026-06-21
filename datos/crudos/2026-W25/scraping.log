@@ -654,3 +654,167 @@
 2026-06-19 20:51:42,105 INFO     Resumen: 79 medios procesados | 75 exitosos | 4 fallidos | 3556 titulares totales
 2026-06-19 20:51:42,105 INFO     Titulares → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\crudos\2026-W25\titulares.csv
 2026-06-19 20:51:42,106 INFO     HTML crudos → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\crudos\2026-W25/
+2026-06-21 13:33:28,108 INFO     Semana: 2026-W25 | Medios a procesar: 79 (69 prov. + 10 nac.)
+2026-06-21 13:33:28,108 INFO     ============================================================
+2026-06-21 13:33:28,108 INFO     [PROVINCIAL] EL DÍA (Buenos Aires) — https://www.eldia.com
+2026-06-21 13:33:28,398 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:33:30,399 INFO     [PROVINCIAL] EN ORSAI (Buenos Aires) — https://www.enorsai.com.ar
+2026-06-21 13:33:30,624 INFO       → OK | 47 titulares extraídos
+2026-06-21 13:33:32,634 INFO     [PROVINCIAL] 5 DÍAS (Buenos Aires) — https://www.diario5dias.com.ar
+2026-06-21 13:33:33,574 INFO       → OK | 32 titulares extraídos
+2026-06-21 13:33:35,577 INFO     [PROVINCIAL] LA VOZ DEL INTERIOR (Córdoba) — https://www.lavoz.com.ar
+2026-06-21 13:33:35,768 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:33:37,769 INFO     [PROVINCIAL] EL DIARIO (Córdoba) — https://www.eldiariodecarlospaz.com.ar
+2026-06-21 13:33:37,943 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:33:39,945 INFO     [PROVINCIAL] EL DIARIO DEL CENTRO DEL PAÍS (Córdoba) — https://www.eldiariocba.com.ar
+2026-06-21 13:33:40,060 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:33:42,061 INFO     [PROVINCIAL] EL DIARIO (Entre Ríos) — https://www.eldiario.com.ar
+2026-06-21 13:33:42,667 INFO       → OK | 30 titulares extraídos
+2026-06-21 13:33:44,668 INFO     [PROVINCIAL] ELONCE (Entre Ríos) — https://www.elonce.com
+2026-06-21 13:33:44,953 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:33:46,958 INFO     [PROVINCIAL] UNO ENTRE RÍOS (Entre Ríos) — https://www.unoentrerios.com.ar
+2026-06-21 13:33:47,420 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:33:49,424 INFO     [PROVINCIAL] RAFAELA NOTICIAS (Santa Fe) — https://www.rafaelanoticias.com.ar
+2026-06-21 13:33:49,440 WARNING    → FALLO (ConnectionError) | sin titulares
+2026-06-21 13:33:51,442 INFO     [PROVINCIAL] LA CAPITAL (Santa Fe) — https://www.lacapital.com.ar
+2026-06-21 13:33:51,848 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:33:53,850 INFO     [PROVINCIAL] AIRE DIGITAL (Santa Fe) — https://www.airedesantafe.com.ar
+2026-06-21 13:33:54,294 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:33:56,295 INFO     [PROVINCIAL] DIARIO UNO (Mendoza) — https://www.diariouno.com.ar
+2026-06-21 13:33:56,602 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:33:58,603 INFO     [PROVINCIAL] LOS ANDES (Mendoza) — https://www.losandes.com.ar
+2026-06-21 13:33:58,766 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:00,774 INFO     [PROVINCIAL] MDZ ONLINE (Mendoza) — https://www.mdzol.com
+2026-06-21 13:34:01,126 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:03,127 INFO     [PROVINCIAL] DIARIO DE CUYO (San Juan) — https://www.diariodecuyo.com.ar
+2026-06-21 13:34:03,272 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:05,289 INFO     [PROVINCIAL] EL ZONDA (San Juan) — https://www.diarioelzondasj.com.ar
+2026-06-21 13:34:05,509 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:07,510 INFO     [PROVINCIAL] HUARPE (San Juan) — https://www.diariohuarpe.com
+2026-06-21 13:34:08,415 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:10,430 INFO     [PROVINCIAL] DIARIO DE LA REPÚBLICA (San Luis) — https://www.eldiariodelarepublica.com
+2026-06-21 13:34:11,395 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:13,397 INFO     [PROVINCIAL] EL CHORRILLERO (San Luis) — https://www.elchorrillero.com
+2026-06-21 13:34:13,679 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:15,686 INFO     [PROVINCIAL] VILLA MERCEDES INFO (San Luis) — https://www.villamercedes.info
+2026-06-21 13:34:17,981 INFO       → OK | 46 titulares extraídos
+2026-06-21 13:34:19,983 INFO     [PROVINCIAL] EL ANCASTI (Catamarca) — https://www.elancasti.com.ar
+2026-06-21 13:34:20,110 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:22,112 INFO     [PROVINCIAL] EL ESQUIÚ (Catamarca) — https://www.elesquiu.com
+2026-06-21 13:34:22,243 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:24,248 INFO     [PROVINCIAL] LA UNIÓN (Catamarca) — https://www.launion.digital
+2026-06-21 13:34:24,514 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:26,541 INFO     [PROVINCIAL] EL TRIBUNO (Jujuy) — https://www.eltribunodejujuy.com
+2026-06-21 13:34:27,438 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:29,439 INFO     [PROVINCIAL] LEA (Jujuy) — https://www.periodicolea.com.ar
+2026-06-21 13:34:30,387 INFO       → OK | 46 titulares extraídos
+2026-06-21 13:34:32,389 INFO     [PROVINCIAL] PREGÓN (Jujuy) — https://www.pregon.com.ar
+2026-06-21 13:34:32,949 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:34,950 INFO     [PROVINCIAL] EL INDEPENDIENTE (La Rioja) — https://www.elindependiente.com.ar
+2026-06-21 13:34:35,158 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:37,173 INFO     [PROVINCIAL] NUEVA RIOJA (La Rioja) — https://www.nuevarioja.com.ar
+2026-06-21 13:34:37,476 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:39,485 INFO     [PROVINCIAL] RIOJA VIRTUAL (La Rioja) — https://www.riojavirtual.com.ar
+2026-06-21 13:34:42,044 INFO       → OK | 8 titulares extraídos
+2026-06-21 13:34:44,045 INFO     [PROVINCIAL] EL TRIBUNO (Salta) — https://www.eltribuno.com
+2026-06-21 13:34:44,202 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:46,205 INFO     [PROVINCIAL] NUEVO DIARIO (Salta) — https://www.nuevodiariodesalta.com.ar
+2026-06-21 13:34:46,660 INFO       → OK | 38 titulares extraídos
+2026-06-21 13:34:48,661 INFO     [PROVINCIAL] PUNTO UNO (Salta) — https://www.diariopuntouno.com.ar
+2026-06-21 13:34:48,684 WARNING    → FALLO (ConnectionError) | sin titulares
+2026-06-21 13:34:50,687 INFO     [PROVINCIAL] EL LIBERAL (Santiago del Estero) — https://www.elliberal.com.ar
+2026-06-21 13:34:51,121 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:53,122 INFO     [PROVINCIAL] NUEVO DIARIO (Santiago del Estero) — https://www.nuevodiarioweb.com.ar
+2026-06-21 13:34:53,286 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:55,297 INFO     [PROVINCIAL] PANORAMA (Santiago del Estero) — https://www.diariopanorama.com
+2026-06-21 13:34:56,895 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:34:58,896 INFO     [PROVINCIAL] CONTEXTO (Tucumán) — https://www.contextotucuman.com.ar
+2026-06-21 13:34:59,099 WARNING    → FALLO (ConnectionError) | sin titulares
+2026-06-21 13:35:01,100 INFO     [PROVINCIAL] EL TUCUMANO (Tucumán) — https://www.eltucumano.com
+2026-06-21 13:35:03,234 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:05,236 INFO     [PROVINCIAL] LA GACETA (Tucumán) — https://www.lagaceta.com.ar
+2026-06-21 13:35:05,582 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:07,590 INFO     [PROVINCIAL] DIARIO CHACO (Chaco) — https://www.diariochaco.com
+2026-06-21 13:35:07,883 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:09,884 INFO     [PROVINCIAL] LA VOZ DEL CHACO (Chaco) — https://www.diariolavozdelchaco.com
+2026-06-21 13:35:12,945 INFO       → OK | 49 titulares extraídos
+2026-06-21 13:35:14,950 INFO     [PROVINCIAL] NORTE (Chaco) — https://www.diarionorte.com
+2026-06-21 13:35:15,254 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:17,255 INFO     [PROVINCIAL] EL LIBERTADOR (Corrientes) — https://www.diarioellibertador.com.ar
+2026-06-21 13:35:18,417 INFO       → OK | 43 titulares extraídos
+2026-06-21 13:35:20,419 INFO     [PROVINCIAL] EL LITORAL (Corrientes) — https://www.ellitoral.com.ar
+2026-06-21 13:35:20,790 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:22,804 INFO     [PROVINCIAL] ÉPOCA (Corrientes) — https://www.diarioepoca.com
+2026-06-21 13:35:23,145 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:25,146 INFO     [PROVINCIAL] EL COMERCIAL (Formosa) — https://www.elcomercial.com.ar
+2026-06-21 13:35:25,397 INFO       → OK | 45 titulares extraídos
+2026-06-21 13:35:27,415 INFO     [PROVINCIAL] FORMOSA (Formosa) — https://www.diarioformosa.net
+2026-06-21 13:35:28,292 INFO       → OK | 36 titulares extraídos
+2026-06-21 13:35:30,300 INFO     [PROVINCIAL] FORMOSA AHORA (Formosa) — https://www.formosaahora.com.ar
+2026-06-21 13:35:32,520 INFO       → OK | 19 titulares extraídos
+2026-06-21 13:35:34,521 INFO     [PROVINCIAL] EL TERRITORIO (Misiones) — https://www.elterritorio.com.ar
+2026-06-21 13:35:35,128 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:37,141 INFO     [PROVINCIAL] MISIONES ON LINE (Misiones) — https://www.misionesonline.net
+2026-06-21 13:35:37,892 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:39,904 INFO     [PROVINCIAL] PRIMERA EDICIÓN (Misiones) — https://www.primeraedicion.com.ar
+2026-06-21 13:35:40,037 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:42,050 INFO     [PROVINCIAL] ADN SUR (Chubut) — https://www.adnsur.com.ar
+2026-06-21 13:35:42,279 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:44,280 INFO     [PROVINCIAL] CRÓNICA (Chubut) — https://www.diariocronica.com.ar
+2026-06-21 13:35:44,861 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:46,864 INFO     [PROVINCIAL] EL PATAGÓNICO (Chubut) — https://www.elpatagonico.com
+2026-06-21 13:35:47,267 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:49,268 INFO     [PROVINCIAL] EL DIARIO DE LA PAMPA (La Pampa) — https://www.eldiariodelapampa.com.ar
+2026-06-21 13:35:50,107 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:52,107 INFO     [PROVINCIAL] LA ARENA (La Pampa) — https://www.laarena.com.ar
+2026-06-21 13:35:53,160 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:35:55,161 INFO     [PROVINCIAL] PLAN B NOTICIAS (La Pampa) — https://www.planbnoticias.com.ar
+2026-06-21 13:35:56,880 INFO       → OK | 43 titulares extraídos
+2026-06-21 13:35:58,880 INFO     [PROVINCIAL] CUTRAL CO AL INSTANTE (Neuquén) — https://www.cutralcoalinstante.com
+2026-06-21 13:36:00,910 INFO       → OK | 24 titulares extraídos
+2026-06-21 13:36:02,911 INFO     [PROVINCIAL] LM NEUQUÉN (Neuquén) — https://www.lmneuquen.com
+2026-06-21 13:36:03,050 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:05,051 INFO     [PROVINCIAL] LIMAY NOTICIAS (Neuquén) — https://www.limaynoticias.com.ar
+2026-06-21 13:36:05,781 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:07,782 INFO     [PROVINCIAL] EL CORDILLERANO (Río Negro) — https://www.elcordillerano.com.ar
+2026-06-21 13:36:08,401 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:10,405 INFO     [PROVINCIAL] RÍO NEGRO (Río Negro) — https://www.rionegro.com.ar
+2026-06-21 13:36:11,819 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:13,834 INFO     [PROVINCIAL] NOTICIASNET (Río Negro) — https://www.noticiasnet.com.ar
+2026-06-21 13:36:14,545 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:16,548 INFO     [PROVINCIAL] LA OPINIÓN AUSTRAL (Santa Cruz) — https://www.laopinionaustral.com.ar
+2026-06-21 13:36:17,902 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:19,912 INFO     [PROVINCIAL] NUEVO DÍA (Santa Cruz) — https://www.eldiarionuevodia.com.ar
+2026-06-21 13:36:20,193 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:22,193 INFO     [PROVINCIAL] TIEMPO SUR (Santa Cruz) — https://www.tiemposur.com.ar
+2026-06-21 13:36:22,703 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:24,715 INFO     [PROVINCIAL] EL SUREÑO (Tierra del Fuego) — https://www.surenio.com.ar
+2026-06-21 13:36:24,837 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:26,849 INFO     [PROVINCIAL] MINUTO FUEGUINO (Tierra del Fuego) — https://www.minutofueguino.com
+2026-06-21 13:36:27,039 WARNING    → FALLO (ConnectionError) | sin titulares
+2026-06-21 13:36:29,052 INFO     [PROVINCIAL] RED 23 NOTICIAS (Tierra del Fuego) — https://www.red23noticias.com.ar
+2026-06-21 13:36:29,363 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:31,366 INFO     [NACIONAL] INFOBAE (Nacional) — https://www.infobae.com
+2026-06-21 13:36:32,827 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:34,831 INFO     [NACIONAL] LA NACIÓN (Nacional) — https://www.lanacion.com.ar
+2026-06-21 13:36:35,415 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:37,421 INFO     [NACIONAL] CLARÍN (Nacional) — https://www.clarin.com
+2026-06-21 13:36:37,818 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:39,823 INFO     [NACIONAL] PÁGINA 12 (Nacional) — https://www.pagina12.com.ar
+2026-06-21 13:36:43,978 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:45,987 INFO     [NACIONAL] PERFIL (Nacional) — https://www.perfil.com
+2026-06-21 13:36:46,255 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:48,256 INFO     [NACIONAL] EL DESTAPE (Nacional) — https://www.eldestapeweb.com
+2026-06-21 13:36:48,459 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:50,463 INFO     [NACIONAL] LA POLÍTICA ONLINE (Nacional) — https://www.lapoliticaonline.com.ar
+2026-06-21 13:36:51,389 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:53,396 INFO     [NACIONAL] TIEMPO ARGENTINO (Nacional) — https://www.tiempoar.com.ar
+2026-06-21 13:36:53,695 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:55,696 INFO     [NACIONAL] LA PRENSA (Nacional) — https://www.laprensa.com.ar
+2026-06-21 13:36:56,504 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:58,510 INFO     [NACIONAL] ÁMBITO FINANCIERO (Nacional) — https://www.ambito.com
+2026-06-21 13:36:58,941 INFO       → OK | 50 titulares extraídos
+2026-06-21 13:36:58,980 INFO     ============================================================
+2026-06-21 13:36:58,980 INFO     Resumen: 79 medios procesados | 75 exitosos | 4 fallidos | 3556 titulares totales
+2026-06-21 13:36:58,981 INFO     Titulares → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\crudos\2026-W25\titulares.csv
+2026-06-21 13:36:58,981 INFO     HTML crudos → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\crudos\2026-W25/

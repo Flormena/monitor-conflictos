@@ -211,3 +211,33 @@
 2026-06-19 20:54:13,937 INFO         1  MDZ ONLINE
 2026-06-19 20:54:13,937 INFO         1  EL ESQUIÚ
 2026-06-19 20:54:13,937 INFO     ============================================================
+2026-06-21 13:37:04,746 INFO     Analizando semana: 2026-W25
+2026-06-21 13:37:04,777 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-21 13:37:04,823 INFO     Titulares cargados: 3556
+2026-06-21 13:37:04,904 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W25.csv (18 filas)
+2026-06-21 13:37:04,920 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (127 filas totales, 18 de esta semana)
+2026-06-21 13:37:04,920 INFO     ============================================================
+2026-06-21 13:37:04,920 INFO     Titulares leídos:  3556
+2026-06-21 13:37:04,920 INFO     Matches totales:   18  (0.5% de detección)
+2026-06-21 13:37:04,920 INFO     ────────────────────────────────────────
+2026-06-21 13:37:04,920 INFO     Menciones por palabra clave:
+2026-06-21 13:37:04,920 INFO       reclamo            9
+2026-06-21 13:37:04,920 INFO       marcha             5
+2026-06-21 13:37:04,920 INFO       movilización       2
+2026-06-21 13:37:04,920 INFO       paro               2
+2026-06-21 13:37:04,920 INFO       protesta           1
+2026-06-21 13:37:04,920 INFO     ────────────────────────────────────────
+2026-06-21 13:37:04,920 INFO     Excluidos por filtro de bigramas:
+2026-06-21 13:37:04,920 INFO       marcha             8
+2026-06-21 13:37:04,920 INFO     ────────────────────────────────────────
+2026-06-21 13:37:04,920 INFO     Menciones por corpus:
+2026-06-21 13:37:04,920 INFO       provincial        15
+2026-06-21 13:37:04,920 INFO       nacional           3
+2026-06-21 13:37:04,920 INFO     ────────────────────────────────────────
+2026-06-21 13:37:04,920 INFO     Top 5 medios con más menciones:
+2026-06-21 13:37:04,920 INFO         2  NORTE
+2026-06-21 13:37:04,920 INFO         1  LA VOZ DEL INTERIOR
+2026-06-21 13:37:04,920 INFO         1  EL DIARIO
+2026-06-21 13:37:04,920 INFO         1  EL DIARIO DEL CENTRO DEL PAÍS
+2026-06-21 13:37:04,920 INFO         1  EL ZONDA
+2026-06-21 13:37:04,920 INFO     ============================================================
