@@ -129,7 +129,12 @@
     padding-bottom: 10px; display: flex; justify-content: space-between; align-items: baseline;
   }
   .panel-title span.hl { color: var(--accent-2); }
-  .panel canvas { width: 100% !important; }
+  /* Contenedor con altura fija: Chart.js con maintainAspectRatio:false necesita
+     un padre con alto definido en CSS, no alcanza con el atributo height del canvas. */
+  .chart-box { position: relative; width: 100%; }
+  .chart-box.h-tall  { height: 260px; }
+  .chart-box.h-short { height: 150px; }
+  .chart-box canvas { width: 100% !important; height: 100% !important; }
   .panel-nota {
     font-family: var(--mono); font-size: 10.5px; color: var(--muted);
     border-top: 1px solid var(--border); padding-top: 10px; line-height: 1.6;
@@ -332,7 +337,7 @@
     <span style="color:var(--accent-2)">⚠ PRUEBA TEMPORAL · SEGUIMIENTO DIARIO</span>
     <span class="hl">3 corridas</span>
   </div>
-  <canvas id="chart-seguimiento" height="90"></canvas>
+  <div class="chart-box h-short"><canvas id="chart-seguimiento"></canvas></div>
   <div class="panel-nota">
     bloque provisorio para evaluar la cadencia de corrida (METODOLOGIA.md §8.4 pendiente);
     no es parte del dashboard oficial y se va a quitar al terminar la prueba
@@ -800,12 +805,12 @@
 <div class="grid">
   <div class="panel">
     <div class="panel-title"><span>TENDENCIA TEMPORAL</span></div>
-    <canvas id="chart-tendencia" height="190"></canvas>
+    <div class="chart-box h-tall"><canvas id="chart-tendencia"></canvas></div>
     <div class="panel-nota">menciones absolutas por semana, sin deduplicar entre medios (METODOLOGIA.md §8.6)</div>
   </div>
   <div class="panel">
     <div class="panel-title"><span>MENCIONES POR PALABRA CLAVE</span></div>
-    <canvas id="chart-palabras" height="190"></canvas>
+    <div class="chart-box h-tall"><canvas id="chart-palabras"></canvas></div>
     <div class="panel-nota">acumulado histórico, las 8 palabras del corpus</div>
   </div>
 </div>
@@ -3769,6 +3774,7 @@ new Chart(document.getElementById('chart-tendencia').getContext('2d'), {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
       tooltip: { backgroundColor: '#000', padding: 10, cornerRadius: 2, bodyFont: { family: 'ui-monospace, monospace' } }
@@ -3793,6 +3799,7 @@ new Chart(document.getElementById('chart-palabras').getContext('2d'), {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: { legend: { display: false }, tooltip: { backgroundColor: '#000', padding: 10, cornerRadius: 2 } },
     scales: {
       x: { ticks: { color: '#cdd6f4', font: { family: 'ui-monospace, monospace', size: 11 } }, grid: { display: false } },
@@ -3831,6 +3838,7 @@ new Chart(document.getElementById('chart-seguimiento').getContext('2d'), {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y:  { beginAtZero: true, ticks: { color: '#6c7086', precision: 0 }, grid: { color: '#1e2330' } },
       y2: { position: 'right', beginAtZero: true, ticks: { color: '#6c7086', precision: 0 }, grid: { display: false } },
