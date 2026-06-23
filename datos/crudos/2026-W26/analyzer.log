@@ -1,0 +1,31 @@
+2026-06-22 23:04:43,491 INFO     Analizando semana: 2026-W26
+2026-06-22 23:04:43,491 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-22 23:04:43,527 INFO     Titulares cargados: 3566
+2026-06-22 23:04:43,619 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W26.csv (22 filas)
+2026-06-22 23:04:43,672 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (149 filas totales, 22 de esta semana)
+2026-06-22 23:04:43,672 INFO     ============================================================
+2026-06-22 23:04:43,672 INFO     Titulares leídos:  3566
+2026-06-22 23:04:43,673 INFO     Matches totales:   22  (0.6% de detección)
+2026-06-22 23:04:43,673 INFO     ────────────────────────────────────────
+2026-06-22 23:04:43,673 INFO     Menciones por palabra clave:
+2026-06-22 23:04:43,673 INFO       paro              10
+2026-06-22 23:04:43,673 INFO       reclamo            6
+2026-06-22 23:04:43,673 INFO       protesta           4
+2026-06-22 23:04:43,673 INFO       piquete            1
+2026-06-22 23:04:43,673 INFO       marcha             1
+2026-06-22 23:04:43,673 INFO     ────────────────────────────────────────
+2026-06-22 23:04:43,673 INFO     Excluidos por filtro de bigramas:
+2026-06-22 23:04:43,673 INFO       marcha             5
+2026-06-22 23:04:43,673 INFO       reclamo            1
+2026-06-22 23:04:43,673 INFO     ────────────────────────────────────────
+2026-06-22 23:04:43,673 INFO     Menciones por corpus:
+2026-06-22 23:04:43,673 INFO       provincial        17
+2026-06-22 23:04:43,673 INFO       nacional           5
+2026-06-22 23:04:43,673 INFO     ────────────────────────────────────────
+2026-06-22 23:04:43,673 INFO     Top 5 medios con más menciones:
+2026-06-22 23:04:43,673 INFO         3  TIEMPO ARGENTINO
+2026-06-22 23:04:43,673 INFO         2  EL DÍA
+2026-06-22 23:04:43,673 INFO         2  EL ANCASTI
+2026-06-22 23:04:43,673 INFO         2  LA OPINIÓN AUSTRAL
+2026-06-22 23:04:43,673 INFO         2  NUEVO DÍA
+2026-06-22 23:04:43,673 INFO     ============================================================
