@@ -59,3 +59,33 @@
 2026-06-23 21:39:27,381 INFO         2  TIEMPO ARGENTINO
 2026-06-23 21:39:27,381 INFO         1  ELONCE
 2026-06-23 21:39:27,381 INFO     ============================================================
+2026-06-24 18:24:03,869 INFO     Analizando semana: 2026-W26
+2026-06-24 18:24:03,869 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-24 18:24:03,931 INFO     Titulares cargados: 3561
+2026-06-24 18:24:04,022 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W26.csv (15 filas)
+2026-06-24 18:24:04,062 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (142 filas totales, 15 de esta semana)
+2026-06-24 18:24:04,063 INFO     ============================================================
+2026-06-24 18:24:04,063 INFO     Titulares leídos:  3561
+2026-06-24 18:24:04,063 INFO     Matches totales:   15  (0.4% de detección)
+2026-06-24 18:24:04,063 INFO     ────────────────────────────────────────
+2026-06-24 18:24:04,063 INFO     Menciones por palabra clave:
+2026-06-24 18:24:04,063 INFO       paro               5
+2026-06-24 18:24:04,063 INFO       reclamo            5
+2026-06-24 18:24:04,064 INFO       protesta           2
+2026-06-24 18:24:04,064 INFO       movilización       2
+2026-06-24 18:24:04,064 INFO       marcha             1
+2026-06-24 18:24:04,064 INFO     ────────────────────────────────────────
+2026-06-24 18:24:04,064 INFO     Excluidos por filtro de bigramas:
+2026-06-24 18:24:04,064 INFO       marcha             7
+2026-06-24 18:24:04,064 INFO     ────────────────────────────────────────
+2026-06-24 18:24:04,064 INFO     Menciones por corpus:
+2026-06-24 18:24:04,064 INFO       provincial        13
+2026-06-24 18:24:04,064 INFO       nacional           2
+2026-06-24 18:24:04,064 INFO     ────────────────────────────────────────
+2026-06-24 18:24:04,064 INFO     Top 5 medios con más menciones:
+2026-06-24 18:24:04,065 INFO         2  EL ANCASTI
+2026-06-24 18:24:04,065 INFO         2  NUEVO DIARIO
+2026-06-24 18:24:04,065 INFO         2  NUEVO DÍA
+2026-06-24 18:24:04,065 INFO         1  EL DIARIO DEL CENTRO DEL PAÍS
+2026-06-24 18:24:04,065 INFO         1  UNO ENTRE RÍOS
+2026-06-24 18:24:04,065 INFO     ============================================================
