@@ -14,11 +14,11 @@
 </style>
 </head>
 <body>
-  <h1>Seguimiento diario — prueba de una semana (4 corridas registradas)</h1>
+  <h1>Seguimiento diario — prueba de una semana (5 corridas registradas)</h1>
   <canvas id="c" height="110"></canvas>
   <table>
     <tr><th>Fecha</th><th>Semana</th><th>Titulares scrapeados</th><th>Matches</th></tr>
-    <tr><td>2026-06-18</td><td>2026-W25</td><td>3561</td><td>20</td></tr><tr><td>2026-06-19</td><td>2026-W25</td><td>3556</td><td>22</td></tr><tr><td>2026-06-21</td><td>2026-W25</td><td>3556</td><td>18</td></tr><tr><td>2026-06-22</td><td>2026-W26</td><td>3566</td><td>22</td></tr>
+    <tr><td>2026-06-18</td><td>2026-W25</td><td>3561</td><td>20</td></tr><tr><td>2026-06-19</td><td>2026-W25</td><td>3556</td><td>22</td></tr><tr><td>2026-06-21</td><td>2026-W25</td><td>3556</td><td>18</td></tr><tr><td>2026-06-22</td><td>2026-W26</td><td>3566</td><td>22</td></tr><tr><td>2026-06-23</td><td>2026-W26</td><td>3558</td><td>24</td></tr>
   </table>
   <p class="nota">
     Generado por analisis/seguimiento_diario.py. Esto NO es el dashboard oficial
@@ -31,11 +31,11 @@
 new Chart(document.getElementById('c').getContext('2d'), {
   type: 'line',
   data: {
-    labels: ["2026-06-18", "2026-06-19", "2026-06-21", "2026-06-22"],
+    labels: ["2026-06-18", "2026-06-19", "2026-06-21", "2026-06-22", "2026-06-23"],
     datasets: [
       {
         label: 'Matches (palabras clave)',
-        data: [20, 22, 18, 22],
+        data: [20, 22, 18, 22, 24],
         borderColor: '#4cc9f0',
         backgroundColor: 'rgba(76,201,240,0.1)',
         fill: true,
@@ -44,7 +44,7 @@ new Chart(document.getElementById('c').getContext('2d'), {
       },
       {
         label: 'Titulares scrapeados',
-        data: [3561, 3556, 3556, 3566],
+        data: [3561, 3556, 3556, 3566, 3558],
         borderColor: '#6c7086',
         borderDash: [4,4],
         fill: false,

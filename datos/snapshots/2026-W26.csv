@@ -1,23 +1,25 @@
 ﻿fecha,semana_iso,corpus,diario,provincia,region,ciudad_origen,url_medio,titular,palabras_encontradas,cantidad_palabras
-2026-06-22,2026-W26,provincial,EL DÍA,Buenos Aires,AMBA,La Plata,https://www.eldia.com,Advierten con un piquete en la 520 por la falta de agua en los hogares,piquete,1
-2026-06-22,2026-W26,provincial,EL DÍA,Buenos Aires,AMBA,La Plata,https://www.eldia.com,Reclamo por semáforo y patrullas en un sector de La Plata donde hay 4 colegios,reclamo,1
-2026-06-22,2026-W26,provincial,LA VOZ DEL INTERIOR,Córdoba,Centro,Córdoba,https://www.lavoz.com.ar,Transporte. Las empresas abonaron el anticipo salarial y por ahora no habrá paro de urbanos,paro,1
-2026-06-22,2026-W26,provincial,EL DIARIO,Córdoba,Centro,Villa Carlos Paz,https://www.eldiariodecarlospaz.com.ar,Un cordón sanitario permitió salvar a un hombre que sufrió un paro cardíaco en Córdoba,paro,1
-2026-06-22,2026-W26,provincial,EL ANCASTI,Catamarca,NOA,Catamarca,https://www.elancasti.com.ar,OSEP escuchó el reclamo de las MAE y aseguró que no existen deudas exigibles,reclamo,1
-2026-06-22,2026-W26,provincial,EL ANCASTI,Catamarca,NOA,Catamarca,https://www.elancasti.com.ar,Reclamo de maestras por demoras en pagos de OSEP,reclamo,1
-2026-06-22,2026-W26,provincial,PREGÓN,Jujuy,NOA,San Salvador de Jujuy,https://www.pregon.com.ar,El insólito pedido del Kun Agüero: “Tiene que haber paro” y la reacción de Pollo Vignolo sorprendió a todos,paro,1
-2026-06-22,2026-W26,provincial,DIARIO CHACO,Chaco,NEA,Resistencia,https://www.diariochaco.com,UTEDYC denunció a Sarmiento ante la Dirección del Trabajo y convocó a un paro,paro,1
-2026-06-22,2026-W26,provincial,NORTE,Chaco,NEA,Resistencia,https://www.diarionorte.com,"Marcha por Axel López, a casi un mes de su desaparición",marcha,1
-2026-06-22,2026-W26,provincial,EL PATAGÓNICO,Chubut,Patagonia,Comodoro Rivadavia,https://www.elpatagonico.com,Protesta policial en vísperas de otra mesa de paritarias,protesta,1
-2026-06-22,2026-W26,provincial,LA OPINIÓN AUSTRAL,Santa Cruz,Patagonia,Santa Cruz,https://www.laopinionaustral.com.ar,ADOSAC anunció un nuevo paro de 72 horas tras rechazar la última oferta salarial del Gobierno,paro,1
-2026-06-22,2026-W26,provincial,LA OPINIÓN AUSTRAL,Santa Cruz,Patagonia,Santa Cruz,https://www.laopinionaustral.com.ar,“Voy a luchar para que no quede impune”: fuerte reclamo de la familia de “huesito” Carabajal a cuatro años del hecho,reclamo,1
-2026-06-22,2026-W26,provincial,NUEVO DÍA,Santa Cruz,Patagonia,Santa Cruz,https://www.eldiarionuevodia.com.ar,Nueva semana de paro docente: cuántos días resolvió ADOSAC y cuál es la oferta rechazada,paro,1
-2026-06-22,2026-W26,provincial,NUEVO DÍA,Santa Cruz,Patagonia,Santa Cruz,https://www.eldiarionuevodia.com.ar,ATE Santa Cruz confirmó paro toda la semana tras rechazar la oferta salarial,paro,1
-2026-06-22,2026-W26,provincial,TIEMPO SUR,Santa Cruz,Patagonia,Santa Cruz,https://www.tiemposur.com.ar,Congreso ADOSAC resolvió un paro de 72 horas,paro,1
-2026-06-22,2026-W26,provincial,EL SUREÑO,Tierra del Fuego,Patagonia,Río Grande,https://www.surenio.com.ar,Paro docente el jueves: SUTEF se suma a la medida de fuerza nacional,paro,1
-2026-06-22,2026-W26,provincial,RED 23 NOTICIAS,Tierra del Fuego,Patagonia,Río Grande,https://www.red23noticias.com.ar,El reclamo por el GLP escala: presentan proyecto propio ante la falta de respuestas,reclamo,1
-2026-06-22,2026-W26,nacional,PÁGINA 12,Nacional,Nacional,Nacional,https://www.pagina12.com.ar,Apelan la condena a cuatro manifestantes detenidos en la protesta contra la Ley Bases,protesta,1
-2026-06-22,2026-W26,nacional,EL DESTAPE,Nacional,Nacional,Nacional,https://www.eldestapeweb.com,ATE recrudece las medidas contra el ajuste de Vidal y realiza un paro de 120 horas,paro,1
-2026-06-22,2026-W26,nacional,TIEMPO ARGENTINO,Nacional,Nacional,Nacional,https://www.tiempoar.com.ar,"Tras 15 días de acampe, comunidades wichí lograron un acuerdo con el gobierno chaqueño y levantaron la protesta",protesta,1
-2026-06-22,2026-W26,nacional,TIEMPO ARGENTINO,Nacional,Nacional,Nacional,https://www.tiempoar.com.ar,Cierran la sede central del INTI para intentar frenar una protesta contra el vaciamiento,protesta,1
-2026-06-22,2026-W26,nacional,TIEMPO ARGENTINO,Nacional,Nacional,Nacional,https://www.tiempoar.com.ar,El reclamo por Cristina se suma al clima electoral que vive el peronismo,reclamo,1
+2026-06-23,2026-W26,provincial,ELONCE,Entre Ríos,Centro,Entre rios,https://www.elonce.com,Amet convocó al paro y se suma a la protesta docente de Agmer para este miércoles,"paro, protesta",2
+2026-06-23,2026-W26,provincial,LOS ANDES,Mendoza,Cuyo,Mendoza,https://www.losandes.com.ar,Crece la interna en la CGT: gremios duros impulsan un paro nacional de 36 horas contra Milei,paro,1
+2026-06-23,2026-W26,provincial,LOS ANDES,Mendoza,Cuyo,Mendoza,https://www.losandes.com.ar,Condenaron al activista que golpeó al presidente de la Cámara de Servicios Mineros durante la protesta de Uspallata,protesta,1
+2026-06-23,2026-W26,provincial,MDZ ONLINE,Mendoza,Cuyo,Mendoza,https://www.mdzol.com,Jorge Macri obliga a empresas de transporte y residuos a garantizar el servicio cuando gremios hagan paro,paro,1
+2026-06-23,2026-W26,provincial,EL ZONDA,San Juan,Cuyo,San Juan,https://www.diarioelzondasj.com.ar,Reclamo vitivinícola. Productores sanjuaninos exigen a FECOVITA el pago pendiente por sus uvas,reclamo,1
+2026-06-23,2026-W26,provincial,EL ESQUIÚ,Catamarca,NOA,Catamarca,https://www.elesquiu.com,Crece el reclamo en El Portezuelo: padres protestan por la falta de transporte escolar,reclamo,1
+2026-06-23,2026-W26,provincial,RIOJA VIRTUAL,La Rioja,NOA,La Rioja,https://www.riojavirtual.com.ar,"LA UCR RESPALDÓ RECLAMO LIMÍTROFE DE LA RIOJA CON SAN JUAN, CON OBJECIONES",reclamo,1
+2026-06-23,2026-W26,provincial,EL LIBERAL,Santiago del Estero,NOA,Santiago del Estero,https://www.elliberal.com.ar,La CGT Santiago del Estero reclamó por el excesivo plus,reclamo,1
+2026-06-23,2026-W26,provincial,NORTE,Chaco,NEA,Resistencia,https://www.diarionorte.com,Protesta de becarios del CONICET. Universidades argentinas caen en ranking global,protesta,1
+2026-06-23,2026-W26,provincial,NORTE,Chaco,NEA,Resistencia,https://www.diarionorte.com,"Marcha por Axel López, a casi un mes de su desaparición",marcha,1
+2026-06-23,2026-W26,provincial,MISIONES ON LINE,Misiones,NEA,Posadas,https://www.misionesonline.net,Conflicto por tierras en Garupá: detuvieron a una médica y su defensa afirma que actuaba por un reclamo de propiedad en disputa judicial,reclamo,1
+2026-06-23,2026-W26,provincial,EL PATAGÓNICO,Chubut,Patagonia,Comodoro Rivadavia,https://www.elpatagonico.com,Protesta policial en vísperas de otra mesa de paritarias,protesta,1
+2026-06-23,2026-W26,provincial,PLAN B NOTICIAS,La Pampa,Patagonia,Santa Rosa,https://www.planbnoticias.com.ar,Trapaglia cuestionó las condiciones de trabajo en un laboratorio del Molas y reclamó soluciones,reclamo,1
+2026-06-23,2026-W26,provincial,CUTRAL CO AL INSTANTE,Neuquén,Patagonia,Cutral Có,https://www.cutralcoalinstante.com,ATEN convocó a un paro y movilización en rechazo al proyecto de ley de GNL,"paro, movilización",2
+2026-06-23,2026-W26,provincial,LA OPINIÓN AUSTRAL,Santa Cruz,Patagonia,Santa Cruz,https://www.laopinionaustral.com.ar,“Voy a luchar para que no quede impune”: fuerte reclamo de la familia de “huesito” Carabajal a cuatro años del hecho,reclamo,1
+2026-06-23,2026-W26,provincial,NUEVO DÍA,Santa Cruz,Patagonia,Santa Cruz,https://www.eldiarionuevodia.com.ar,Un sindicato estatal lanzó un paro por 96 horas en Santa Cruz antes de la paritaria,paro,1
+2026-06-23,2026-W26,provincial,TIEMPO SUR,Santa Cruz,Patagonia,Santa Cruz,https://www.tiemposur.com.ar,Martes con paro docente Presencia de ADOSAC en Trabajo mientras se desarrolla la paritaria,paro,1
+2026-06-23,2026-W26,provincial,TIEMPO SUR,Santa Cruz,Patagonia,Santa Cruz,https://www.tiemposur.com.ar,Conflicto policial Policías autoconvocados mantendrán las carpas de protesta pese a las advertencias del Gobierno,protesta,1
+2026-06-23,2026-W26,provincial,EL SUREÑO,Tierra del Fuego,Patagonia,Río Grande,https://www.surenio.com.ar,ATSA convocó a un paro provincial para este miércoles,paro,1
+2026-06-23,2026-W26,provincial,RED 23 NOTICIAS,Tierra del Fuego,Patagonia,Río Grande,https://www.red23noticias.com.ar,24 Horas: ATSA convoca a un paro y advierte por el deterioro del sistema,paro,1
+2026-06-23,2026-W26,nacional,PERFIL,Nacional,Nacional,Nacional,https://www.perfil.com,"La UIA reclamó cambios al ""Súper RIGI"" para fortalecer a los proveedores locales",reclamo,1
+2026-06-23,2026-W26,nacional,EL DESTAPE,Nacional,Nacional,Nacional,https://www.eldestapeweb.com,Más gremios presionan a la CGT con un nuevo paro nacional de 36 horas,paro,1
+2026-06-23,2026-W26,nacional,TIEMPO ARGENTINO,Nacional,Nacional,Nacional,https://www.tiempoar.com.ar,reclamo internacional,reclamo,1
+2026-06-23,2026-W26,nacional,TIEMPO ARGENTINO,Nacional,Nacional,Nacional,https://www.tiempoar.com.ar,Gremios «disconformes» de la CGT pedirán un paro de 36 horas a la cúpula,paro,1

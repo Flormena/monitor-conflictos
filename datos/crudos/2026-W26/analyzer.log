@@ -29,3 +29,33 @@
 2026-06-22 23:04:43,673 INFO         2  LA OPINIÓN AUSTRAL
 2026-06-22 23:04:43,673 INFO         2  NUEVO DÍA
 2026-06-22 23:04:43,673 INFO     ============================================================
+2026-06-23 21:39:27,203 INFO     Analizando semana: 2026-W26
+2026-06-23 21:39:27,204 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-23 21:39:27,258 INFO     Titulares cargados: 3558
+2026-06-23 21:39:27,350 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W26.csv (24 filas)
+2026-06-23 21:39:27,380 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (151 filas totales, 24 de esta semana)
+2026-06-23 21:39:27,380 INFO     ============================================================
+2026-06-23 21:39:27,380 INFO     Titulares leídos:  3558
+2026-06-23 21:39:27,380 INFO     Matches totales:   24  (0.7% de detección)
+2026-06-23 21:39:27,380 INFO     ────────────────────────────────────────
+2026-06-23 21:39:27,381 INFO     Menciones por palabra clave:
+2026-06-23 21:39:27,381 INFO       paro              10
+2026-06-23 21:39:27,381 INFO       reclamo            9
+2026-06-23 21:39:27,381 INFO       protesta           5
+2026-06-23 21:39:27,381 INFO       marcha             1
+2026-06-23 21:39:27,381 INFO       movilización       1
+2026-06-23 21:39:27,381 INFO     ────────────────────────────────────────
+2026-06-23 21:39:27,381 INFO     Excluidos por filtro de bigramas:
+2026-06-23 21:39:27,381 INFO       marcha             5
+2026-06-23 21:39:27,381 INFO     ────────────────────────────────────────
+2026-06-23 21:39:27,381 INFO     Menciones por corpus:
+2026-06-23 21:39:27,381 INFO       provincial        20
+2026-06-23 21:39:27,381 INFO       nacional           4
+2026-06-23 21:39:27,381 INFO     ────────────────────────────────────────
+2026-06-23 21:39:27,381 INFO     Top 5 medios con más menciones:
+2026-06-23 21:39:27,381 INFO         2  LOS ANDES
+2026-06-23 21:39:27,381 INFO         2  NORTE
+2026-06-23 21:39:27,381 INFO         2  TIEMPO SUR
+2026-06-23 21:39:27,381 INFO         2  TIEMPO ARGENTINO
+2026-06-23 21:39:27,381 INFO         1  ELONCE
+2026-06-23 21:39:27,381 INFO     ============================================================
