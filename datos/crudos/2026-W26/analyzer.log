@@ -89,3 +89,34 @@
 2026-06-24 18:24:04,065 INFO         1  EL DIARIO DEL CENTRO DEL PAÍS
 2026-06-24 18:24:04,065 INFO         1  UNO ENTRE RÍOS
 2026-06-24 18:24:04,065 INFO     ============================================================
+2026-06-26 13:11:09,213 INFO     Analizando semana: 2026-W26
+2026-06-26 13:11:09,214 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-26 13:11:09,259 INFO     Titulares cargados: 3569
+2026-06-26 13:11:09,412 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W26.csv (44 filas)
+2026-06-26 13:11:09,429 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (171 filas totales, 44 de esta semana)
+2026-06-26 13:11:09,429 INFO     ============================================================
+2026-06-26 13:11:09,429 INFO     Titulares leídos:  3569
+2026-06-26 13:11:09,429 INFO     Matches totales:   44  (1.2% de detección)
+2026-06-26 13:11:09,429 INFO     ────────────────────────────────────────
+2026-06-26 13:11:09,429 INFO     Menciones por palabra clave:
+2026-06-26 13:11:09,430 INFO       reclamo           20
+2026-06-26 13:11:09,430 INFO       paro              11
+2026-06-26 13:11:09,430 INFO       marcha            11
+2026-06-26 13:11:09,430 INFO       movilización       4
+2026-06-26 13:11:09,430 INFO       protesta           2
+2026-06-26 13:11:09,430 INFO     ────────────────────────────────────────
+2026-06-26 13:11:09,430 INFO     Excluidos por filtro de bigramas:
+2026-06-26 13:11:09,430 INFO       marcha             2
+2026-06-26 13:11:09,430 INFO       reclamo            1
+2026-06-26 13:11:09,430 INFO     ────────────────────────────────────────
+2026-06-26 13:11:09,430 INFO     Menciones por corpus:
+2026-06-26 13:11:09,430 INFO       provincial        37
+2026-06-26 13:11:09,430 INFO       nacional           7
+2026-06-26 13:11:09,430 INFO     ────────────────────────────────────────
+2026-06-26 13:11:09,430 INFO     Top 5 medios con más menciones:
+2026-06-26 13:11:09,431 INFO         4  ADN SUR
+2026-06-26 13:11:09,431 INFO         3  UNO ENTRE RÍOS
+2026-06-26 13:11:09,431 INFO         3  EL ZONDA
+2026-06-26 13:11:09,431 INFO         3  LA VOZ DEL CHACO
+2026-06-26 13:11:09,431 INFO         3  LA OPINIÓN AUSTRAL
+2026-06-26 13:11:09,431 INFO     ============================================================
