@@ -120,3 +120,34 @@
 2026-06-26 13:11:09,431 INFO         3  LA VOZ DEL CHACO
 2026-06-26 13:11:09,431 INFO         3  LA OPINIÓN AUSTRAL
 2026-06-26 13:11:09,431 INFO     ============================================================
+2026-06-27 19:04:14,121 INFO     Analizando semana: 2026-W26
+2026-06-27 19:04:14,121 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-27 19:04:14,143 INFO     Titulares cargados: 3561
+2026-06-27 19:04:14,223 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W26.csv (26 filas)
+2026-06-27 19:04:14,241 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (153 filas totales, 26 de esta semana)
+2026-06-27 19:04:14,241 INFO     ============================================================
+2026-06-27 19:04:14,241 INFO     Titulares leídos:  3561
+2026-06-27 19:04:14,241 INFO     Matches totales:   26  (0.7% de detección)
+2026-06-27 19:04:14,241 INFO     ────────────────────────────────────────
+2026-06-27 19:04:14,241 INFO     Menciones por palabra clave:
+2026-06-27 19:04:14,241 INFO       reclamo           10
+2026-06-27 19:04:14,241 INFO       paro               8
+2026-06-27 19:04:14,241 INFO       marcha             6
+2026-06-27 19:04:14,241 INFO       protesta           3
+2026-06-27 19:04:14,241 INFO       movilización       1
+2026-06-27 19:04:14,241 INFO     ────────────────────────────────────────
+2026-06-27 19:04:14,241 INFO     Excluidos por filtro de bigramas:
+2026-06-27 19:04:14,241 INFO       marcha             4
+2026-06-27 19:04:14,241 INFO       reclamo            1
+2026-06-27 19:04:14,241 INFO     ────────────────────────────────────────
+2026-06-27 19:04:14,241 INFO     Menciones por corpus:
+2026-06-27 19:04:14,241 INFO       provincial        23
+2026-06-27 19:04:14,241 INFO       nacional           3
+2026-06-27 19:04:14,241 INFO     ────────────────────────────────────────
+2026-06-27 19:04:14,241 INFO     Top 5 medios con más menciones:
+2026-06-27 19:04:14,241 INFO         4  ADN SUR
+2026-06-27 19:04:14,241 INFO         2  NUEVO DIARIO
+2026-06-27 19:04:14,241 INFO         2  LA VOZ DEL CHACO
+2026-06-27 19:04:14,241 INFO         2  NUEVO DÍA
+2026-06-27 19:04:14,241 INFO         2  TIEMPO ARGENTINO
+2026-06-27 19:04:14,241 INFO     ============================================================
