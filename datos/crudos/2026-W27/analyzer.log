@@ -1,0 +1,30 @@
+2026-06-30 12:11:09,774 INFO     Analizando semana: 2026-W27
+2026-06-30 12:11:09,774 INFO     Palabras clave: huelga, paro, movilización, represión, piquete, protesta, marcha, reclamo
+2026-06-30 12:11:09,792 INFO     Titulares cargados: 3556
+2026-06-30 12:11:09,890 INFO     Snapshot → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\snapshots\2026-W27.csv (26 filas)
+2026-06-30 12:11:09,910 INFO     Acumulativo → C:\Users\mflor\OneDrive\Documentos\GitHub\monitor-conflictos\datos\procesados\conflictos.csv (179 filas totales, 26 de esta semana)
+2026-06-30 12:11:09,910 INFO     ============================================================
+2026-06-30 12:11:09,910 INFO     Titulares leídos:  3556
+2026-06-30 12:11:09,910 INFO     Matches totales:   26  (0.7% de detección)
+2026-06-30 12:11:09,910 INFO     ────────────────────────────────────────
+2026-06-30 12:11:09,910 INFO     Menciones por palabra clave:
+2026-06-30 12:11:09,910 INFO       paro              11
+2026-06-30 12:11:09,910 INFO       reclamo            8
+2026-06-30 12:11:09,910 INFO       protesta           4
+2026-06-30 12:11:09,910 INFO       marcha             3
+2026-06-30 12:11:09,910 INFO       movilización       1
+2026-06-30 12:11:09,910 INFO     ────────────────────────────────────────
+2026-06-30 12:11:09,910 INFO     Excluidos por filtro de bigramas:
+2026-06-30 12:11:09,910 INFO       marcha             3
+2026-06-30 12:11:09,910 INFO     ────────────────────────────────────────
+2026-06-30 12:11:09,910 INFO     Menciones por corpus:
+2026-06-30 12:11:09,910 INFO       provincial        22
+2026-06-30 12:11:09,910 INFO       nacional           4
+2026-06-30 12:11:09,910 INFO     ────────────────────────────────────────
+2026-06-30 12:11:09,910 INFO     Top 5 medios con más menciones:
+2026-06-30 12:11:09,910 INFO         3  EL DÍA
+2026-06-30 12:11:09,910 INFO         2  EL TRIBUNO
+2026-06-30 12:11:09,910 INFO         2  LA OPINIÓN AUSTRAL
+2026-06-30 12:11:09,910 INFO         1  5 DÍAS
+2026-06-30 12:11:09,910 INFO         1  UNO ENTRE RÍOS
+2026-06-30 12:11:09,910 INFO     ============================================================
